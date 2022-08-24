@@ -1,3 +1,16 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["airbnb", "airbnb-typescript", "next/core-web-vitals","some-other-config-you-use",
+  "prettier"],
+  "plugins": ["unused-imports"],
+  "parserOptions": {
+    "project": ["./tsconfig.json"]
+  },
+  "rules": {
+    "curly": ["error", "all"],
+    "no-unused-vars": "off",
+		"unused-imports/no-unused-imports": "error",
+    "react/require-default-props": ["off"],
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off"
+  }
 }
