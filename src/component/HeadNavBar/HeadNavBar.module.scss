@@ -1,0 +1,12 @@
+.container {
+    background-color: #221f1f;
+    padding: .5rem;
+    &__ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        list-style: none;
+    }
+}

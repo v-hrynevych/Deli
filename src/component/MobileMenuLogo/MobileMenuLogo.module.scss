@@ -1,0 +1,38 @@
+.container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    height: 3rem;
+    transition: all 0.2s ease-in-out;
+    border-radius: 4px;
+    padding-right: 0.5rem;
+
+    &:hover {
+        background-color: rgba($color: #ffffff, $alpha: 0.2);
+        cursor: pointer;
+    }
+}
+.logo {
+    position: absolute;
+    height: .2rem;
+    width: 1.5rem;
+    background-color: #fff;
+    &::after {
+        content: "";
+        position: absolute;
+        height: 0.2rem;
+        width: 2rem;
+        background-color: #fff;
+        top: 10px;
+    }
+    &::before {
+        content: "";
+        position: absolute;
+        height: 0.2rem;
+        width: 2rem;
+        background-color: #fff;
+        top: -10px;
+    }
+}
