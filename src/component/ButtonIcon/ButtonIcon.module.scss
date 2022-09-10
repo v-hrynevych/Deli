@@ -1,0 +1,18 @@
+.buttonIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    transition: all 0.2s ease-in-out;
+    border-radius: 4px;
+    svg{
+        color: #fff;
+        width: 25px;
+        height: 25px;
+    }
+    &:hover {
+        background-color: rgba($color: #ffffff, $alpha: 0.2);
+        cursor: pointer;
+    }
+}

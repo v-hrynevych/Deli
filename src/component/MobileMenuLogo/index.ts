@@ -1,1 +1,0 @@
-export {MobileMenuLogo} from './MobileMenuLogo' 

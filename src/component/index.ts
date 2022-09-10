@@ -1,5 +1,5 @@
 export {HeadNavBar} from "./HeadNavBar";
 export {SideMenu} from "./SideMenu";
-export {MobileMenuLogo} from "./MobileMenuLogo";
+export {ButtonIcon} from "./ButtonIcon";
 export {Modal} from "./Modal";
 export {ButtonNav} from "./ButtonNav";

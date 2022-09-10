@@ -1,12 +1,110 @@
-.container {
-    background-color: #221f1f;
-    padding: .5rem;
-    &__ul {
+.HeadNavBar {
+    &__container {
+        background-color: #221f1f;
+        padding: 0.5rem;
+        &Ul {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            gap: 2rem;
+            list-style: none;
+        }
+    }
+    &__logo {
+        a {
+            text-decoration: none;
+            font-size: 40px;
+            color: #fff;
+            font-weight: bold;
+        }
+    }
+    &__catalog {
+        &Item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff3;
+            border-radius: 4px;
+            transition: all 0.2s ease-in-out;
+            p {
+                margin: 0;
+                padding: 0 1rem;
+                color: #fff;
+            }
+            &:hover {
+                background-color: #fff6;
+            }
+        }
+    }
+    &__searchForm {
         display: flex;
+        &Item {
+            padding: 9px 4px 9px 40px;
+            border-radius: 4px 0 0 4px;
+            background: #fff
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E")
+                no-repeat 13px center;
+            input,
+            input:focus {
+                border: none;
+                outline: none;
+            }
+            input[type="search"]::-webkit-search-cancel-button {
+                -webkit-appearance: none;
+            }
+            input {
+                border-right: 1px solid #e9e9e9;
+                font-size: 1rem;
+                border: none;
+            }
+            button {
+                border: none;
+            }
+            &Micro {
+                color: #3e77aa;
+                width: 40px;
+                border-left: 1px solid red;
+                background: none;
+                &:hover {
+                    color: #ff7878;
+                    cursor: pointer;
+                }
+            }
+            &SearchButton {
+                background-color: #00a046;
+                border: none;
+                color: #fff;
+                border-radius: 0 4px 4px 0;
+                padding: 0 1rem;
+                cursor: pointer;
+                &:hover {
+                    background-color: #0ebe5a;
+                }
+            }
+        }
+    }
+
+    &__actionsUl {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        gap: 1rem;
         flex-direction: row;
+    }
+    &__actionsLanguage {
+        display: flex;
         justify-content: center;
         align-items: center;
-        margin: 0;
-        list-style: none;
+        a {
+            text-decoration: none;
+            color: #797878;
+            padding: 4px 8px;
+        }
+        a:first-child {
+            border-right: 1px solid #797878;
+        }
     }
 }
