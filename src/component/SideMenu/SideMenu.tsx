@@ -27,10 +27,13 @@ import Image from "next/image";
 import GoogleApp from "../../sgv/Google_Play.svg";
 import AppleApp from "../../sgv/App_StoreSVG.svg";
 import {ButtonNav} from "../ButtonNav";
+import {ButtonIcon} from "../ButtonIcon";
 
-interface SideMenuProps extends HTMLAttributes<HTMLDivElement> {}
+interface SideMenuProps extends HTMLAttributes<HTMLDivElement> {
+    handleClick:any;
+}
 
-export const SideMenu = ({className, ...rest}: SideMenuProps) => {
+export const SideMenu = ({handleClick,className, ...rest}: SideMenuProps) => {
     const SideMenuClasses = classNames(styles.SideMenu, className);
     const [IsServices, setIsServices] = useState(false);
     const [IsPartners, setIsPartners] = useState(false);
@@ -38,9 +41,7 @@ export const SideMenu = ({className, ...rest}: SideMenuProps) => {
         <div className={SideMenuClasses} {...rest}>
             <div className={styles.SideMenu__logo}>
                 <p>Ecom</p>
-                <button>
-                    <FontAwesomeIcon icon={faXmark} />
-                </button>
+                <ButtonIcon icon={faXmark} handleClick={handleClick}/>
             </div>
             <div className={styles.SideMenu__auth}>
                 <div className={styles.SideMenu__authAvatar}>

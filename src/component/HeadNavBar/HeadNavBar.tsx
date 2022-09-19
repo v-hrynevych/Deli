@@ -1,29 +1,35 @@
 import styles from "./HeadNavBar.module.scss";
-import {HTMLAttributes} from "react";
-import {ButtonNav} from "../index";
+import {HTMLAttributes, useState} from "react";
+import {SearchForm} from "../index";
 import {SideMenu} from "../index";
 import {ButtonIcon} from "../index";
 import {Modal} from "../Modal";
 import {
     faStore,
-    faMicrophone,
     faUser,
     faShoppingCart,
     faBars,
 } from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 
 interface HeadNavBarProps extends HTMLAttributes<HTMLDivElement> {}
 
 export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
+    const [isSideNav, setIsSideNav] = useState(false);
+
+    const openSideNav = () => {
+        setIsSideNav(!isSideNav);
+    };
     return (
         <>
             <div {...rest} className={styles.HeadNavBar__container}>
                 <nav>
                     <ul className={styles.HeadNavBar__containerUl}>
                         <li>
-                            <ButtonIcon icon={faBars} />
+                            <ButtonIcon
+                                icon={faBars}
+                                handleClick={openSideNav}
+                            />
                         </li>
                         <li className={styles.HeadNavBar__logo}>
                             <Link href="">
@@ -37,30 +43,7 @@ export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
                             </div>
                         </li>
                         <li>
-                            <form className={styles.HeadNavBar__searchForm} action="">
-                                <div className={styles.HeadNavBar__searchFormItem}>
-                                    <input
-                                        type="search"
-                                        placeholder="I'm looking for..."
-                                    />
-
-                                    <button
-                                        className={
-                                            styles.HeadNavBar__searchFormItemMicro
-                                        }
-                                    >
-                                        <FontAwesomeIcon icon={faMicrophone} />
-                                    </button>
-                                </div>
-
-                                <button
-                                    className={
-                                        styles.HeadNavBar__searchFormItemSearchButton
-                                    }
-                                >
-                                    Search
-                                </button>
-                            </form>
+                            <SearchForm />
                         </li>
                         <li className={styles.HeadNavBar__actions}>
                             <ul className={styles.HeadNavBar__actionsUl}>
@@ -82,9 +65,11 @@ export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
                         </li>
                         <li></li>
                     </ul>
-                    {/* <Modal>
-                        <SideMenu />
-                    </Modal> */}
+                    {isSideNav && (
+                        <Modal>
+                            <SideMenu handleClick={openSideNav} />
+                        </Modal>
+                    )}
                 </nav>
             </div>
         </>

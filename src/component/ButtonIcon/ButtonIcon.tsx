@@ -4,9 +4,11 @@ import {HTMLAttributes} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 
-interface ButtonIconProps extends HTMLAttributes<HTMLDivElement> {
+interface ButtonIconProps extends HTMLAttributes<HTMLButtonElement> {
     icon: IconProp;
-    handleClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    handleClick?: (
+        event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    ) => void;
 }
 
 export const ButtonIcon = ({
@@ -19,8 +21,8 @@ export const ButtonIcon = ({
     const ButtonIconClasses = classNames(styles.buttonIcon, className);
 
     return (
-        <div className={ButtonIconClasses} onClick={handleClick} {...rest}>
+        <button className={ButtonIconClasses} onClick={handleClick} {...rest}>
             <FontAwesomeIcon icon={icon} />
-        </div>
+        </button>
     );
 };
