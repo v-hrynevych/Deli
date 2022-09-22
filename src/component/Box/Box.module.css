@@ -1,0 +1,7 @@
+.box {
+  width: var(--jobie-box-width);
+  height: var(--jobie-box-height);
+  background-color: var(--cards-bg);
+  border-radius: 24px;
+  padding: 1.5rem;
+}

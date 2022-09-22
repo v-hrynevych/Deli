@@ -1,9 +1,9 @@
 import styles from "./HeadNavBar.module.scss";
-import {HTMLAttributes, useState} from "react";
-import {SearchForm} from "../index";
-import {SideMenu} from "../index";
-import {ButtonIcon} from "../index";
-import {Modal} from "../Modal";
+import { HTMLAttributes, useState } from "react";
+import { SearchForm } from "../index";
+import { SideMenu } from "../index";
+import { ButtonIcon } from "../index";
+import { Modal } from "../Modal";
 import {
     faStore,
     faUser,
@@ -12,24 +12,30 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
+import { useRouter } from "next/router";
+import { SignIn, SignUp } from "../../views/Authentication";
+
 interface HeadNavBarProps extends HTMLAttributes<HTMLDivElement> {}
 
-export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
+export const HeadNavBar = ({ className, ...rest }: HeadNavBarProps) => {
     const [isSideNav, setIsSideNav] = useState(false);
+    const [isActiveModal,setIsActiveModal] = useState(true);
 
-    const openSideNav = () => {
+    const router = useRouter();
+
+    const openClose = () => {
         setIsSideNav(!isSideNav);
     };
+    const routCart =()=>{
+        router.push('cart')
+    }
     return (
         <>
             <div {...rest} className={styles.HeadNavBar__container}>
                 <nav>
                     <ul className={styles.HeadNavBar__containerUl}>
                         <li>
-                            <ButtonIcon
-                                icon={faBars}
-                                handleClick={openSideNav}
-                            />
+                            <ButtonIcon icon={faBars} handleClick={openClose} />
                         </li>
                         <li className={styles.HeadNavBar__logo}>
                             <Link href="">
@@ -59,17 +65,23 @@ export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
                                     <ButtonIcon icon={faUser} />
                                 </li>
                                 <li className={styles.HeadNavBar__actionsCart}>
-                                    <ButtonIcon icon={faShoppingCart} />
+                                    <ButtonIcon icon={faShoppingCart}  handleClick={routCart}/>
                                 </li>
                             </ul>
                         </li>
                         <li></li>
                     </ul>
                     {isSideNav && (
-                        <Modal>
-                            <SideMenu handleClick={openSideNav} />
+                        <Modal isActive={isSideNav} setIsActive={setIsSideNav}>
+                            <SideMenu handleClick={openClose} />
                         </Modal>
                     )}
+                    {
+                    <Modal isActive={isActiveModal} setIsActive={setIsActiveModal}>
+                        {/* <SignUp/> */}
+                        <SignIn/>
+                    </Modal>
+                    }
                 </nav>
             </div>
         </>
