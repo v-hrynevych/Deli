@@ -17,7 +17,7 @@
     height: 100vh;
     max-width: 300px;
     background-color: #fff;
-    &__logo {
+    .logo {
         display: flex;
         justify-content: space-between;
         background-color: #221f1f;
@@ -40,13 +40,28 @@
             }
         }
     }
-    &__auth {
+    .auth {
         background-color: #221f1f;
         display: flex;
         align-items: center;
-        column-gap: 16px;
         padding: 8px;
-        &Avatar {
+        .user {
+            display: flex;
+            gap: 1rem;
+            &Info {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+            }
+            p:first-child {
+                color: #fff;
+            }
+            p:last-child {
+                color: #7a7878;
+            }
+        }
+        .avatar {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -55,16 +70,18 @@
             height: 40px;
             background-color: #ffffff0d;
         }
-        &Content {
+        .logOutUser {
+            display: flex;
+            gap: 1rem;
             p {
                 color: #a6a5a5;
                 font-size: 12px;
             }
         }
-        &Button {
+        .buttons {
             display: flex;
-            flex-direction: row;
-            align-items: center;
+            flex-direction: column;
+            align-items: flex-start;
             margin-bottom: 4px;
             button {
                 cursor: pointer;
@@ -208,7 +225,7 @@
                 color: #221f1f;
             }
             list-style: none;
-            li{
+            li {
                 border: none;
             }
         }
@@ -235,7 +252,7 @@
                 color: #221f1f;
             }
             list-style: none;
-            li{
+            li {
                 border: none;
             }
         }

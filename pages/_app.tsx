@@ -3,9 +3,16 @@ import "@fortawesome/fontawesome-svg-core/styles.css"; // import Font Awesome CS
 import {config} from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
 import type {AppProps} from "next/app";
+import {store} from "src/store";
+import {Provider} from "react-redux";
+
 
 function MyApp({Component, pageProps}: AppProps) {
-    return <Component {...pageProps} />;
+    return (
+        <Provider store={store}>
+            <Component {...pageProps} />;
+        </Provider>
+    );
 }
 
 export default MyApp;

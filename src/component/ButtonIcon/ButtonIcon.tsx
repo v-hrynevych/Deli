@@ -6,9 +6,7 @@ import {IconProp} from "@fortawesome/fontawesome-svg-core";
 
 interface ButtonIconProps extends HTMLAttributes<HTMLButtonElement> {
     icon: IconProp;
-    handleClick?: (
-        event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    ) => void;
+    handleClick?: ()=> void;
 }
 
 export const ButtonIcon = ({

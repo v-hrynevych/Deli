@@ -1,22 +1,21 @@
-import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import { InputField } from "src/component";
-import { useSignIn } from "../../hooks";
-import { FormControl } from "../FormControl";
+import {faEnvelope, faLock} from "@fortawesome/free-solid-svg-icons";
+import {useState} from "react";
+import {InputField} from "src/component";
+import {useSignIn} from "../../hooks";
+import {FormControl} from "../FormControl";
 
 export const SignIn = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const { signIn, user, error } = useSignIn({ redirectUrl: "/" });
-    console.log(user,password);
+    const {signIn, user, error} = useSignIn({redirectUrl: "/"});
     return (
         <FormControl
             onSubmit={() => signIn(email, password)}
             title="Sign in"
             subtitle="Welcome back!"
             linkTitle="Don't have account?"
-            linkHref="/"
+            linkHref="/sign-up"
         >
             <>
                 <InputField
@@ -33,7 +32,11 @@ export const SignIn = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                {error && <p style={{ color: "red" }}>{error.code}</p>}
+                {error && (
+                    <p style={{color: "red", paddingTop: "1rem"}}>
+                        {error.code}
+                    </p>
+                )}
             </>
         </FormControl>
     );

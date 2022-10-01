@@ -21,7 +21,7 @@ export const SignUp = () => {
             title="Registration"
             subtitle="It will only take 1 minute"
             linkTitle="Already have account?"
-            linkHref="/"
+            linkHref="/sign-in"
             onSubmit={() => signUp(email, password)}
         >
             <>

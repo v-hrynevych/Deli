@@ -1,7 +1,7 @@
-import { FormEventHandler, ReactElement } from "react";
+import {FormEventHandler, ReactElement} from "react";
 import Link from "next/link";
 
-import { Box, Button } from "../../../../component";
+import {Box, Button} from "../../../../component";
 
 import styles from "./FormControl.module.css";
 
@@ -35,10 +35,16 @@ export const FormControl = ({
                     <p className={styles.subtitle}>{subtitle}</p>
                     {children}
                     <div className={styles.flex}>
-                        <Button type="submit" onSubmit={handleSubmit}>
+                        <Button
+                            type="submit"
+                            variant="primary"
+                            onSubmit={handleSubmit}
+                        >
                             Submit
                         </Button>
-                        <Link href={linkHref}>{linkTitle}</Link>
+                        <Link href={linkHref}>
+                            {linkTitle}
+                        </Link>
                     </div>
                 </form>
             </Box>

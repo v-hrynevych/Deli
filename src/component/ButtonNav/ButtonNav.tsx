@@ -3,9 +3,10 @@ import {IconProp} from "@fortawesome/fontawesome-svg-core";
 import styles from "./ButtonNav.module.scss";
 import classNames from "classnames";
 import {HTMLAttributes} from "react";
+import { IconDefinition } from "@fortawesome/free-brands-svg-icons";
 
 interface ButtonNavProps extends HTMLAttributes<HTMLButtonElement> {
-    icon: IconProp;
+    icon: IconProp | IconDefinition;
     text: string;
     clickHandler?: React.MouseEventHandler<HTMLButtonElement>;
 }

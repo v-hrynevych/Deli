@@ -60,6 +60,8 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
               className={inputFieldClasses}
               ref={ref}
               type={type}
+              name={type}
+              autoComplete='on'
             />
           )}
           {isIconVisible && (

@@ -15,8 +15,8 @@ export const Box = ({
   ...rest
 }: BoxProps) => {
   const boxCss = {
-    "--jobie-box-width": width,
-    "--jobie-box-height": height,
+    "--box-width": width,
+    "--box-height": height,
   } as CSSProperties;
 
   return (

@@ -1,28 +1,28 @@
-import { HTMLAttributes, Dispatch, SetStateAction } from "react";
+import {HTMLAttributes} from "react";
 import classnames from "classnames";
 import styles from "./Modal.module.scss";
 
 interface ModalProps extends HTMLAttributes<HTMLDivElement> {
-    isActive: boolean;
+    isActive?: boolean;
     variant?: "start" | "center" | "end";
-    setIsActive: Dispatch<SetStateAction<boolean>>;
+    handleClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 export const Modal = ({
-    isActive,
-    setIsActive,
+    isActive = true,
     className,
     variant = "center",
+    handleClick,
     children,
 }: ModalProps) => {
     const modalClasses = classnames(
         styles.modal,
         styles[variant],
         isActive && styles.active,
-        className
+        className,
     );
-    
+
     return (
-        <div className={modalClasses} onClick={() => setIsActive(false)}>
+        <div className={modalClasses} onClick={handleClick}>
             <div
                 className={styles[variant]}
                 onClick={(e) => e.stopPropagation()}

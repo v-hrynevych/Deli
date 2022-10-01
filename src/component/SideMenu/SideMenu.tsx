@@ -20,43 +20,79 @@ import {
     faCartShopping,
     faStore,
     faXmark,
+    faRightFromBracket,
     faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
 import Image from "next/image";
-import GoogleApp from "../../sgv/Google_Play.svg";
-import AppleApp from "../../sgv/App_StoreSVG.svg";
+import GoogleApp from "../../svg/Google_Play.svg";
+import AppleApp from "../../svg/App_StoreSVG.svg";
 import {ButtonNav} from "../ButtonNav";
 import {ButtonIcon} from "../ButtonIcon";
+import {useRouter} from "next/router";
 
-interface SideMenuProps extends HTMLAttributes<HTMLDivElement> {
-    handleClick:any;
-}
+import {auth} from "../../../firebase";
+import {signOut} from "firebase/auth";
+import {useSelector} from "react-redux";
+import {userValue} from "src/store/userSlice";
+import {useUser} from "src/hooks";
 
-export const SideMenu = ({handleClick,className, ...rest}: SideMenuProps) => {
+interface SideMenuProps extends HTMLAttributes<HTMLDivElement> {}
+
+export const SideMenu = ({className, ...rest}: SideMenuProps) => {
     const SideMenuClasses = classNames(styles.SideMenu, className);
     const [IsServices, setIsServices] = useState(false);
     const [IsPartners, setIsPartners] = useState(false);
+    const {userName, userEmail} = useSelector(userValue);
+    const router = useRouter();
+    const backHome = () => {
+        router.replace("/");
+    };
+    const handleSignOut = async () => {
+        await signOut(auth);
+        backHome();
+    };
     return (
         <div className={SideMenuClasses} {...rest}>
-            <div className={styles.SideMenu__logo}>
+            <div className={styles.logo}>
                 <p>Ecom</p>
-                <ButtonIcon icon={faXmark} handleClick={handleClick}/>
+                <ButtonIcon icon={faXmark} handleClick={backHome} />
             </div>
-            <div className={styles.SideMenu__auth}>
-                <div className={styles.SideMenu__authAvatar}>
-                    <FontAwesomeIcon
-                        icon={faUser}
-                        style={{fontSize: 24, color: "#fff"}}
-                    />
-                </div>
-                <div className={styles.SideMenu__authContent}>
-                    <div className={styles.SideMenu__authButton}>
-                        <button>Login</button>
-                        <button>Registration</button>
+            <div className={styles.auth}>
+                {userEmail ? (
+                    <div className={styles.user}>
+                        <div className={styles.avatar}>
+                            <FontAwesomeIcon
+                                icon={faUser}
+                                style={{fontSize: 24, color: "#fff"}}
+                            />
+                        </div>
+                        <div className={styles.userInfo}>
+                            <p>{userName}</p>
+                            <p>{userEmail}</p>
+                        </div>
                     </div>
-                    <p>Log in to get advanced features</p>
-                </div>
+                ) : (
+                    <div className={styles.logOutUser}>
+                        <div className={styles.avatar}>
+                            <FontAwesomeIcon
+                                icon={faUser}
+                                style={{fontSize: 24, color: "#fff"}}
+                            />
+                        </div>
+                        <div className={styles.buttons}>
+                            <div className={styles.item}>
+                                <button onClick={() => router.push("sign-in")}>
+                                    Login
+                                </button>
+                                <button onClick={() => router.push("sign-up")}>
+                                    Registration
+                                </button>
+                            </div>
+                            <p>Log in to get advanced features</p>
+                        </div>
+                    </div>
+                )}
             </div>
             <div className={styles.SideMenu__donation}></div>
 
@@ -82,10 +118,7 @@ export const SideMenu = ({handleClick,className, ...rest}: SideMenuProps) => {
                 <li className={styles.SideMenu__city}>
                     <p>City</p>
                     <span>Lublin</span>
-                    <FontAwesomeIcon
-                        onClick={() => console.log("City clicked")}
-                        icon={faChevronDown}
-                    />
+                    <FontAwesomeIcon icon={faChevronDown} />
                 </li>
                 <li className={styles.SideMenu__helpCenter}>
                     <ButtonNav
@@ -219,6 +252,15 @@ export const SideMenu = ({handleClick,className, ...rest}: SideMenuProps) => {
                         </div>
                     </div>
                 </li>
+                {userEmail !== null && (
+                    <li>
+                        <ButtonNav
+                            icon={faRightFromBracket}
+                            text="log out of the account"
+                            clickHandler={handleSignOut}
+                        />
+                    </li>
+                )}
             </ul>
         </div>
     );
