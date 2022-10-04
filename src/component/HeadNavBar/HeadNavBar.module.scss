@@ -1,46 +1,48 @@
-.HeadNavBar {
-    &__container {
-        background-color: #221f1f;
-        padding: 0.5rem;
-        &Ul {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
+.container {
+    background-color: #221f1f;
+    padding: 0.5rem;
+    height: 4.375rem;
+    &Ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        gap: 2rem;
+        list-style: none;
+    }
+}
+.logo {
+    a {
+        text-decoration: none;
+        font-size: 40px;
+        color: #fff;
+        font-weight: bold;
+    }
+}
+.catalog {
+    &Item {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff3;
+        border-radius: 4px;
+        transition: all 0.2s ease-in-out;
+        p {
             margin: 0;
-            gap: 2rem;
-            list-style: none;
-        }
-    }
-    &__logo {
-        a {
-            text-decoration: none;
-            font-size: 40px;
+            font-size: 18px;
+            padding: 0 0.6rem;
             color: #fff;
-            font-weight: bold;
+        }
+        &:hover {
+            background-color: #fff6;
         }
     }
-    &__catalog {
-        &Item {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #fff3;
-            border-radius: 4px;
-            transition: all 0.2s ease-in-out;
-            p {
-                margin: 0;
-                font-size: 18px;
-                padding: 0 .6rem;
-                color: #fff;
-            }
-            &:hover {
-                background-color: #fff6;
-            }
-        }
-    }
+}
 
-    &__actionsUl {
+.actions {
+    &Ul {
         margin: 0;
         padding: 0;
         list-style: none;
@@ -48,7 +50,7 @@
         gap: 1rem;
         flex-direction: row;
     }
-    &__actionsLanguage {
+    &Language {
         display: flex;
         justify-content: center;
         align-items: center;

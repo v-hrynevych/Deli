@@ -6,7 +6,6 @@ import type {AppProps} from "next/app";
 import {store} from "src/store";
 import {Provider} from "react-redux";
 
-
 function MyApp({Component, pageProps}: AppProps) {
     return (
         <Provider store={store}>

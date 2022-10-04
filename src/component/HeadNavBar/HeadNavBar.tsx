@@ -1,8 +1,8 @@
 import styles from "./HeadNavBar.module.scss";
 
-import {HTMLAttributes} from "react";
-import {SearchForm} from "../index";
-import {ButtonIcon} from "../index";
+import { HTMLAttributes } from "react";
+import { SearchForm } from "../index";
+import { ButtonIcon } from "../index";
 
 import {
     faStore,
@@ -14,108 +14,99 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
-import {useRouter} from "next/router";
-import {useSelector} from "react-redux";
-import {userValue} from "src/store/userSlice";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { userValue } from "src/store/userSlice";
+import { useCollection } from "src/hooks";
 
 interface HeadNavBarProps extends HTMLAttributes<HTMLDivElement> {}
 
-export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
+export const HeadNavBar = ({ className, ...rest }: HeadNavBarProps) => {
     const router = useRouter();
-
-    const {userEmail} = useSelector(userValue);
+    const { userEmail } = useSelector(userValue);
 
     const openSideMenu = () => {
         router.replace("/side-menu");
     };
     const openSignIn = () => {
-        router.push("sign-in");
+        router.replace("sign-in");
     };
     const openCabinet = () => {
-        router.push("cabinet");
+        router.replace("cabinet");
     };
     const openWishlist = () => {
-       router.replace('cabinet/wishlist')
+        router.replace("cabinet/wishlist");
     };
     const routCart = () => {
         router.replace("/cart");
     };
-
     return (
-        <>
-            <div {...rest} className={styles.HeadNavBar__container}>
-                <nav>
-                    <ul className={styles.HeadNavBar__containerUl}>
-                        <li>
-                            <ButtonIcon
-                                icon={faBars}
-                                handleClick={openSideMenu}
-                            />
-                        </li>
-                        <li className={styles.HeadNavBar__logo}>
-                            <Link href="">
-                                <a href="">Ecom</a>
-                            </Link>
-                        </li>
-                        <li className={styles.HeadNavBar__catalog}>
-                            <div className={styles.HeadNavBar__catalogItem}>
-                                <ButtonIcon icon={faStore} />
-                                <p>Catalog</p>
-                            </div>
-                        </li>
-                        <li>
-                            <SearchForm />
-                        </li>
-                        <li className={styles.HeadNavBar__actions}>
-                            <ul className={styles.HeadNavBar__actionsUl}>
-                                <li
-                                    className={
-                                        styles.HeadNavBar__actionsLanguage
-                                    }
-                                >
-                                    <Link href={"/pl"}>PL</Link>
-                                    <Link href={"/ua"}>UA</Link>
-                                </li>
-                                {userEmail === null && (
-                                    <li
-                                        className={
-                                            styles.HeadNavBar__actionsUser
-                                        }
-                                    >
-                                        <ButtonIcon
-                                            icon={faUser}
-                                            handleClick={openSignIn}
-                                        />
-                                    </li>
-                                )}
-                                {userEmail !== null && (
-                                    <>
-                                        <li>
-                                            <ButtonIcon
-                                                handleClick={openCabinet}
-                                                icon={faTableList}
-                                            />
-                                        </li>
-                                        <li>
-                                            <ButtonIcon
-                                                handleClick={openWishlist}
-                                                icon={faHeart}
-                                            />
-                                        </li>
-                                    </>
-                                )}
-
-                                <li className={styles.HeadNavBar__actionsCart}>
+        <div {...rest} className={styles.container}>
+            <nav>
+                <ul className={styles.containerUl}>
+                    <li>
+                        <ButtonIcon icon={faBars} handleClick={openSideMenu} />
+                    </li>
+                    <li className={styles.logo}>
+                        <Link href="">
+                            <a href="">Ecom</a>
+                        </Link>
+                    </li>
+                    <li className={styles.catalog}>
+                        <div
+                            onClick={() => {
+                                router.replace("catalog");
+                            }}
+                            className={styles.catalogItem}
+                        >
+                            <ButtonIcon icon={faStore} />
+                            <p>Catalog</p>
+                        </div>
+                    </li>
+                    <li>
+                        <SearchForm />
+                    </li>
+                    <li className={styles.actions}>
+                        <ul className={styles.actionsUl}>
+                            <li className={styles.actionsLanguage}>
+                                <Link href={"/pl"}>PL</Link>
+                                <Link href={"/ua"}>UA</Link>
+                            </li>
+                            {userEmail === null && (
+                                <li className={styles.actionsUser}>
                                     <ButtonIcon
-                                        icon={faShoppingCart}
-                                        handleClick={routCart}
+                                        icon={faUser}
+                                        handleClick={openSignIn}
                                     />
                                 </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </>
+                            )}
+                            {userEmail !== null && (
+                                <>
+                                    <li>
+                                        <ButtonIcon
+                                            handleClick={openCabinet}
+                                            icon={faTableList}
+                                        />
+                                    </li>
+                                    <li>
+                                        <ButtonIcon
+                                            handleClick={openWishlist}
+                                            icon={faHeart}
+                                        />
+                                    </li>
+                                </>
+                            )}
+
+                            <li className={styles.actionsCart}>
+                                <ButtonIcon
+                                    icon={faShoppingCart}
+                                    handleClick={routCart}
+                                />
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     );
 };
