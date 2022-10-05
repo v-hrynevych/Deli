@@ -1,26 +1,25 @@
-import { FirebaseError } from "firebase/app";
-import { DocumentData } from "firebase/firestore";
-import { collection, getDocs } from "firebase/firestore";
-import { useState, useEffect } from "react";
-import { db } from "../../firebase";
+import {log} from "console";
+import {FirebaseError} from "firebase/app";
+import {DocumentData} from "firebase/firestore";
+import {collection, getDocs} from "firebase/firestore";
+import {useState, useEffect} from "react";
+import {db} from "../../firebase";
 
 export const useCollection = (name: string) => {
-    const [data, setData] = useState<{} | null>(null);
+    const [data, setData] = useState<{}[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<FirebaseError | null>(null);
 
     const collectionName = collection(db, name);
-
     async function getData() {
         try {
             setIsLoading(true);
             const res = await getDocs(collectionName);
+            const resDate: {}[] = [];
             res.forEach((item) => {
-                setData((prevState) => ({
-                    ...prevState,
-                    [item.id]: [item.data()],
-                }));
+                resDate.push(item.data());
             });
+            setData(resDate);
         } catch (err) {
             setError(err as FirebaseError);
         } finally {
@@ -30,5 +29,5 @@ export const useCollection = (name: string) => {
     useEffect(() => {
         getData();
     }, []);
-    return { data, isLoading, error };
+    return {data, isLoading, error};
 };
