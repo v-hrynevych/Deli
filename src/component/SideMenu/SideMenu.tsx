@@ -16,9 +16,6 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import {
     faChevronDown,
-    faCircleQuestion,
-    faCartShopping,
-    faStore,
     faXmark,
     faRightFromBracket,
     faUser,
@@ -98,10 +95,18 @@ export const SideMenu = ({className, ...rest}: SideMenuProps) => {
 
             <ul className={styles.SideMenu__list}>
                 <li className={styles.SideMenu__listCatalog}>
-                    <ButtonNav text="Product catalog" icon={faStore} />
+                    <ButtonNav
+                        href={"product"}
+                        text="Product catalog"
+                        icon={"faStore"}
+                    />
                 </li>
                 <li className={styles.SideMenu__listBasket}>
-                    <ButtonNav text="Basket" icon={faCartShopping} />
+                    <ButtonNav
+                        href="cart"
+                        text="Basket"
+                        icon={"faCartShopping"}
+                    />
                 </li>
             </ul>
 
@@ -123,9 +128,14 @@ export const SideMenu = ({className, ...rest}: SideMenuProps) => {
                 <li className={styles.SideMenu__helpCenter}>
                     <ButtonNav
                         text="Reference center"
-                        icon={faCircleQuestion}
+                        icon={"faCircleQuestion"}
+                        href={"/"}
                     />
-                    <ButtonNav text="Contact us" icon={faTelegram} />
+                    <ButtonNav
+                        href="contact"
+                        text="Contact us"
+                        icon={"faTelegram"}
+                    />
                 </li>
                 <li>
                     <div className={styles.SideMenu__companyInfo}>
@@ -255,9 +265,9 @@ export const SideMenu = ({className, ...rest}: SideMenuProps) => {
                 {userEmail !== null && (
                     <li>
                         <ButtonNav
-                            icon={faRightFromBracket}
+                            icon={"faRightFromBracket"}
                             text="log out of the account"
-                            clickHandler={handleSignOut}
+                            href="/"
                         />
                     </li>
                 )}

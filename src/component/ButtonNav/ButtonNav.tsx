@@ -7,7 +7,7 @@ import Link from "next/link";
 
 interface ButtonNavProps extends HTMLAttributes<HTMLButtonElement> {
     icon: string;
-    text: string| null;
+    text: string | null;
     href: string;
     clickHandler?: React.MouseEventHandler<HTMLButtonElement>;
 }
@@ -16,7 +16,7 @@ export const ButtonNav = ({
     icon = "faCircleExclamation",
     className,
     text,
-    href,
+    href = "/",
     clickHandler,
     ...rest
 }: ButtonNavProps) => {
@@ -31,7 +31,7 @@ export const ButtonNav = ({
                             style={{fontSize: 24}}
                         />
                     </span>
-                    {text}
+                    <p>{text}</p>
                 </button>
             </a>
         </Link>

@@ -2,6 +2,7 @@
     background-color: #221f1f;
     padding: 0.5rem;
     height: 4.375rem;
+    z-index: 100;
     &Ul {
         display: flex;
         flex-direction: row;
@@ -21,23 +22,18 @@
     }
 }
 .catalog {
-    &Item {
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #fff3;
-        border-radius: 4px;
-        transition: all 0.2s ease-in-out;
-        p {
-            margin: 0;
-            font-size: 18px;
-            padding: 0 0.6rem;
-            color: #fff;
-        }
-        &:hover {
-            background-color: #fff6;
-        }
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff3;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+    p {
+        margin: 0;
+        font-size: 18px;
+        padding: 0 0.6rem;
+        color: #fff;
     }
 }
 

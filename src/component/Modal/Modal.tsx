@@ -5,12 +5,14 @@ import styles from "./Modal.module.scss";
 interface ModalProps extends HTMLAttributes<HTMLDivElement> {
     isActive?: boolean;
     variant?: "start" | "center" | "end" | "top";
+    zIndex?: number;
     handleClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 export const Modal = ({
     isActive = true,
     className,
     variant = "center",
+    style,
     handleClick,
     children,
 }: ModalProps) => {

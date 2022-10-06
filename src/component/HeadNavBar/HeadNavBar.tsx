@@ -1,8 +1,8 @@
 import styles from "./HeadNavBar.module.scss";
 
-import { HTMLAttributes } from "react";
-import { SearchForm } from "../index";
-import { ButtonIcon } from "../index";
+import {HTMLAttributes} from "react";
+import {ButtonNav, SearchForm} from "../index";
+import {ButtonIcon} from "../index";
 
 import {
     faStore,
@@ -14,38 +14,23 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
-import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
-import { userValue } from "src/store/userSlice";
-import { useCollection } from "src/hooks";
+import {useRouter} from "next/router";
+import {useSelector} from "react-redux";
+import {userValue} from "src/store/userSlice";
+import {useCollection} from "src/hooks";
 
 interface HeadNavBarProps extends HTMLAttributes<HTMLDivElement> {}
 
-export const HeadNavBar = ({ className, ...rest }: HeadNavBarProps) => {
+export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
     const router = useRouter();
-    const { userEmail } = useSelector(userValue);
+    const {userEmail} = useSelector(userValue);
 
-    const openSideMenu = () => {
-        router.replace("/side-menu");
-    };
-    const openSignIn = () => {
-        router.replace("sign-in");
-    };
-    const openCabinet = () => {
-        router.replace("cabinet");
-    };
-    const openWishlist = () => {
-        router.replace("cabinet/wishlist");
-    };
-    const routCart = () => {
-        router.replace("/cart");
-    };
     return (
         <div {...rest} className={styles.container}>
             <nav>
                 <ul className={styles.containerUl}>
                     <li>
-                        <ButtonIcon icon={faBars} handleClick={openSideMenu} />
+                        <ButtonIcon href="side-menu" icon={"faBars"} />
                     </li>
                     <li className={styles.logo}>
                         <Link href="/">
@@ -53,15 +38,11 @@ export const HeadNavBar = ({ className, ...rest }: HeadNavBarProps) => {
                         </Link>
                     </li>
                     <li className={styles.catalog}>
-                        <div
-                            onClick={() => {
-                                router.replace("catalog");
-                            }}
-                            className={styles.catalogItem}
-                        >
-                            <ButtonIcon icon={faStore} />
-                            <p>Catalog</p>
-                        </div>
+                        <ButtonNav
+                            href="catalog"
+                            icon={"faStore"}
+                            text={"Catalog"}
+                        />
                     </li>
                     <li>
                         <SearchForm />
@@ -75,8 +56,8 @@ export const HeadNavBar = ({ className, ...rest }: HeadNavBarProps) => {
                             {userEmail === null && (
                                 <li className={styles.actionsUser}>
                                     <ButtonIcon
-                                        icon={faUser}
-                                        handleClick={openSignIn}
+                                        icon={"faUser"}
+                                        href={"sign-in"}
                                     />
                                 </li>
                             )}
@@ -84,14 +65,14 @@ export const HeadNavBar = ({ className, ...rest }: HeadNavBarProps) => {
                                 <>
                                     <li>
                                         <ButtonIcon
-                                            handleClick={openCabinet}
-                                            icon={faTableList}
+                                            icon={"faTableList"}
+                                            href={"/cabinet"}
                                         />
                                     </li>
                                     <li>
                                         <ButtonIcon
-                                            handleClick={openWishlist}
-                                            icon={faHeart}
+                                            icon={"faHeart"}
+                                            href=" cabinet/wishlist"
                                         />
                                     </li>
                                 </>
@@ -99,8 +80,8 @@ export const HeadNavBar = ({ className, ...rest }: HeadNavBarProps) => {
 
                             <li className={styles.actionsCart}>
                                 <ButtonIcon
-                                    icon={faShoppingCart}
-                                    handleClick={routCart}
+                                    icon={"faShoppingCart"}
+                                    href="cart"
                                 />
                             </li>
                         </ul>

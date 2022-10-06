@@ -9,7 +9,10 @@ const SideMenuPage = () => {
     };
     return (
         <MainLayout>
-            <Modal handleClick={backHome} variant="start">
+            <Modal
+                handleClick={backHome}
+                variant="start"
+            >
                 <SideMenu />
             </Modal>
         </MainLayout>

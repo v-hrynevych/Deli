@@ -6,6 +6,7 @@ import {Box} from "../Box";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import * as fas from "@fortawesome/free-solid-svg-icons";
+import {ButtonIcon} from "../ButtonIcon";
 
 interface CatalogItemProp {
     itemData: {}[];
@@ -32,12 +33,7 @@ export const CatalogItem = ({
                     ({name, id, icon = "faCircleExclamation", href}: any) => {
                         return (
                             <li key={id}>
-                                <FontAwesomeIcon
-                                    icon={fas[icon as keyof typeof fas]}
-                                />
-                                <Link href={`${href}`}>
-                                    <a href={href}>{name}</a>
-                                </Link>
+                                <ButtonIcon href="/" icon={icon} />
                             </li>
                         );
                     },

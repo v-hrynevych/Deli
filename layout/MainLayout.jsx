@@ -7,7 +7,6 @@ import {useUser} from "src/hooks";
 import {useCollection} from "src/hooks";
 
 import styles from "./MainLayout.module.scss";
-import {useEffect} from "react";
 
 export const MainLayout = ({children}) => {
     const user = useUser();
@@ -15,13 +14,13 @@ export const MainLayout = ({children}) => {
     const {data, isLoading} = useCollection("catalog");
     const titleRout = router.route.split("/").at(-1);
     const titleName = router.route === "/" ? "Ecom" : titleRout;
-
     const isHomePage =
         titleRout === "" ||
         titleRout === "side-menu" ||
         titleRout === "sign-in" ||
         titleRout === "sign-up" ||
         titleRout === "catalog";
+
     return (
         <>
             <Head>
