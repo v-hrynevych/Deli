@@ -8,11 +8,15 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import * as fas from "@fortawesome/free-solid-svg-icons";
 
 interface CatalogItemProp {
-    itemData: [];
+    itemData: {}[];
     isLoading: boolean;
+    variant: "standard" | "modal";
 }
-
-export const CatalogItem = ({isLoading, itemData}: CatalogItemProp) => {
+export const CatalogItem = ({
+    isLoading,
+    itemData,
+    variant = "standard",
+}: CatalogItemProp) => {
     if (isLoading) {
         return (
             <Box>
@@ -20,21 +24,24 @@ export const CatalogItem = ({isLoading, itemData}: CatalogItemProp) => {
             </Box>
         );
     }
-
+    const catalogItemClass = classnames(styles.container, styles[variant]);
     return (
-        <div className={styles.container}>
+        <div className={catalogItemClass}>
             <ul className={styles.item}>
-                {itemData.map(({name, icon, href}) => {
-                    return (
-                        <li>
-                            <FontAwesomeIcon icon={fas[icon]} />
-
-                            <Link key={name} href={`${href}`}>
-                                <a href={href}>{name}</a>
-                            </Link>
-                        </li>
-                    );
-                })}
+                {itemData?.map(
+                    ({name, id, icon = "faCircleExclamation", href}: any) => {
+                        return (
+                            <li key={id}>
+                                <FontAwesomeIcon
+                                    icon={fas[icon as keyof typeof fas]}
+                                />
+                                <Link href={`${href}`}>
+                                    <a href={href}>{name}</a>
+                                </Link>
+                            </li>
+                        );
+                    },
+                )}
             </ul>
         </div>
     );

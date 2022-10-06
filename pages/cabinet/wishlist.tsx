@@ -1,9 +1,6 @@
-import { MainLayout } from "layout";
 
 const Wishlist = () => {
-    return ( <MainLayout>
-        
-    </MainLayout> );
-}
- 
+    return <></>;
+};
+
 export default Wishlist;

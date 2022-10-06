@@ -1,6 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {RootState} from "src/store";
-import { useUser } from "src/hooks";
 
 export interface userState {
     userName: string | null;

@@ -1,30 +1,39 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {IconProp} from "@fortawesome/fontawesome-svg-core";
 import styles from "./ButtonNav.module.scss";
 import classNames from "classnames";
 import {HTMLAttributes} from "react";
-import { IconDefinition } from "@fortawesome/free-brands-svg-icons";
+import {fas} from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 interface ButtonNavProps extends HTMLAttributes<HTMLButtonElement> {
-    icon: IconProp | IconDefinition;
-    text: string;
+    icon: string;
+    text: string| null;
+    href: string;
     clickHandler?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export const ButtonNav = ({
-    icon,
+    icon = "faCircleExclamation",
     className,
     text,
+    href,
     clickHandler,
     ...rest
 }: ButtonNavProps) => {
     const ButtonNavClasses = classNames(styles.ButtonNav, className);
     return (
-        <button className={ButtonNavClasses} onClick={clickHandler}>
-            <span>
-                <FontAwesomeIcon icon={icon} style={{fontSize: 24}} />
-            </span>
-            {text}
-        </button>
+        <Link href={`${href}`}>
+            <a href={href} style={{textDecoration: "none"}}>
+                <button className={ButtonNavClasses} onClick={clickHandler}>
+                    <span>
+                        <FontAwesomeIcon
+                            icon={fas[icon]}
+                            style={{fontSize: 24}}
+                        />
+                    </span>
+                    {text}
+                </button>
+            </a>
+        </Link>
     );
 };

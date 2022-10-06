@@ -12,7 +12,7 @@ const Catalog = () => {
     return (
         <MainLayout>
             <Modal variant="top" handleClick={backHome}>
-                <CatalogItem isLoading={isLoading} itemData={data} />
+                <CatalogItem variant="modal" isLoading={isLoading} itemData={data} />
             </Modal>
         </MainLayout>
     );

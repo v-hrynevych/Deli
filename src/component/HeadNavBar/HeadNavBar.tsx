@@ -48,8 +48,8 @@ export const HeadNavBar = ({ className, ...rest }: HeadNavBarProps) => {
                         <ButtonIcon icon={faBars} handleClick={openSideMenu} />
                     </li>
                     <li className={styles.logo}>
-                        <Link href="">
-                            <a href="">Ecom</a>
+                        <Link href="/">
+                            <a href="/">Ecom</a>
                         </Link>
                     </li>
                     <li className={styles.catalog}>

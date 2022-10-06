@@ -1,10 +1,13 @@
 .container {
     padding: 0.5rem;
-    box-sizing: border-box;
-    border-radius: 4px;
-    background-color: #fff;
-    box-shadow: 0 2px 20px #0003;
-    box-sizing: border-box;
+    &.standard {
+    }
+    &.modal {
+        box-sizing: border-box;
+        border-radius: 4px;
+        background-color: #fff;
+        box-shadow: 0 2px 20px #0003;
+    }
 }
 .item {
     width: 300px;
