@@ -10,12 +10,14 @@ interface ButtonIconProps extends HTMLAttributes<HTMLButtonElement> {
     icon: string;
     handleClick?: () => void;
     href: string;
+    color?: string;
 }
 
 export const ButtonIcon = ({
     className,
     icon,
     href,
+    color,
     handleClick,
     children,
     ...rest
@@ -30,7 +32,7 @@ export const ButtonIcon = ({
                     onClick={handleClick}
                     {...rest}
                 >
-                    <FontAwesomeIcon icon={fas[icon]} />
+                    <FontAwesomeIcon color={color} icon={fas[icon]} />
                 </button>
             </a>
         </Link>

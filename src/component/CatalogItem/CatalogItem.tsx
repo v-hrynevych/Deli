@@ -1,11 +1,7 @@
-import {HTMLAttributes} from "react";
 import classnames from "classnames";
 import styles from "./CatalogItem.module.scss";
 import Link from "next/link";
 import {Box} from "../Box";
-
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import * as fas from "@fortawesome/free-solid-svg-icons";
 import {ButtonIcon} from "../ButtonIcon";
 
 interface CatalogItemProp {
@@ -32,8 +28,17 @@ export const CatalogItem = ({
                 {itemData?.map(
                     ({name, id, icon = "faCircleExclamation", href}: any) => {
                         return (
-                            <li key={id}>
-                                <ButtonIcon href="/" icon={icon} />
+                            <li className={styles.li} key={name}>
+                                <ButtonIcon
+                                    color="#ADB8C8"
+                                    href={href}
+                                    icon={icon}
+                                />
+                                <Link href={"href"}>
+                                    <a href={"href"}>
+                                        <p>{name}</p>
+                                    </a>
+                                </Link>
                             </li>
                         );
                     },

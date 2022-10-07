@@ -10,19 +10,18 @@
     }
 }
 .item {
-    width: 300px;
     list-style: none;
-    display: flex;
-    flex-direction: column;
-    li {
+    .li {
+        display: flex;
+        gap: 1rem;
+        padding-left: 12px;
+        padding-right: 12px;
+        font-size: 14px;
+        align-items: center;
+        line-height: 31px;
         a {
             color: #3e77aa;
-            width: 100%;
-            padding-left: 12px;
-            padding-right: 12px;
-            box-sizing: border-box;
-            font-size: 14px;
-            line-height: 31px;
+            text-decoration: none;
         }
     }
 }
