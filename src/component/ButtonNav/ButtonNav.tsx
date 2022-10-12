@@ -7,7 +7,7 @@ import Link from "next/link";
 
 interface ButtonNavProps extends HTMLAttributes<HTMLButtonElement> {
     icon: string;
-    text: string | null;
+    text?: string | null;
     href: string;
     clickHandler?: React.MouseEventHandler<HTMLButtonElement>;
 }

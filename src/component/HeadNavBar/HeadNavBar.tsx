@@ -4,14 +4,6 @@ import {HTMLAttributes} from "react";
 import {ButtonNav, SearchForm} from "../index";
 import {ButtonIcon} from "../index";
 
-import {
-    faStore,
-    faUser,
-    faShoppingCart,
-    faBars,
-    faTableList,
-    faHeart,
-} from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
 import {useRouter} from "next/router";
@@ -30,7 +22,7 @@ export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
             <nav>
                 <ul className={styles.containerUl}>
                     <li>
-                        <ButtonIcon href="side-menu" icon={"faBars"} />
+                        <ButtonIcon href="/side-menu" icon={"faBars"} />
                     </li>
                     <li className={styles.logo}>
                         <Link href="/">
@@ -39,7 +31,7 @@ export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
                     </li>
                     <li className={styles.catalog}>
                         <ButtonNav
-                            href="catalog"
+                            href="/catalog"
                             icon={"faStore"}
                             text={"Catalog"}
                         />
@@ -66,13 +58,13 @@ export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
                                     <li>
                                         <ButtonIcon
                                             icon={"faTableList"}
-                                            href={"/cabinet"}
+                                            href={"/cabinet/orders"}
                                         />
                                     </li>
                                     <li>
                                         <ButtonIcon
                                             icon={"faHeart"}
-                                            href=" cabinet/wishlist"
+                                            href=" /cabinet/wishlist"
                                         />
                                     </li>
                                 </>

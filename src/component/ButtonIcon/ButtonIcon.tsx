@@ -9,7 +9,7 @@ import Link from "next/link";
 interface ButtonIconProps extends HTMLAttributes<HTMLButtonElement> {
     icon: string;
     handleClick?: () => void;
-    href: string;
+    href?: string;
     color?: string;
 }
 
@@ -17,9 +17,8 @@ export const ButtonIcon = ({
     className,
     icon,
     href,
-    color,
+    color ='#fff',
     handleClick,
-    children,
     ...rest
 }: ButtonIconProps) => {
     const ButtonIconClasses = classNames(styles.buttonIcon, className);

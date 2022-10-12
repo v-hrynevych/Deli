@@ -11,7 +11,7 @@ const Catalog = () => {
     };
     return (
         <MainLayout>
-            <Modal variant="top" handleClick={backHome}>
+            <Modal variant="center" handleClick={backHome}>
                 <CatalogItem
                     variant="modal"
                     isLoading={isLoading}

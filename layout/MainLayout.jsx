@@ -12,15 +12,15 @@ export const MainLayout = ({children}) => {
     const user = useUser();
     const router = useRouter();
     const {data, isLoading} = useCollection("catalog");
-    const titleRout = router.route.split("/").at(-1);
-    const titleName = router.route === "/" ? "Ecom" : titleRout;
-    const isHomePage =
-        titleRout === "" ||
-        titleRout === "side-menu" ||
-        titleRout === "sign-in" ||
-        titleRout === "sign-up" ||
-        titleRout === "catalog";
-
+    const titleRout = router.route.split("/").at(1);
+    const titleName = titleRout === "" ? "Ecom" : titleRout.toUpperCase();
+    const isRenderPage = [
+        "",
+        "side-menu",
+        "sign-in",
+        "sign-up",
+        "catalog",
+    ].includes(titleRout);
     return (
         <>
             <Head>
@@ -29,7 +29,7 @@ export const MainLayout = ({children}) => {
             </Head>
             <HeadNavBar />
 
-            {isHomePage && (
+            {isRenderPage && (
                 <div className={styles.container}>
                     <div className={styles.sideBar}>
                         <CatalogItem

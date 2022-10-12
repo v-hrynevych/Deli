@@ -1,13 +1,32 @@
 import {MainLayout} from "layout";
+import {UserInfo} from "src/component";
 import {ButtonNav} from "src/component";
 import styles from "styles/Cabinet.module.scss";
 
 import {useSelector} from "react-redux";
 import {cabinetValue} from "src/store/cabinetSlice";
 import {userValue} from "src/store/userSlice";
+import {useRouter} from "next/router";
+import { AddProduct } from "src/component";
+
 const Cabinet = () => {
     const {cabinetList} = useSelector(cabinetValue);
     const {userEmail, userName} = useSelector(userValue);
+    const router = useRouter();
+    const rout = router.asPath.split("/").at(-1);
+
+    const cabinetRouting = (rout?: string) => {
+        switch (rout) {
+            case "personal-information":
+                return <UserInfo />;
+            case "orders":
+            // return <Order />;
+            case "add-product":
+                return <AddProduct />;
+            default:
+                break;
+        }
+    };
 
     return (
         <MainLayout>
@@ -15,7 +34,7 @@ const Cabinet = () => {
                 <nav className={styles.sideMenu}>
                     <div className={styles.user}>
                         <ButtonNav
-                            href="cabinet/personal-information"
+                            href="personal-information"
                             icon={"faUser"}
                             text={userEmail}
                         />
@@ -24,17 +43,18 @@ const Cabinet = () => {
                         {Object.values(cabinetList).map(
                             ({name, icon, href}) => {
                                 return (
-                                    <ButtonNav key={name}
+                                    <ButtonNav
+                                        key={name}
                                         icon={icon}
                                         text={name}
                                         href={href}
-                                    ></ButtonNav>
+                                    />
                                 );
                             },
                         )}
                     </div>
                 </nav>
-                <div className={styles.content}></div>
+                <div className={styles.content}>{cabinetRouting(rout)}</div>
             </div>
         </MainLayout>
     );

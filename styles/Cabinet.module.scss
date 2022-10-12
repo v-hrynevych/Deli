@@ -1,7 +1,9 @@
 .container {
     display: flex;
-    justify-content: center;
     padding: 0 2rem;
+    margin: 0 5rem;
+    max-width: 100rem;
+    width: 100%;
     .sideMenu {
         border-right: 1px solid #e9e9e9;
         border-bottom: 1px solid #e9e9e9;
@@ -17,5 +19,9 @@
         .navItem {
             padding: 4px 8px;
         }
+    }
+    .content {
+        padding: 1.5rem 3.5rem;
+        width: 100%;
     }
 }

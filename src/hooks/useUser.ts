@@ -2,13 +2,12 @@ import {useState} from "react";
 import {onAuthStateChanged, User} from "firebase/auth";
 
 import {auth} from "../../firebase";
-import {useDispatch} from "react-redux";
-import {setActiveUser} from "src/store/userSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {setActiveUser, userValue} from "src/store/userSlice";
 
 export const useUser = () => {
     const dispatch = useDispatch();
-    const [user, setUser] = useState<null | User>(null);
-
+    const user = useSelector(userValue);
     onAuthStateChanged(auth, (user) => {
         if (user !== null) {
             dispatch(
@@ -17,7 +16,6 @@ export const useUser = () => {
                     userEmail: user.email,
                 }),
             );
-            setUser(user);
         }
         if (user === null) {
             dispatch(
@@ -26,7 +24,6 @@ export const useUser = () => {
                     userEmail: null,
                 }),
             );
-            setUser(null);
         }
     });
     return user;

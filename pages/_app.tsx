@@ -5,7 +5,6 @@ config.autoAddCss = false;
 import type {AppProps} from "next/app";
 import {store} from "src/store";
 import {Provider} from "react-redux";
-import { useUser } from "src/hooks";
 
 function MyApp({Component, pageProps}: AppProps) {
     return (

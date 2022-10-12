@@ -1,14 +1,30 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {RootState} from "src/store";
 
-export interface userState {
+interface PersonalData {
+    surname: string | undefined;
+    birthday: string | undefined;
+    sex: string | undefined;
+    language: string | undefined;
+    tel: string | undefined;
+}
+
+interface userState {
     userName: string | null;
     userEmail: string | null;
+    personalData: PersonalData | null;
 }
 
 const initialState: userState = {
     userName: null,
     userEmail: null,
+    personalData: {
+        surname: undefined,
+        birthday: undefined,
+        sex: undefined,
+        language: undefined,
+        tel: undefined,
+    },
 };
 
 export const userSlice = createSlice({

@@ -1,19 +1,20 @@
 .input {
-    padding: 0.75rem 2rem;
+    padding: 0.75rem 3rem;
     margin: 0;
     font-family: -apple-system, "Source Sans Pro", sans-serif;
-    border: 2px solid #6e7198;
+    border: 2px solid #e9e9e9;
     border-radius: 12px;
     font-size: 1rem;
     outline: none;
 }
 
 .inputWithIcon {
-    padding-left: 4.5rem;
+   
+    
 }
 
 .input::placeholder {
-    color: black;
+    color: #797878;
     transition: color 0.3s;
     font-size: 1rem;
     font-weight: 500;
@@ -25,8 +26,8 @@
 }
 
 .inputWrapper {
-    position: relative;
     display: flex;
+    position: relative;
     flex-direction: column;
     font-size: 1rem;
     font-weight: 500;
@@ -54,11 +55,28 @@
 
 .inputIcon {
     position: absolute;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
     top: 50%;
-    left: 2rem;
-    transform: translate(0, -25%);
+    left: 1rem;
+    transform: translate(0, 20%);
     color: black;
+}
+
+.file {
+    border-radius: 4px;
+    cursor: pointer;
+    background: rgb(242, 244, 245);
+    width: 188px;
+    height: 141px;
+    padding: 0px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    display: flex;
+    gap: 1rem;
+    display: flex;
+    border: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
 }
