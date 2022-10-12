@@ -1,0 +1,27 @@
+.container {
+    padding: 0.5rem;
+    &.standard {
+    }
+    &.modal {
+        box-sizing: border-box;
+        border-radius: 4px;
+        background-color: #fff;
+        box-shadow: 0 2px 20px #0003;
+    }
+}
+.item {
+    list-style: none;
+    .li {
+        display: flex;
+        gap: 1rem;
+        padding-left: 12px;
+        padding-right: 12px;
+        font-size: 14px;
+        align-items: center;
+        line-height: 31px;
+        a {
+            color: #3e77aa;
+            text-decoration: none;
+        }
+    }
+}

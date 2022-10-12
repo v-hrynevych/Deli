@@ -1,0 +1,25 @@
+.container {
+    border: 1px solid #e9e9e9;
+    width: 100%;
+
+    border-radius: 4px;
+    .title {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+    .children {
+        padding: 0 1.5rem 1.5rem;
+    }
+    details[open] {
+        .chevron {
+            transform: rotate(180deg);
+        }
+    }
+    summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem;
+    }
+}
