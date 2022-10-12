@@ -21,6 +21,7 @@ export const SignIn = () => {
                 <InputField
                     type="email"
                     placeholder="Email"
+                    label="Email:"
                     icon={faEnvelope}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -28,6 +29,7 @@ export const SignIn = () => {
                 <InputField
                     type="password"
                     placeholder="Password"
+                    label="Password:"
                     icon={faLock}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}

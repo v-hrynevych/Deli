@@ -3,8 +3,8 @@ import {useRouter} from "next/router";
 import {FirebaseError} from "firebase/app";
 import {signInWithEmailAndPassword, User} from "firebase/auth";
 
-import {useDispatch, useSelector} from "react-redux";
-import {setActiveUser, userValue} from "src/store/userSlice";
+import {useDispatch} from "react-redux";
+import {setActiveUser} from "src/store/userSlice";
 import {auth} from "../../../../firebase";
 
 type SignInFunction = (email: string, password: string) => void;
@@ -19,7 +19,6 @@ export const useSignIn = (args?: UseSignInArgs) => {
     const [user, setUser] = useState<User | null>(null);
 
     const dispatch = useDispatch();
-    const {userName, userEmail} = useSelector(userValue);
 
     const router = useRouter();
     const signIn: SignInFunction = async (email, password) => {

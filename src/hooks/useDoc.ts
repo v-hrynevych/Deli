@@ -1,10 +1,10 @@
-import {db} from "../../firebase";
-import {FirebaseError} from "firebase/app";
-import {doc, setDoc} from "firebase/firestore";
+import { db } from "../../firebase";
+import { FirebaseError } from "firebase/app";
+import { doc, setDoc } from "firebase/firestore";
 
-import {useState} from "react";
+import { useState } from "react";
 interface PostDataProps {
-    data: {};
+    products: {};
 }
 
 export const useDoc = (collection: string, nameDoc: string) => {
@@ -12,15 +12,15 @@ export const useDoc = (collection: string, nameDoc: string) => {
     const [error, setError] = useState<FirebaseError | null>(null);
 
     const collectionName = doc(db, collection, nameDoc);
-    async function PostDoc({data}: PostDataProps) {
+    async function postDoc(product: PostDataProps) {
         try {
             setIsLoading(true);
-            await setDoc(collectionName, data);
+            await setDoc(collectionName, product, { merge: true });
         } catch (err) {
             setError(err as FirebaseError);
         } finally {
             setIsLoading(false);
         }
     }
-    return {PostDoc, isLoading, error};
+    return { postDoc, isLoading, error };
 };

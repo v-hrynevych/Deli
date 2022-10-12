@@ -32,8 +32,15 @@
             width: 100%;
         }
     }
-    .city,
-    .contact {
-        width: 33%;
+    .infoItem {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .info {
+            flex-basis: 40%;
+        }
+        .price {
+            flex-basis: 20%;
+        }
     }
 }

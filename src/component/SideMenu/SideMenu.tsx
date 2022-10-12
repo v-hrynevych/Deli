@@ -1,11 +1,11 @@
 import styles from "./SideMenu.module.scss";
 import classNames from "classnames";
-import {HTMLAttributes} from "react";
-import {useState} from "react";
+import { HTMLAttributes } from "react";
+import { useState } from "react";
 
 import Link from "next/link";
 
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faInstagram,
     faFacebook,
@@ -14,46 +14,34 @@ import {
     faViber,
     faTelegram,
 } from "@fortawesome/free-brands-svg-icons";
-import {
-    faChevronDown,
-    faXmark,
-    faRightFromBracket,
-    faUser,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faUser } from "@fortawesome/free-solid-svg-icons";
 
 import Image from "next/image";
 import GoogleApp from "../../svg/Google_Play.svg";
 import AppleApp from "../../svg/App_StoreSVG.svg";
-import {ButtonNav} from "../ButtonNav";
-import {ButtonIcon} from "../ButtonIcon";
-import {useRouter} from "next/router";
+import { ButtonNav } from "../ButtonNav";
+import { ButtonIcon } from "../ButtonIcon";
+import { useRouter } from "next/router";
 
-import {auth} from "../../../firebase";
-import {signOut} from "firebase/auth";
-import {useSelector} from "react-redux";
-import {userValue} from "src/store/userSlice";
-import {useUser} from "src/hooks";
+import { useSelector } from "react-redux";
+import { userValue } from "src/store/userSlice";
+import { useSignOut } from "src/views/Authentication/hooks";
 
 interface SideMenuProps extends HTMLAttributes<HTMLDivElement> {}
 
-export const SideMenu = ({className, ...rest}: SideMenuProps) => {
-    const SideMenuClasses = classNames(styles.SideMenu, className);
+export const SideMenu = ({ className, ...rest }: SideMenuProps) => {
+    const { signOutUser } = useSignOut();
+
     const [IsServices, setIsServices] = useState(false);
     const [IsPartners, setIsPartners] = useState(false);
-    const {userName, userEmail} = useSelector(userValue);
+    const { userName, userEmail } = useSelector(userValue);
     const router = useRouter();
-    const backHome = () => {
-        router.replace("/");
-    };
-    const handleSignOut = async () => {
-        await signOut(auth);
-        backHome();
-    };
+    const SideMenuClasses = classNames(styles.SideMenu, className);
     return (
         <div className={SideMenuClasses} {...rest}>
             <div className={styles.logo}>
                 <p>Ecom</p>
-                <ButtonIcon icon={faXmark} handleClick={backHome} />
+                <ButtonIcon icon={"faXmark"} href="/" />
             </div>
             <div className={styles.auth}>
                 {userEmail ? (
@@ -61,7 +49,7 @@ export const SideMenu = ({className, ...rest}: SideMenuProps) => {
                         <div className={styles.avatar}>
                             <FontAwesomeIcon
                                 icon={faUser}
-                                style={{fontSize: 24, color: "#fff"}}
+                                style={{ fontSize: 24, color: "#fff" }}
                             />
                         </div>
                         <div className={styles.userInfo}>
@@ -74,7 +62,7 @@ export const SideMenu = ({className, ...rest}: SideMenuProps) => {
                         <div className={styles.avatar}>
                             <FontAwesomeIcon
                                 icon={faUser}
-                                style={{fontSize: 24, color: "#fff"}}
+                                style={{ fontSize: 24, color: "#fff" }}
                             />
                         </div>
                         <div className={styles.buttons}>
@@ -237,27 +225,27 @@ export const SideMenu = ({className, ...rest}: SideMenuProps) => {
                         <div className={styles.SideMenu__socialNetworksItem}>
                             <FontAwesomeIcon
                                 icon={faFacebook}
-                                style={{fontSize: 25, color: "#506098"}}
+                                style={{ fontSize: 25, color: "#506098" }}
                             />
                             <FontAwesomeIcon
                                 icon={faTwitter}
-                                style={{fontSize: 25, color: "#76c9fd"}}
+                                style={{ fontSize: 25, color: "#76c9fd" }}
                             />
                             <FontAwesomeIcon
                                 icon={faYoutube}
-                                style={{fontSize: 25, color: "#e90000"}}
+                                style={{ fontSize: 25, color: "#e90000" }}
                             />
                             <FontAwesomeIcon
                                 icon={faInstagram}
-                                style={{fontSize: 25, color: "#7d3daf"}}
+                                style={{ fontSize: 25, color: "#7d3daf" }}
                             />
                             <FontAwesomeIcon
                                 icon={faViber}
-                                style={{fontSize: 25, color: "#7d3daf"}}
+                                style={{ fontSize: 25, color: "#7d3daf" }}
                             />
                             <FontAwesomeIcon
                                 icon={faTelegram}
-                                style={{fontSize: 25, color: "#08c"}}
+                                style={{ fontSize: 25, color: "#08c" }}
                             />
                         </div>
                     </div>
@@ -268,6 +256,7 @@ export const SideMenu = ({className, ...rest}: SideMenuProps) => {
                             icon={"faRightFromBracket"}
                             text="log out of the account"
                             href="/"
+                            clickHandler={signOutUser}
                         />
                     </li>
                 )}

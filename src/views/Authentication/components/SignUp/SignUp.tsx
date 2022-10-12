@@ -27,6 +27,7 @@ export const SignUp = () => {
             <>
                 <InputField
                     placeholder="Name"
+                    label="Name:"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     icon={faUser}
@@ -34,6 +35,7 @@ export const SignUp = () => {
                 />
                 <InputField
                     placeholder="Email"
+                    label="Email:"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     icon={faEnvelope}
@@ -42,12 +44,14 @@ export const SignUp = () => {
                 <InputField
                     placeholder="Phone number"
                     value={phone}
+                    label='Tel:'
                     onChange={(e) => setPhone(e.target.value)}
                     icon={faPhone}
                     type=""
                 />
                 <InputField
                     placeholder="Password"
+                    label="Password:"
                     value={password}
                     icon={faLock}
                     onChange={(e) => setPassword(e.target.value)}

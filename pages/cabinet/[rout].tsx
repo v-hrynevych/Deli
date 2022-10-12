@@ -19,7 +19,7 @@ const Cabinet = () => {
         switch (rout) {
             case "personal-information":
                 return <UserInfo />;
-            case "orders":
+            // case "orders":
             // return <Order />;
             case "add-product":
                 return <AddProduct />;
