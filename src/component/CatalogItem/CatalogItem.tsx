@@ -5,8 +5,8 @@ import {Box} from "../Box";
 import {ButtonIcon} from "../ButtonIcon";
 
 interface CatalogItemProp {
-    itemData: {}[];
-    isLoading: boolean;
+    itemData: Array<{}> | null;
+    isLoading?: boolean;
     variant: "standard" | "modal";
 }
 export const CatalogItem = ({

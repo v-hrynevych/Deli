@@ -1,5 +1,5 @@
-import { FormEventHandler, useState } from "react";
-import { Button, InputField } from "src/component";
+import {FormEventHandler, useState} from "react";
+import {Button, InputField} from "src/component";
 import {
     faCity,
     faEnvelope,
@@ -8,16 +8,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./AddProduct.module.scss";
-import { useStorage } from "src/hooks/useStorage";
-import { useSelector } from "react-redux";
-import { userValue } from "src/store/userSlice";
-import { useDoc } from "src/hooks";
-import { Timestamp } from "firebase/firestore";
+import {useStorage} from "src/hooks/useStorage";
+import {useSelector} from "react-redux";
+import {userValue} from "src/store/userSlice";
+import {useDoc} from "src/hooks";
+import {Timestamp} from "firebase/firestore";
 
 export const AddProduct = () => {
-    const { userId } = useSelector(userValue);
-    const { postFiles } = useStorage();
-    const { postDoc } = useDoc("user", `${userId}`);
+    const {userId} = useSelector(userValue);
+    const {postFiles} = useStorage();
+    const {postDoc} = useDoc("user", `${userId}`);
     const [title, setTitle] = useState("");
     const [NamePhoto, setNamePhoto] = useState(["", "", "", "", "", ""]);
     const [textArea, setTextArea] = useState("");
@@ -25,7 +25,7 @@ export const AddProduct = () => {
     const [email, setEmail] = useState("");
     const [tel, setTel] = useState("");
     const [price, setPrice] = useState("");
-    const [photoFiles, setPhotoFiles] = useState<any>([
+    const [photoFiles, setPhotoFiles] = useState<Array<File | null>>([
         null,
         null,
         null,
@@ -45,14 +45,14 @@ export const AddProduct = () => {
         },
     };
     const onChangePhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { id, files } = event.target;
+        const {id, files} = event.target;
         const numId = parseInt(id);
         const filePhoto = files![0];
 
         setNamePhoto((prevState) => [
             ...prevState.fill(filePhoto?.name, numId, numId + 1),
         ]);
-        setPhotoFiles((prevState: File[]) => [
+        setPhotoFiles((prevState) => [
             ...prevState.fill(filePhoto, numId, numId + 1),
         ]);
     };
@@ -61,15 +61,28 @@ export const AddProduct = () => {
         e.preventDefault();
 
         if (userId) {
-            // postFiles(photoFiles, userId, `/products/${title}`);
+            postFiles({
+                listFiles: photoFiles,
+                user: userId,
+                nameFolder: `/products/${title}`,
+            });
             postDoc({
                 products: productObj,
             });
+            // setTitle('')
+            // setCity('')
+            // setEmail('')
+            // setPrice('')
+            // setNamePhoto(NamePhoto.fill(''))
+            // setPhotoFiles(photoFiles.fill(null))
+            // setTextArea('')
+            // setTel('')
         }
     };
 
     return (
         <form onSubmit={onSubmit} className={styles.form}>
+            
             <h2>Add product</h2>
             <div className={styles.title}>
                 <InputField

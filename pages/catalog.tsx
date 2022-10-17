@@ -1,22 +1,20 @@
 import {MainLayout} from "layout";
 import {CatalogItem, Modal} from "src/component";
 import {useRouter} from "next/router";
-import {useCollection} from "src/hooks";
+import {useSelector} from "react-redux";
+import {catalogValue} from "src/store/catalogSlice";
 
 const Catalog = () => {
     const router = useRouter();
-    const {data, isLoading} = useCollection("catalog");
-    const backHome = () => {
-        router.replace("/");
+    const {catalog} = useSelector(catalogValue);
+
+    const back = () => {
+        router.back();
     };
     return (
         <MainLayout>
-            <Modal variant="center" handleClick={backHome}>
-                <CatalogItem
-                    variant="modal"
-                    isLoading={isLoading}
-                    itemData={data}
-                />
+            <Modal variant="center" handleClick={back}>
+                <CatalogItem variant="modal" itemData={catalog} />
             </Modal>
         </MainLayout>
     );

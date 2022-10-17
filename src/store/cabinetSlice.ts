@@ -15,7 +15,7 @@ interface CabinetState {
 
 const initialState: CabinetState = {
     cabinetList: {
-        MyOrders: {name: "My Orders", icon: "faTableList", href: "orders"},
+        MyOrders: {name: "My Products", icon: "faTableList", href: "products"},
         WithList: {
             name: "A wish list",
             icon: "faHeart",

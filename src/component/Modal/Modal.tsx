@@ -12,7 +12,6 @@ export const Modal = ({
     isActive = true,
     className,
     variant = "center",
-    style,
     handleClick,
     children,
 }: ModalProps) => {

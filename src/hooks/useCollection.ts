@@ -1,12 +1,11 @@
-import {log} from "console";
 import {FirebaseError} from "firebase/app";
-import {DocumentData} from "firebase/firestore";
 import {collection, getDocs} from "firebase/firestore";
-import {useState, useEffect} from "react";
+import {useState, useLayoutEffect} from "react";
 import {db} from "../../firebase";
 
-export const useCollection = (name: string) => {
-    const [data, setData] = useState<{}[]>([]);
+type Data = Array<{}> | null;
+export const useCollection = (name: string, userId: string | null) => {
+    const [data, setData] = useState<Data>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<FirebaseError | null>(null);
 
@@ -15,9 +14,11 @@ export const useCollection = (name: string) => {
         try {
             setIsLoading(true);
             const res = await getDocs(collectionName);
-            const resDate: {}[] = [];
+            const resDate: Data = [];
             res.forEach((item) => {
-                resDate.push(item.data());
+                if (item.id === userId) {
+                    resDate.push(item.data());
+                }
             });
             setData(resDate);
         } catch (err) {
@@ -26,7 +27,7 @@ export const useCollection = (name: string) => {
             setIsLoading(false);
         }
     }
-    useEffect(() => {
+    useLayoutEffect(() => {
         getData();
     }, []);
     return {data, isLoading, error};

@@ -4,23 +4,19 @@ import {CatalogItem} from "src/component";
 import Head from "next/head";
 import {useRouter} from "next/router";
 import {useUser} from "src/hooks";
-import {useCollection} from "src/hooks";
 
 import styles from "./MainLayout.module.scss";
+import {useSelector} from "react-redux";
+import {catalogValue} from "src/store/catalogSlice";
 
 export const MainLayout = ({children}) => {
     const user = useUser();
+    const {catalog} = useSelector(catalogValue);
+
     const router = useRouter();
-    const {data, isLoading} = useCollection("catalog");
     const titleRout = router.route.split("/").at(1);
     const titleName = titleRout === "" ? "Ecom" : titleRout.toUpperCase();
-    const isRenderPage = [
-        "",
-        "side-menu",
-        "sign-in",
-        "sign-up",
-        "catalog",
-    ].includes(titleRout);
+    const isSidebar = ["", "catalog", "side-menu"].includes(titleRout);
     return (
         <>
             <Head>
@@ -28,20 +24,14 @@ export const MainLayout = ({children}) => {
                 <meta name="" content="" />
             </Head>
             <HeadNavBar />
-
-            {isRenderPage && (
-                <div className={styles.container}>
+            <div className={styles.container}>
+                {isSidebar && (
                     <div className={styles.sideBar}>
-                        <CatalogItem
-                            variant="standard"
-                            isLoading={isLoading}
-                            itemData={data}
-                        />
+                        <CatalogItem variant="standard" itemData={catalog} />
                     </div>
-                    <div className={styles.content}></div>
-                </div>
-            )}
-            {children}
+                )}
+                <div className={styles.content}>{children}</div>
+            </div>
         </>
-    );
+    )
 };

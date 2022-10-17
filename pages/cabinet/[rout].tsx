@@ -8,19 +8,21 @@ import {cabinetValue} from "src/store/cabinetSlice";
 import {userValue} from "src/store/userSlice";
 import {useRouter} from "next/router";
 import { AddProduct } from "src/component";
+import { Products } from "src/component/Cabinet";
 
 const Cabinet = () => {
     const {cabinetList} = useSelector(cabinetValue);
     const {userEmail, userName} = useSelector(userValue);
     const router = useRouter();
-    const rout = router.asPath.split("/").at(-1);
+    const rout = router.asPath.split("/").at(2);
+    
 
     const cabinetRouting = (rout?: string) => {
         switch (rout) {
             case "personal-information":
                 return <UserInfo />;
-            // case "orders":
-            // return <Order />;
+            case "products":
+            return <Products />;
             case "add-product":
                 return <AddProduct />;
             default:

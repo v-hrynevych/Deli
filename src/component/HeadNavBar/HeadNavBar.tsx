@@ -58,7 +58,7 @@ export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
                                     <li>
                                         <ButtonIcon
                                             icon={"faTableList"}
-                                            href={"/cabinet/orders"}
+                                            href={"/cabinet/products"}
                                         />
                                     </li>
                                     <li>
