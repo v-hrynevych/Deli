@@ -1,4 +1,4 @@
-import {FormEventHandler, useState} from "react";
+import {FormEventHandler, useEffect, useState} from "react";
 import {Button, InputField} from "src/component";
 import {
     faCity,
@@ -16,7 +16,7 @@ import {Timestamp} from "firebase/firestore";
 
 export const AddProduct = () => {
     const {userId} = useSelector(userValue);
-    const {postFiles} = useStorage();
+    const {postFiles, fileUrlArr, isLoading} = useStorage();
     const {postDoc} = useDoc("user", `${userId}`);
     const [title, setTitle] = useState("");
     const [NamePhoto, setNamePhoto] = useState(["", "", "", "", "", ""]);
@@ -25,14 +25,8 @@ export const AddProduct = () => {
     const [email, setEmail] = useState("");
     const [tel, setTel] = useState("");
     const [price, setPrice] = useState("");
-    const [photoFiles, setPhotoFiles] = useState<Array<File | null>>([
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-    ]);
+    const [photoFiles, setPhotoFiles] = useState<Array<File | null>>([]);
+
     const productObj = {
         [title]: {
             data: Timestamp.fromDate(new Date()),
@@ -42,47 +36,46 @@ export const AddProduct = () => {
             email: email,
             tel: tel,
             price: price,
+            photoUrl: fileUrlArr,
         },
     };
+
     const onChangePhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {id, files} = event.target;
         const numId = parseInt(id);
-        const filePhoto = files![0];
+        const PhotoFile = files![0];
 
         setNamePhoto((prevState) => [
-            ...prevState.fill(filePhoto?.name, numId, numId + 1),
+            ...prevState.fill(PhotoFile?.name, numId, numId + 1),
         ]);
-        setPhotoFiles((prevState) => [
-            ...prevState.fill(filePhoto, numId, numId + 1),
-        ]);
+        setPhotoFiles((prevState) => [...prevState, PhotoFile]);
     };
 
     const onSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-
-        if (userId) {
-            postFiles({
-                listFiles: photoFiles,
-                user: userId,
-                nameFolder: `/products/${title}`,
+        postFiles({
+            listFiles: photoFiles,
+            user: userId,
+        })
+            .then(() => {
+                postDoc({
+                    products: productObj,
+                });
+            })
+            .then(() => {
+                setTitle("");
+                setCity("");
+                setEmail("");
+                setPrice("");
+                setNamePhoto(["", "", "", "", "", ""]);
+                setPhotoFiles([]);
+                setTextArea("");
+                setTel("");
             });
-            postDoc({
-                products: productObj,
-            });
-            // setTitle('')
-            // setCity('')
-            // setEmail('')
-            // setPrice('')
-            // setNamePhoto(NamePhoto.fill(''))
-            // setPhotoFiles(photoFiles.fill(null))
-            // setTextArea('')
-            // setTel('')
-        }
     };
 
     return (
         <form onSubmit={onSubmit} className={styles.form}>
-            
             <h2>Add product</h2>
             <div className={styles.title}>
                 <InputField
@@ -138,7 +131,7 @@ export const AddProduct = () => {
                         <InputField
                             onChange={(e) => setEmail(e.target.value)}
                             type="text"
-                            value={email}
+                            value={email!}
                             label="E-mail address"
                             icon={faEnvelope}
                         />
@@ -164,7 +157,9 @@ export const AddProduct = () => {
             </div>
 
             <div>
-                <Button type="submit">Add product</Button>
+                <Button disabled={false} type="submit">
+                    Add product
+                </Button>
             </div>
         </form>
     );
