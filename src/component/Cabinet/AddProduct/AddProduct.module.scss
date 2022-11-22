@@ -5,6 +5,18 @@
     .title {
         max-width: 700px;
     }
+    .category {
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        select {
+            background: rgb(242, 244, 245);
+            border-radius: 4px;
+            padding: 16px;
+            border: none;
+        }
+    }
     .photo {
         display: flex;
         flex-wrap: wrap;

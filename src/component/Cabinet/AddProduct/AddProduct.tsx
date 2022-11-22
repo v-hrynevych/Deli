@@ -13,11 +13,14 @@ import {useSelector} from "react-redux";
 import {userValue} from "src/store/userSlice";
 import {useDoc} from "src/hooks";
 import {Timestamp} from "firebase/firestore";
+import {catalogValue} from "src/store/catalogSlice";
 
 export const AddProduct = () => {
+    const {catalog} = useSelector(catalogValue);
     const {userId} = useSelector(userValue);
     const {postFiles, fileUrlArr} = useStorage();
-    const {postDoc} = useDoc("user", `${userId}`);
+    const {postDoc} = useDoc("user");
+
     const [title, setTitle] = useState("");
     const [NamePhoto, setNamePhoto] = useState(["", "", "", "", "", ""]);
     const [textArea, setTextArea] = useState("");
@@ -25,7 +28,9 @@ export const AddProduct = () => {
     const [email, setEmail] = useState("");
     const [tel, setTel] = useState("");
     const [price, setPrice] = useState("");
+    const [category, setCategory] = useState("");
     const [photoFiles, setPhotoFiles] = useState<Array<File | null>>([]);
+
     const formRef = useRef<HTMLFormElement>(null);
 
     const productObj = {
@@ -38,18 +43,19 @@ export const AddProduct = () => {
             tel: tel,
             price: price,
             photoUrl: fileUrlArr,
+            userId: userId,
+            category: category,
         },
     };
-    console.log(NamePhoto);
 
     const onChangePhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {id, files} = event.target;
         const photoId = parseInt(id);
         const PhotoFile = files![0];
-        NamePhoto.splice(photoId, 1, PhotoFile.name);
-        // setNamePhoto((prevState) => [
-        //     ...prevState.fill(PhotoFile?.name, numId, numId + 1),
-        // ]);
+        // NamePhoto.splice(photoId, 1, PhotoFile.name);
+        setNamePhoto((prevState) => [
+            ...prevState.fill(PhotoFile?.name, photoId, photoId + 1),
+        ]);
         setPhotoFiles((prevState) => [...prevState, PhotoFile]);
     };
 
@@ -62,6 +68,7 @@ export const AddProduct = () => {
             .then(() => {
                 postDoc({
                     products: productObj,
+                    nameDoc: category,
                 });
             })
             .then(() => {
@@ -74,10 +81,15 @@ export const AddProduct = () => {
                 setPhotoFiles([]);
                 setTextArea("");
                 setTel("");
-                formRef.current?.reset()
+                setCategory("");
+                formRef.current?.reset();
             });
     };
-
+    const handleCategoryChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        setCategory(event.target.value);
+    };
     return (
         <form onSubmit={onSubmit} ref={formRef} className={styles.form}>
             <h2>Add product</h2>
@@ -90,8 +102,26 @@ export const AddProduct = () => {
                     label="Ad Title"
                 />
             </div>
+            <div className={styles.category}>
+                <h3>Category</h3>
+                <div className={styles.select}>
+                    <select
+                        name="category-list"
+                        id="category-list"
+                        onChange={handleCategoryChange}
+                    >
+                        {catalog?.map((item, index) => {
+                            return (
+                                <option key={index} value={item.name}>
+                                    {item.name}
+                                </option>
+                            );
+                        })}
+                    </select>
+                </div>
+            </div>
             <div className={styles.photo}>
-                <h2>Pictures</h2>
+                <h3>Pictures</h3>
                 <div className={styles.item}>
                     {NamePhoto.map((item, index) => {
                         return (

@@ -2,36 +2,50 @@ import {createSlice} from "@reduxjs/toolkit";
 import {useCollection} from "src/hooks";
 import {RootState} from "src/store";
 
-interface catalogState {
-    catalog: Array<{}> | null;
+interface initState {
+    catalog: Array<objInitState> | null;
+}
+interface objInitState {
+    href: string;
+    icon: string;
+    name: string;
 }
 
-const initialState: catalogState = {
+const initialState: initState = {
     catalog: [
         {
             href: "alcohol",
             icon: "faMartiniGlassCitrus",
             name: " Alcoholic drinks and products",
         },
+        {href: "appliances", icon: "faBlenderPhone", name: " Appliances"},
+        {href: "children", icon: "faChildren", name: "Children's products"},
+        {href: "clothes", icon: "faShirt", name: "Clothes, shoes and jewelry"},
         {
-            icon: "faBlenderPhone",
-            name: " Appliances",
+            href: "cottage-garden",
+            icon: "faHouse",
+            name: "Cottage, garden and vegetable garden",
         },
-        {icon: "faChildren", name: "Children's products"},
-        {icon: "faShirt", name: "Clothes, shoes and jewelry"},
-        {icon: "faHouse", name: "Cottage, garden and vegetable garden"},
-        {icon: "faTag", name: "Cycle discounts up to 40%"},
-        {icon: "faBarcode", name: "Goods for business and services"},
-        {icon: "faGamepad", name: "Goods for gamers"},
-        {icon: "faChair", name: "Household products"},
-        {icon: "faLaptop", name: "Laptops and computers"},
-        {icon: "faPaw", name: "Pet supplies"},
-        {icon: "faToilet", name: "Plumbing and repair"},
-        {icon: "faMobileScreenButton", name: "Smartphones, TV and electronics"},
-        {icon: "faDumbbell", name: "Sports and hobbies"},
-        {icon: "faToolbox", name: "Tools and auto products"},
-        {icon: "faNotesMedical", name: "beauty and health"},
-        {icon: "faPaperclip", name: "office, school, books"},
+        {href: "discounts", icon: "faTag", name: "Cycle discounts up to 40%"},
+        {
+            href: "business-services",
+            icon: "faBarcode",
+            name: "Goods for business and services",
+        },
+        {href: "game", icon: "faGamepad", name: "Goods for gamers"},
+        {href: "household", icon: "faChair", name: "Household products"},
+        {href: "computers", icon: "faLaptop", name: "Laptops and computers"},
+        {href: "pet", icon: "faPaw", name: "Pet supplies"},
+        {href: "plumbing", icon: "faToilet", name: "Plumbing and repair"},
+        {
+            href: "Smartphones-electronics",
+            icon: "faMobileScreenButton",
+            name: "Smartphones, TV and electronics",
+        },
+        {href: "sports", icon: "faDumbbell", name: "Sports and hobbies"},
+        {href: "auto", icon: "faToolbox", name: "Tools and auto products"},
+        {href: "beauty", icon: "faNotesMedical", name: "beauty and health"},
+        {href: "office", icon: "faPaperclip", name: "office, school, books"},
     ],
 };
 
