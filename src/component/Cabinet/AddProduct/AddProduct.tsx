@@ -1,4 +1,4 @@
-import {FormEventHandler, useEffect, useState} from "react";
+import {FormEventHandler, useEffect, useRef, useState} from "react";
 import {Button, InputField} from "src/component";
 import {
     faCity,
@@ -16,7 +16,7 @@ import {Timestamp} from "firebase/firestore";
 
 export const AddProduct = () => {
     const {userId} = useSelector(userValue);
-    const {postFiles, fileUrlArr, isLoading} = useStorage();
+    const {postFiles, fileUrlArr} = useStorage();
     const {postDoc} = useDoc("user", `${userId}`);
     const [title, setTitle] = useState("");
     const [NamePhoto, setNamePhoto] = useState(["", "", "", "", "", ""]);
@@ -26,6 +26,7 @@ export const AddProduct = () => {
     const [tel, setTel] = useState("");
     const [price, setPrice] = useState("");
     const [photoFiles, setPhotoFiles] = useState<Array<File | null>>([]);
+    const formRef = useRef<HTMLFormElement>(null);
 
     const productObj = {
         [title]: {
@@ -39,15 +40,16 @@ export const AddProduct = () => {
             photoUrl: fileUrlArr,
         },
     };
+    console.log(NamePhoto);
 
     const onChangePhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {id, files} = event.target;
-        const numId = parseInt(id);
+        const photoId = parseInt(id);
         const PhotoFile = files![0];
-
-        setNamePhoto((prevState) => [
-            ...prevState.fill(PhotoFile?.name, numId, numId + 1),
-        ]);
+        NamePhoto.splice(photoId, 1, PhotoFile.name);
+        // setNamePhoto((prevState) => [
+        //     ...prevState.fill(PhotoFile?.name, numId, numId + 1),
+        // ]);
         setPhotoFiles((prevState) => [...prevState, PhotoFile]);
     };
 
@@ -63,6 +65,7 @@ export const AddProduct = () => {
                 });
             })
             .then(() => {
+                alert("Great");
                 setTitle("");
                 setCity("");
                 setEmail("");
@@ -71,11 +74,12 @@ export const AddProduct = () => {
                 setPhotoFiles([]);
                 setTextArea("");
                 setTel("");
+                formRef.current?.reset()
             });
     };
 
     return (
-        <form onSubmit={onSubmit} className={styles.form}>
+        <form onSubmit={onSubmit} ref={formRef} className={styles.form}>
             <h2>Add product</h2>
             <div className={styles.title}>
                 <InputField
