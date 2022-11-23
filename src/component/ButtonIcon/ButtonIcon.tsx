@@ -17,7 +17,7 @@ export const ButtonIcon = ({
     className,
     icon,
     href,
-    color ='#fff',
+    color = "#fff",
     handleClick,
     ...rest
 }: ButtonIconProps) => {

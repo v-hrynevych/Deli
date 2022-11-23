@@ -28,14 +28,14 @@ export const CatalogItem = ({
                 {itemData?.map(
                     ({name, id, icon = "faCircleExclamation", href}: any) => {
                         return (
-                            <li className={styles.li} key={name}>
+                            <li className={styles.li} key={id}>
                                 <ButtonIcon
                                     color="#ADB8C8"
                                     href={href}
                                     icon={icon}
                                 />
-                                <Link href={"href"}>
-                                    <a href={"href"}>
+                                <Link href={href}>
+                                    <a href={href}>
                                         <p>{name}</p>
                                     </a>
                                 </Link>

@@ -11,3 +11,5 @@ export {CatalogItem} from "./CatalogItem";
 export {UserInfo} from "./Cabinet";
 export {Details} from "./Details";
 export {AddProduct} from "./Cabinet";
+export {ProductCard} from "./ProductCard";
+export {StarRating} from "./StarRating";

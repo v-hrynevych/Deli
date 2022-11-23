@@ -2,7 +2,7 @@ import type {NextPage} from "next";
 import {MainLayout} from "../layout";
 
 const Home: NextPage = () => {
-    return <MainLayout>
+    return <MainLayout isSidebar={true}>
         
     </MainLayout>
 };

@@ -12,7 +12,7 @@ const Catalog = () => {
         router.back();
     };
     return (
-        <MainLayout>
+        <MainLayout isSidebar={true}>
             <Modal variant="center" handleClick={back}>
                 <CatalogItem variant="modal" itemData={catalog} />
             </Modal>
