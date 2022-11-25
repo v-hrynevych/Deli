@@ -35,6 +35,9 @@ const Cabinet = () => {
                 <nav className={styles.sideMenu}>
                     <div className={styles.user}>
                         <ButtonNav
+                            isActive={
+                                rout === "personal-information" ? "active" : ""
+                            }
                             href="personal-information"
                             icon={"faUser"}
                             text={userEmail}
@@ -45,6 +48,7 @@ const Cabinet = () => {
                             ({name, icon, href}) => {
                                 return (
                                     <ButtonNav
+                                        isActive={href === rout ? "active" : ""}
                                         key={name}
                                         icon={icon}
                                         text={name}

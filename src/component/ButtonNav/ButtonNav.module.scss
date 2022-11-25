@@ -25,7 +25,10 @@
         transition: all 0.5s ease-in-out;
     }
     &:hover {
-        background-color: #d0ecdb;
+        background-color: #e6f5ed;
         border-radius: 4px;
+    }
+    &.active {
+        background-color: #00a04633;
     }
 }

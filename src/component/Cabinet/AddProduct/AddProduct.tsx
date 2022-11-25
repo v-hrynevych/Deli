@@ -1,6 +1,7 @@
 import {FormEventHandler, useEffect, useRef, useState} from "react";
 import {Button, InputField} from "src/component";
 import {
+    faArrowUp19,
     faCity,
     faEnvelope,
     faMoneyBill,
@@ -30,6 +31,7 @@ export const AddProduct = () => {
     const [price, setPrice] = useState("");
     const [category, setCategory] = useState("");
     const [photoFiles, setPhotoFiles] = useState<Array<File | null>>([]);
+    const [quantity, setQuantity] = useState("0");
 
     const formRef = useRef<HTMLFormElement>(null);
 
@@ -46,6 +48,7 @@ export const AddProduct = () => {
             photoUrlTitle: fileUrlArr[0],
             userId: userId,
             category: category,
+            quantity: quantity,
         },
     };
 
@@ -175,6 +178,16 @@ export const AddProduct = () => {
                             value={tel}
                             label="Phone number"
                             icon={faPhone}
+                        />
+                    </div>
+                    <div className={styles.quantity}>
+                        <h3>Quantity</h3>
+                        <InputField
+                            type={"number"}
+                            icon={faArrowUp19}
+                            value={quantity}
+                            label="Quantity"
+                            onChange={(e) => setQuantity(e.target.value)}
                         />
                     </div>
                 </div>
