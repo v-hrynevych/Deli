@@ -25,7 +25,12 @@ export const ProductCard = ({
     return (
         <div className={styles.container}>
             <div className={styles.icon}>
-                <ButtonIcon className="hover" icon="faHeart" color="#ffa900" />
+                <ButtonIcon
+                    href=""
+                    className="hover"
+                    icon="faHeart"
+                    color="#ffa900"
+                />
             </div>
             <div className={styles.img}>
                 <Image src={src} width={140} height={140} />
@@ -44,7 +49,7 @@ export const ProductCard = ({
             </div>
             <div className={styles.price}>
                 {price}
-                <ButtonIcon icon="faCartShopping" color="#00a046" />
+                <ButtonIcon href="" icon="faCartShopping" color="#00a046" />
             </div>
             <div className={styles.available}>
                 {quantity ? (

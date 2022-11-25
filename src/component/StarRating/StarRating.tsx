@@ -9,8 +9,8 @@ export const StarRating = ({star}: StarProps) => {
 
     return (
         <div className={styles.starRrating}>
-            {rating.map((item) => {
-                return item;
+            {rating.map((item, index) => {
+                return <span key={index}>{item}</span>;
             })}
         </div>
     );

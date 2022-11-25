@@ -9,7 +9,6 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 import {useSelector} from "react-redux";
 import {userValue} from "src/store/userSlice";
-import {useCollection} from "src/hooks";
 
 interface HeadNavBarProps extends HTMLAttributes<HTMLDivElement> {}
 
@@ -22,16 +21,16 @@ export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
             <nav>
                 <ul className={styles.containerUl}>
                     <li>
-                        <ButtonIcon href="/side-menu" icon={"faBars"} />
+                        <ButtonIcon href={"/side-menu"} icon={"faBars"} />
                     </li>
                     <li className={styles.logo}>
-                        <Link href="/">
+                        <Link href={"/"}>
                             <a href="/">Ecom</a>
                         </Link>
                     </li>
                     <li className={styles.catalog}>
                         <ButtonNav
-                            href="/catalog"
+                            href={"/catalog"}
                             icon={"faStore"}
                             text={"Catalog"}
                         />
@@ -49,7 +48,7 @@ export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
                                 <li className={styles.actionsUser}>
                                     <ButtonIcon
                                         icon={"faUser"}
-                                        href={"sign-in"}
+                                        href={"/sign-in"}
                                     />
                                 </li>
                             )}
@@ -64,7 +63,7 @@ export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
                                     <li>
                                         <ButtonIcon
                                             icon={"faHeart"}
-                                            href=" /cabinet/wishlist"
+                                            href={"/cabinet/wishlist"}
                                         />
                                     </li>
                                 </>
@@ -73,7 +72,7 @@ export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
                             <li className={styles.actionsCart}>
                                 <ButtonIcon
                                     icon={"faShoppingCart"}
-                                    href="cart"
+                                    href={"/cart"}
                                 />
                             </li>
                         </ul>

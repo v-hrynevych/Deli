@@ -19,7 +19,7 @@ export const AddProduct = () => {
     const {catalog} = useSelector(catalogValue);
     const {userId} = useSelector(userValue);
     const {postFiles, fileUrlArr} = useStorage();
-    const {postDoc} = useDoc("user");
+    const {postDoc, error} = useDoc("user");
 
     const [title, setTitle] = useState("");
     const [NamePhoto, setNamePhoto] = useState(["", "", "", "", "", ""]);
@@ -43,6 +43,7 @@ export const AddProduct = () => {
             tel: tel,
             price: price,
             photoUrl: fileUrlArr,
+            photoUrlTitle: fileUrlArr[0],
             userId: userId,
             category: category,
         },
@@ -52,13 +53,16 @@ export const AddProduct = () => {
         const {id, files} = event.target;
         const photoId = parseInt(id);
         const PhotoFile = files![0];
-        // NamePhoto.splice(photoId, 1, PhotoFile.name);
         setNamePhoto((prevState) => [
             ...prevState.fill(PhotoFile?.name, photoId, photoId + 1),
         ]);
         setPhotoFiles((prevState) => [...prevState, PhotoFile]);
     };
-
+    const handleCategoryChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        setCategory(event.target.value);
+    };
     const onSubmit: FormEventHandler = (e) => {
         e.preventDefault();
         postFiles({
@@ -85,11 +89,7 @@ export const AddProduct = () => {
                 formRef.current?.reset();
             });
     };
-    const handleCategoryChange = (
-        event: React.ChangeEvent<HTMLSelectElement>,
-    ) => {
-        setCategory(event.target.value);
-    };
+
     return (
         <form onSubmit={onSubmit} ref={formRef} className={styles.form}>
             <h2>Add product</h2>

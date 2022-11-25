@@ -9,17 +9,19 @@ import styles from "./MainLayout.module.scss";
 import {useSelector} from "react-redux";
 import {catalogValue} from "src/store/catalogSlice";
 
-export const MainLayout = ({children,isSidebar}) => {
+export const MainLayout = ({children, isSidebar}) => {
     const user = useUser();
     const {catalog} = useSelector(catalogValue);
 
     const router = useRouter();
-    const titleRout = router.route.split("/").at(1);
-    const titleName = titleRout === "" ? "Ecom" : titleRout.toUpperCase();
+    if (router.asPath === "/") {
+        router.query.name = "Ecom";
+    }
+
     return (
         <>
             <Head>
-                <title>{titleName}</title>
+                <title>{router.query.name}</title>
                 <meta name="" content="" />
             </Head>
             <HeadNavBar />
@@ -32,5 +34,5 @@ export const MainLayout = ({children,isSidebar}) => {
                 <div className={styles.content}>{children}</div>
             </div>
         </>
-    )
+    );
 };

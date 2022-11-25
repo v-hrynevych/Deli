@@ -22,19 +22,22 @@ export const CatalogItem = ({
         );
     }
     const catalogItemClass = classnames(styles.container, styles[variant]);
+
     return (
         <div className={catalogItemClass}>
             <ul className={styles.item}>
                 {itemData?.map(
-                    ({name, id, icon = "faCircleExclamation", href}: any) => {
+                    ({name, icon = "faCircleExclamation", href}: any) => {
                         return (
-                            <li className={styles.li} key={id}>
+                            <li className={styles.li} key={name}>
                                 <ButtonIcon
                                     color="#ADB8C8"
                                     href={href}
                                     icon={icon}
                                 />
-                                <Link href={href}>
+                                <Link
+                                    href={{pathname: href, query: {name: name}}}
+                                >
                                     <a href={href}>
                                         <p>{name}</p>
                                     </a>
