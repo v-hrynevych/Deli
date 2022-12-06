@@ -1,25 +1,40 @@
 import {useEffect} from "react";
 import {useSelector} from "react-redux";
-import {useCollection} from "src/hooks";
+import {ProductCard} from "src/component";
+import {useQueryFilter} from "src/hooks";
 
-import {useStorage} from "src/hooks/useStorage";
 import {userValue} from "src/store/userSlice";
 
 export const Products = () => {
     const {userId} = useSelector(userValue);
-    const {data} = useCollection("user", userId,);
-    const {getFiles, files} = useStorage();
+    const {queryFilter, data} = useQueryFilter("products");
+    console.log(data);
 
-    // getFiles(userId,)
+    useEffect(() => {
+        queryFilter({
+            filterField: "userId",
+            value: userId,
+        });
+    }, []);
 
     return (
         <>
             {data &&
-                data.map((item) => {
-                    
-                    
-                    return <div></div>;
-                })}
+                data.map((item: any) => (
+                    <ProductCard
+                        isCart={false}
+                        productId={item.id}
+                        href={item.href}
+                        key={item.id}
+                        src={item.photoUrl[0]}
+                        title={item.name}
+                        stars={item.stars}
+                        price={item.price}
+                        oldPrice={item.oldPrice}
+                        quantity={item.quantity}
+                        quantityComments={item.quantityComments}
+                    />
+                ))}
         </>
     );
 };

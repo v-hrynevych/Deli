@@ -29,6 +29,7 @@ export const ButtonNav = ({
 }: ButtonNavProps) => {
     const ButtonNavClasses = classNames(styles.ButtonNav, styles[isActive]);
     const isBrands = brands ? (fab[icon] as IconProp) : fas[icon];
+
     return (
         <Link href={href}>
             <a href={href} style={{textDecoration: "none"}}>

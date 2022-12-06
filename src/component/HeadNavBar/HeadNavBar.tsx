@@ -9,12 +9,14 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 import {useSelector} from "react-redux";
 import {userValue} from "src/store/userSlice";
+import { useLocalStorage } from "src/hooks";
 
 interface HeadNavBarProps extends HTMLAttributes<HTMLDivElement> {}
 
 export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
     const router = useRouter();
     const {userEmail} = useSelector(userValue);
+    const [wish] = useLocalStorage<Array<number>>("wish", []);
 
     return (
         <div {...rest} className={styles.container}>
@@ -62,6 +64,7 @@ export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
                                     </li>
                                     <li>
                                         <ButtonIcon
+                                            after={wish}
                                             icon={"faHeart"}
                                             href={"/cabinet/wishlist"}
                                         />

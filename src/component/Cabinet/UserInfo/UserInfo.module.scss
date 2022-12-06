@@ -1,6 +1,7 @@
 .container {
     display: flex;
     flex-direction: column;
+    width: 100%;
     gap: 1rem;
     .list {
         display: flex;
@@ -9,7 +10,13 @@
         flex-wrap: wrap;
 
         li {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
             flex: 0 0 32.3%;
+            input {
+                width: 50%;
+            }
             label {
                 font-size: 12px;
                 color: #797878;
@@ -18,5 +25,8 @@
                 font-size: 14px;
             }
         }
+    }
+    .button {
+        padding-top: 1rem;
     }
 }

@@ -4,19 +4,19 @@ import {doc, DocumentData, getDoc, setDoc} from "firebase/firestore";
 
 import {useState} from "react";
 interface PostDataProps {
-    products: {};
+    documentItem: {};
     nameDoc: string;
 }
 
 export const useDoc = (collection: string) => {
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<FirebaseError | null>(null);
+    const [DocError, setError] = useState<FirebaseError | null>(null);
     const [data, setData] = useState<DocumentData | undefined>(undefined);
-    async function postDoc({products, nameDoc}: PostDataProps) {
+    async function postDoc({documentItem, nameDoc}: PostDataProps) {
         try {
-            const collectionName = doc(db, collection, nameDoc);
             setIsLoading(true);
-            await setDoc(collectionName, products, {merge: true});
+            const collectionName = doc(db, collection, nameDoc);
+            await setDoc(collectionName, documentItem, {merge: true});
         } catch (err) {
             setError(err as FirebaseError);
         } finally {
@@ -39,5 +39,5 @@ export const useDoc = (collection: string) => {
             setIsLoading(false);
         }
     }
-    return {postDoc, data, getDocument, isLoading, error};
+    return {postDoc, data, getDocument, isLoading, DocError};
 };

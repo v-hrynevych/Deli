@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { onAuthStateChanged, User } from "firebase/auth";
+import {useEffect, useState} from "react";
+import {onAuthStateChanged, User} from "firebase/auth";
 
-import { auth } from "../../firebase";
-import { useDispatch, useSelector } from "react-redux";
-import { setActiveUser, userValue } from "src/store/userSlice";
-import { FirebaseError } from "firebase/app";
+import {auth} from "../../firebase";
+import {useDispatch, useSelector} from "react-redux";
+import {setActiveUser, userValue} from "src/store/userSlice";
+import {FirebaseError} from "firebase/app";
 
 export const useUser = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -15,14 +15,14 @@ export const useUser = () => {
     async function authUser() {
         try {
             setIsLoading(true);
-            await onAuthStateChanged(auth, (user) => {
+            onAuthStateChanged(auth, (user) => {
                 if (user) {
                     dispatch(
                         setActiveUser({
                             userName: user.displayName,
                             userEmail: user.email,
                             userId: user.uid,
-                        })
+                        }),
                     );
                 }
             });
@@ -36,5 +36,5 @@ export const useUser = () => {
         authUser();
     }, []);
 
-    return { user, isLoading, error };
+    return {user, isLoading, error};
 };

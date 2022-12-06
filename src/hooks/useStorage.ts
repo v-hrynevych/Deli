@@ -14,7 +14,7 @@ interface getFileProp {
 }
 export const useStorage = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<FirebaseError | null>(null);
+    const [fileError, setError] = useState<FirebaseError | null>(null);
     const [fileUrlArr, setFileUrlArr] = useState<string[]>([]);
 
     async function postFiles({listFiles, user}: PostFileProp) {
@@ -46,5 +46,5 @@ export const useStorage = () => {
         } finally {
         }
     }
-    return {postFiles, getFiles, fileUrlArr, isLoading, error};
+    return {postFiles, getFiles, fileUrlArr, isLoading, fileError};
 };

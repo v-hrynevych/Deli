@@ -8,6 +8,18 @@
     border-radius: 4px;
     border: none;
     background: none;
+    position: relative;
+    span {
+        color: white;
+        position: absolute;
+        width: 1.2rem;
+        height: 1.2rem;
+        text-align: center;
+        background-color: #797878;
+        border-radius: 50%;
+        top: 0;
+        right: 0;
+    }
     svg {
         width: 25px;
         height: 25px;

@@ -38,7 +38,7 @@ const initialState: initState = {
         {href: "pet", icon: "faPaw", name: "Pet supplies"},
         {href: "plumbing", icon: "faToilet", name: "Plumbing and repair"},
         {
-            href: "Smartphones-electronics",
+            href: "smartphones-electronics",
             icon: "faMobileScreenButton",
             name: "Smartphones, TV and electronics",
         },

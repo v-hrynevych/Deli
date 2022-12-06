@@ -9,7 +9,7 @@ const SignInPage = () => {
         router.push("/");
     };
     return (
-        <MainLayout>
+        <MainLayout isSidebar={true}>
             <Modal handleClick={backHome}>
                 <SignIn />
             </Modal>

@@ -1,3 +1,9 @@
-export { useUser } from "./useUser";
-export {useCollection} from "./useCollection"
+export {useUser} from "./useUser";
+export {useCollection} from "./useCollection";
 export {useDoc} from "./useDoc";
+export {useId} from "./useId";
+export {useStorage} from "./useStorage";
+export {useQueryDocLimit} from "./useQueryDocLimit";
+export {useLocalStorage} from "./useLocalStorage";
+export {useQueryFilter} from "./useQueryFilter";
+export {useUpdateDoc} from "./useUpdateDoc";

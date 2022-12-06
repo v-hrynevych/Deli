@@ -1,0 +1,1 @@
+export {WishIcon} from './WishIcon';

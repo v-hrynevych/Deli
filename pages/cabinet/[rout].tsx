@@ -1,5 +1,5 @@
 import {MainLayout} from "layout";
-import {UserInfo} from "src/component";
+import {UserInfo, WishList} from "src/component";
 import {ButtonNav} from "src/component";
 import styles from "styles/Cabinet.module.scss";
 
@@ -12,18 +12,20 @@ import {Products} from "src/component/Cabinet";
 
 const Cabinet = () => {
     const {cabinetList} = useSelector(cabinetValue);
-    const {userEmail, userName} = useSelector(userValue);
+    const {userEmail, userName, userId} = useSelector(userValue);
     const router = useRouter();
     const rout = router.asPath.split("/").at(2);
-
     const cabinetRouting = (rout?: string) => {
         switch (rout) {
             case "personal-information":
-                return <UserInfo />;
+                return <UserInfo userId={userId} />;
             case "products":
                 return <Products />;
             case "add-product":
                 return <AddProduct />;
+            case "wishlist":
+                return <WishList />;
+
             default:
                 break;
         }

@@ -7,8 +7,10 @@
     .sideBar {
     }
     .content {
+        display: flex;
+        flex-wrap: wrap;
         padding-left: 40px;
         padding-top: 40px;
-        width: calc(100% - 300px);
+        width: 100%
     }
 }

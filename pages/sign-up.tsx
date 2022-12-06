@@ -9,7 +9,7 @@ const SignUpPage = () => {
         router.push('/')
     };
     return (
-        <MainLayout>
+        <MainLayout isSidebar={true}>
             <Modal handleClick={backHome}>
                 <SignUp />
             </Modal>

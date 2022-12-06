@@ -1,10 +1,10 @@
 import classNames from "classnames";
-import { ButtonHTMLAttributes } from "react";
+import {ButtonHTMLAttributes} from "react";
 
-import styles from "./Button.module.css";
+import styles from "./Button.module.scss";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: "primary" | "secondary" | "ghost" | "tertiary";
+    variant?: "primary" | "ghost";
 }
 
 export const Button = ({
@@ -16,7 +16,7 @@ export const Button = ({
     const buttonClassnames = classNames(
         styles.button,
         styles[variant],
-        className
+        className,
     );
 
     return (

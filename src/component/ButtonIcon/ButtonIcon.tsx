@@ -11,9 +11,10 @@ import {IconProp} from "@fortawesome/fontawesome-svg-core";
 interface ButtonIconProps extends HTMLAttributes<HTMLButtonElement> {
     icon: string;
     handleClick?: () => void;
-    href: string;
+    href?: string;
     brands?: boolean;
     color?: string;
+    after?: number[] | number;
 }
 
 export const ButtonIcon = ({
@@ -21,23 +22,37 @@ export const ButtonIcon = ({
     icon,
     href,
     brands,
+    after,
     color = "white",
-    handleClick,
     ...rest
 }: ButtonIconProps) => {
-    const ButtonIconClasses = classNames(styles.buttonIcon, className);
+    const ButtonIconClasses = classNames(
+        styles.buttonIcon,
+        styles.after,
+        className,
+    );
     const isBrands = brands ? (fab[icon] as IconProp) : fas[icon];
+
     return (
-        <Link href={href}>
-            <a href={href}>
-                <button
-                    className={ButtonIconClasses}
-                    onClick={handleClick}
-                    {...rest}
-                >
+        <>
+            {href ? (
+                <Link href={href}>
+                    <a href={href}>
+                        <button className={ButtonIconClasses} {...rest}>
+                            <FontAwesomeIcon color={color} icon={isBrands} />
+                            {Array.isArray(after) ? (
+                                <span>{after.length}</span>
+                            ) : (
+                                after && <span>{after}</span>
+                            )}
+                        </button>
+                    </a>
+                </Link>
+            ) : (
+                <button className={ButtonIconClasses} {...rest}>
                     <FontAwesomeIcon color={color} icon={isBrands} />
                 </button>
-            </a>
-        </Link>
+            )}
+        </>
     );
 };

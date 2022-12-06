@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useState} from "react";
 import {
     faEnvelope,
     faLock,
@@ -6,16 +6,16 @@ import {
     faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { InputField } from "src/component";
-import { useSignUp } from "../../hooks";
-import { FormControl } from "../FormControl";
+import {InputField} from "src/component";
+import {useSignUp} from "../../hooks";
+import {FormControl} from "../FormControl";
 
 export const SignUp = () => {
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
-    const { signUp, error } = useSignUp();
+    const {signUp, error} = useSignUp();
     return (
         <FormControl
             title="Registration"
@@ -44,7 +44,7 @@ export const SignUp = () => {
                 <InputField
                     placeholder="Phone number"
                     value={phone}
-                    label='Tel:'
+                    label="Tel:"
                     onChange={(e) => setPhone(e.target.value)}
                     icon={faPhone}
                     type=""
@@ -57,7 +57,7 @@ export const SignUp = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     type="password"
                 />
-                {error && <p style={{ color: "red" }}>{error.code}</p>}
+                {error && <p style={{color: "red"}}>{error.code}</p>}
             </>
         </FormControl>
     );

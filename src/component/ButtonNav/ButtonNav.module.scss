@@ -11,6 +11,7 @@
     font-size: 14px;
     color: #221f1f;
     transition: all 0.2s ease-in-out;
+    
     span {
         display: flex;
         flex-direction: row;
@@ -30,5 +31,11 @@
     }
     &.active {
         background-color: #00a04633;
+    }
+    .wish {
+        background-color: #00a046;
+        color: white;
+        width: 24px;
+        height: 24px;
     }
 }
