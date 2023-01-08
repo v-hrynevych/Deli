@@ -18,6 +18,8 @@ const Search = () => {
             orderLimit: 10,
         });
     }, [searchText]);
+    
+    
     return (
         <MainLayout isSidebar={true}>
             {data &&
@@ -32,7 +34,10 @@ const Search = () => {
                             productId={item.productId}
                             href={item.href}
                             key={item.id}
-                            src={item.photoUrl}
+                            photoUrl={item.photoUrl}
+                            name={item.name}
+                            productOwner={item.productOwner}
+                            tel={item.tel}
                             title={item.title}
                             stars={item.stars}
                             price={item.price}

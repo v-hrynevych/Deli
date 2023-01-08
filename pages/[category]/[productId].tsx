@@ -19,15 +19,13 @@ const Product = () => {
             {dataDoc && (
                 <GoodsInfo
                     productProps={{
-                        stars:dataDoc.stars,
-                        productId:dataDoc.productId,
-                        quantityComments:dataDoc.quantityComments,
+                        stars: dataDoc.stars,
+                        productId: dataDoc.productId,
                         category: dataDoc.category,
                         data: dataDoc.data,
                         description: dataDoc.description,
                         email: dataDoc.email,
                         href: dataDoc.href,
-                        id: dataDoc.id,
                         location: dataDoc.location,
                         name: dataDoc.name,
                         photoUrl: dataDoc.photoUrl,
@@ -35,7 +33,7 @@ const Product = () => {
                         quantity: dataDoc.quantity,
                         tel: dataDoc.tel,
                         title: dataDoc.title,
-                        userId: dataDoc.userId,
+                        productOwner: dataDoc.productOwner,
                     }}
                 />
             )}

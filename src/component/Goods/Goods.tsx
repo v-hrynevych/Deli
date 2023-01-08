@@ -1,30 +1,30 @@
+import {useEffect} from "react";
 import {useCollection} from "src/hooks";
 import {ProductCard} from "../ProductCard";
 import styles from "./Goods.module.scss";
 
 export const Goods = () => {
-    const {data} = useCollection("product");
-
+    const {getData, collectionData} = useCollection();
+    useEffect(() => {
+        getData("product");
+    });
     return (
         <div className={styles.goods}>
-            {data &&
-                Object.values(data).map((item) => {
-                    for (const key in item) {
-                        let goods = item[key];
-                        return (
-                            <ProductCard
-                                href={goods.href}
-                                key={goods.id}
-                                src={goods.photoUrl[0]}
-                                title={goods.name}
-                                stars={goods.stars}
-                                price={goods.price}
-                                oldPrice={goods.oldPrice}
-                                quantity={goods.quantity}
-                                quantityComments={goods.quantityComments}
-                            />
-                        );
-                    }
+            {collectionData &&
+                collectionData.map((item) => {
+                    return (
+                        <ProductCard
+                            href={item.href}
+                            key={item.id}
+                            photoUrl={item.photoUrl[0]}
+                            title={item.name}
+                            stars={item.stars}
+                            price={item.price}
+                            oldPrice={item.oldPrice}
+                            quantity={item.quantity}
+                            quantityComments={item.quantityComments}
+                        />
+                    );
                 })}
         </div>
     );

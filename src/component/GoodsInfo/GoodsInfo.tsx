@@ -7,9 +7,9 @@ import {ButtonIcon} from "../ButtonIcon";
 import {useRouter} from "next/router";
 import Head from "next/head";
 
-import {useDoc, useLocalStorage} from "src/hooks";
+import {useDoc} from "src/hooks";
 import {WishIcon} from "../WishList";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {userValue} from "src/store/userSlice";
 import {ProductCardProp} from "../ProductCard/interfaces";
 import {cartValue, setCart} from "src/store/cartSlice";
@@ -20,6 +20,7 @@ interface GoodsInfoProps {
 }
 export const GoodsInfo = ({productProps}: GoodsInfoProps) => {
     const router = useRouter();
+    const dispatch = useDispatch();
     const {userName, userId} = useSelector(userValue);
     const {postDoc, docError} = useDoc("user");
     const {cartData} = useSelector(cartValue);
@@ -38,7 +39,6 @@ export const GoodsInfo = ({productProps}: GoodsInfoProps) => {
         title,
         productOwner,
         productId,
-        oldPrice,
     } = productProps;
 
     const cardItem = cartData
@@ -48,7 +48,7 @@ export const GoodsInfo = ({productProps}: GoodsInfoProps) => {
                   photoUrl: photoUrl,
                   title: title,
                   price: price,
-                  oldPrice: oldPrice,
+
                   id: productId,
                   quantity: 1,
               },
@@ -58,7 +58,7 @@ export const GoodsInfo = ({productProps}: GoodsInfoProps) => {
                   photoUrl: photoUrl,
                   title: title,
                   price: price,
-                  oldPrice: oldPrice,
+
                   id: productId,
                   quantity: 1,
               },
@@ -86,6 +86,7 @@ export const GoodsInfo = ({productProps}: GoodsInfoProps) => {
         }
         dispatch(setCart(cardItem));
     };
+
     return (
         <>
             <Head>
@@ -150,7 +151,7 @@ export const GoodsInfo = ({productProps}: GoodsInfoProps) => {
 
                                 <p>{price}</p>
                                 <Button
-                                    onClick={() => shopItem}
+                                    onClick={() => shopItem()}
                                     color="#00BC52"
                                 >
                                     <span>Buy</span>
@@ -167,6 +168,3 @@ export const GoodsInfo = ({productProps}: GoodsInfoProps) => {
         </>
     );
 };
-function dispatch(arg0: {payload: any; type: string}) {
-    throw new Error("Function not implemented.");
-}

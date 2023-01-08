@@ -10,8 +10,8 @@ import {useRouter} from "next/router";
 import {AddProduct} from "src/component";
 import {Products} from "src/component/Cabinet";
 import {SignIn} from "src/views/Authentication";
-import {Spinner} from "src/component/Spiner";
 import {Orders} from "src/component/Cabinet/Orders";
+
 
 const Cabinet = () => {
     const {cabinetList} = useSelector(cabinetValue);
@@ -86,7 +86,9 @@ const Cabinet = () => {
                     </div>
                 </div>
             ) : (
-                <Spinner />
+                <div style={{display:'flex' ,justifyContent: 'center',width:'100%'}}>
+                    <SignIn />
+                </div>
             )}
         </MainLayout>
     );

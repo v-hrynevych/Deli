@@ -3,13 +3,13 @@ import {HTMLAttributes} from "react";
 export interface ProductCardProp extends HTMLAttributes<HTMLDivElement> {
     photoUrl: string[];
     title: string;
-    stars: number;
+    stars?: number;
     price: number;
     oldPrice?: number;
     href: string;
     quantity: number;
     productId: number;
-    quantityComments: number;
+    quantityComments?: number;
     isCart?: boolean;
     category: string;
     data?: string;

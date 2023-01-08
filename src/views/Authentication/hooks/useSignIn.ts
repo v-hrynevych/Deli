@@ -30,7 +30,6 @@ export const useSignIn = (args?: UseSignInArgs) => {
                 password,
             );
             setUser(user);
-            console.log(user);
             
             dispatch(
                 setActiveUser({
