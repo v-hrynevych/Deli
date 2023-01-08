@@ -49,17 +49,6 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             <>
                 <label className={labelClasses}>
                     <span>{label}</span>
-                    {type === "tel" && (
-                        <PhoneInput
-                            inputClass={inputFieldClasses}
-                            buttonClass={styles.button}
-                            specialLabel={label}
-                            onChange={function () {
-                                onChange(arguments[2]);
-                            }}
-                            value={value}
-                        />
-                    )}
                     {type === "file" ? (
                         <div className={inputFileClasses}>
                             <FontAwesomeIcon icon={faFile} />
