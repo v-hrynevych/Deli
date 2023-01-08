@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb", "airbnb-typescript", "next/core-web-vitals","some-other-config-you-use",
+  "extends": ["next/core-web-vitals","some-other-config-you-use",
   "prettier","next"],
   "plugins": ["unused-imports"],
   "parserOptions": {
