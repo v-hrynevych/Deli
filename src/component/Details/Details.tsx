@@ -4,12 +4,19 @@ import {HTMLAttributes, ReactNode} from "react";
 
 import styles from "./Details.module.scss";
 interface DetailsProp extends HTMLAttributes<HTMLDivElement> {
-    jsxTitle: string | ReactNode;
+    jsxTitle?: ReactNode;
+    title: string;
     icon?: string;
     iconColor?: string;
 }
 
-export const Details = ({jsxTitle, iconColor, icon, children}: DetailsProp) => {
+export const Details = ({
+    jsxTitle,
+    iconColor,
+    title,
+    icon,
+    children,
+}: DetailsProp) => {
     return (
         <div className={styles.container}>
             <details>
@@ -22,7 +29,7 @@ export const Details = ({jsxTitle, iconColor, icon, children}: DetailsProp) => {
                             />
                         )}
 
-                        {jsxTitle}
+                        {jsxTitle ? jsxTitle : <p>{title}</p>}
                     </div>
                     <div className={styles.chevron}>
                         <FontAwesomeIcon icon={fas.faChevronDown} />
