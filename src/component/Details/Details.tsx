@@ -5,7 +5,7 @@ import {HTMLAttributes, ReactNode} from "react";
 import styles from "./Details.module.scss";
 interface DetailsProp extends HTMLAttributes<HTMLDivElement> {
     jsxTitle?: ReactNode;
-    title: string;
+    title?: string;
     icon?: string;
     iconColor?: string;
 }
