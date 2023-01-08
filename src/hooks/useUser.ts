@@ -11,12 +11,14 @@ export const useUser = () => {
     const [error, setError] = useState<FirebaseError | null>(null);
 
     const dispatch = useDispatch();
+    const {userId} = useSelector(userValue);
     const user = useSelector(userValue);
     async function authUser() {
         try {
             setIsLoading(true);
             onAuthStateChanged(auth, (user) => {
-                if (user) {
+                if (user && userId === null) {
+        
                     dispatch(
                         setActiveUser({
                             userName: user.displayName,

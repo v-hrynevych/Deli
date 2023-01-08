@@ -22,9 +22,9 @@ const initialState: CabinetState = {
             href: "wishlist",
         },
         Products: {
-            name: "Products viewed",
+            name: "Orders",
             icon: "faEye",
-            href: "recently-viewed",
+            href: "orders",
         },
         AddProducts: {
             name: "Add Product",

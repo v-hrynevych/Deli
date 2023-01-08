@@ -7,7 +7,7 @@ interface updateDocProps {
     nameDoc: string;
 }
 export const useUpdateDoc = (collection: string) => {
-    const [isLoading, setIsLoading] = useState(false);
+    const [isUpdateDoc, setIsLoading] = useState(false);
     const [updateError, setError] = useState<FirebaseError | null>(null);
 
     async function updateDocument({updateObj, nameDoc}: updateDocProps) {
@@ -21,5 +21,5 @@ export const useUpdateDoc = (collection: string) => {
             setIsLoading(false);
         }
     }
-    return {updateDocument, isLoading, updateError};
+    return {updateDocument, isUpdateDoc, updateError};
 };

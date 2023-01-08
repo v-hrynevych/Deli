@@ -1,15 +1,16 @@
 .container {
     background-color: #221f1f;
-    padding: 0.5rem;
+    padding: 0.5rem 10rem;
     height: 4.375rem;
     z-index: 100;
+    min-width: 1500px;
     &Ul {
         display: flex;
         flex-direction: row;
-        justify-content: center;
         align-items: center;
         margin: 0;
-        gap: 2rem;
+        gap: 1rem;
+        justify-content: center;
         list-style: none;
     }
 }

@@ -8,7 +8,7 @@ const Product = () => {
     const router = useRouter();
     const productId = router.query.productId;
 
-    const {getDocument, data} = useDoc("products");
+    const {getDocument, dataDoc} = useDoc("products");
 
     useEffect(() => {
         getDocument(`id${productId}`);
@@ -16,24 +16,29 @@ const Product = () => {
 
     return (
         <MainLayout isSidebar={false}>
-            {data &&
-                data.map((item: any) => {
-                    return (
-                        <GoodsInfo
-                            price={item.price}
-                            oldPrice={item.oldPrice}
-                            key={item.id}
-                            id={item.id}
-                            quantity={item.quantity}
-                            title={item.name}
-                            star={item.star}
-                            comment={item.comment}
-                            imgArr={item.photoUrl}
-                            description={item.description}
-                            sellerName={item.userName}
-                        />
-                    );
-                })}
+            {dataDoc && (
+                <GoodsInfo
+                    productProps={{
+                        stars:dataDoc.stars,
+                        productId:dataDoc.productId,
+                        quantityComments:dataDoc.quantityComments,
+                        category: dataDoc.category,
+                        data: dataDoc.data,
+                        description: dataDoc.description,
+                        email: dataDoc.email,
+                        href: dataDoc.href,
+                        id: dataDoc.id,
+                        location: dataDoc.location,
+                        name: dataDoc.name,
+                        photoUrl: dataDoc.photoUrl,
+                        price: dataDoc.price,
+                        quantity: dataDoc.quantity,
+                        tel: dataDoc.tel,
+                        title: dataDoc.title,
+                        userId: dataDoc.userId,
+                    }}
+                />
+            )}
         </MainLayout>
     );
 };

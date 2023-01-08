@@ -1,27 +1,28 @@
 import {FirebaseError} from "firebase/app";
 import {doc, DocumentData, getDoc, updateDoc} from "firebase/firestore";
+import {resolve} from "path";
 import {useEffect, useState} from "react";
 import {db} from "../../firebase";
 
-export const useId = () => {
+export const useId = (nameId: string) => {
     const [id, setId] = useState<number>(0);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<FirebaseError | null>(null);
 
-    async function getId(nameId: string) {
+    async function getId() {
         try {
             setIsLoading(true);
             const docRef = doc(db, "id", nameId);
             const docSnap = await getDoc(docRef);
             const docData = docSnap.data();
-            setId(docData?.id);
+            setId(parseInt(docData?.id));
         } catch (err) {
             setError(err as FirebaseError);
         } finally {
             setIsLoading(false);
         }
     }
-    async function updateId(nameId: string) {
+    async function updateId() {
         try {
             setIsLoading(true);
             const docRef = doc(db, "id", nameId);
@@ -34,5 +35,9 @@ export const useId = () => {
             setIsLoading(false);
         }
     }
-    return {getId,updateId, id, isLoading, error};
+    useEffect(() => {
+        getId();
+    }, []);
+
+    return {getId, updateId, id, isLoading, error};
 };

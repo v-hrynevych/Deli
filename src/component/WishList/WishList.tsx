@@ -1,33 +1,37 @@
-import {useEffect, useState} from "react";
-import {useLocalStorage} from "src/hooks";
-import {useQueryFilter} from "src/hooks/useQueryFilter";
+import {useSelector} from "react-redux";
+import {wishListValue} from "src/store/wishListSlice";
 import {ProductCard} from "../ProductCard";
 
 export const WishList = () => {
-    const [wish, setWish] = useLocalStorage<Array<number>>("wish", []);
-    const {queryFilter, queryError, data} = useQueryFilter("products");
-    useEffect(() => {
-        queryFilter({filterField: "id", value: wish});
-    }, []);
+    const {wishList} = useSelector(wishListValue);
     return (
         <>
-            {data &&
-                data.map((item: any, index: any) => {
-                    return (
-                        <ProductCard
-                            key={item.id}
-                            src={item.photoUrl[0]}
-                            href={item.href}
-                            title={item.title}
-                            price={item.price}
-                            productId={item.id}
-                            stars={item.stars}
-                            oldPrice={item.oldPrice}
-                            quantity={item.quantity}
-                            quantityComments={item.quantityComments}
-                        />
-                    );
-                })}
+            {wishList
+                ? wishList.map((item) => {
+                      return (
+                          <ProductCard
+                              name={item.name}
+                              productOwner={item.productOwner}
+                              category={item.category}
+                              location={item.location}
+                              data={item.data}
+                              description={item.description}
+                              email={item.email}
+                              productId={item.productId}
+                              href={item.href}
+                              key={item.productId}
+                              photoUrl={item.photoUrl}
+                              title={item.title}
+                              stars={item.stars}
+                              price={item.price}
+                              oldPrice={item.oldPrice}
+                              quantity={item.quantity}
+                              quantityComments={item.quantityComments}
+                              tel={item.tel}
+                          />
+                      );
+                  })
+                : null}
         </>
     );
 };

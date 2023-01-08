@@ -8,6 +8,7 @@ const SignInPage = () => {
     const backHome = () => {
         router.push("/");
     };
+    
     return (
         <MainLayout isSidebar={true}>
             <Modal handleClick={backHome}>

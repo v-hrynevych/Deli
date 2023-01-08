@@ -3,7 +3,7 @@
     max-height: 365px;
     border-right: 1px solid #e9e9e9;
     border-bottom: 1px solid #e9e9e9;
-    padding: 16px;
+    padding:  1rem;
     .icon {
         display: flex;
         justify-content: flex-end;
@@ -20,6 +20,8 @@
     }
     .title {
         margin-bottom: 0.5rem;
+        overflow: hidden;
+        max-height: 1.5rem;
         a {
             text-decoration: none;
             color: black;

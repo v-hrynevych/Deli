@@ -7,10 +7,7 @@
     font-size: 1rem;
     outline: none;
 }
-
 .inputWithIcon {
-   
-    
 }
 
 .input::placeholder {
@@ -33,7 +30,6 @@
     font-weight: 500;
     padding-top: 0.25rem;
 }
-
 .inputWrapper span {
     margin-bottom: 0.25rem;
 }
@@ -79,4 +75,24 @@
     align-items: center;
     flex-direction: column;
     position: relative;
+}
+.radio {
+    display: flex;
+    position: relative;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    cursor: pointer;
+    font-size: 14px;
+    padding-bottom: 8px;
+    padding-left: 40px;
+    padding-top: 8px;
+    input[type="radio"] {
+        -ms-transform: scale(1.5); /* IE 9 */
+        -webkit-transform: scale(
+            1.5
+        ); /* Chrome, Safari, Opera */
+        transform: scale(1.5);
+    }
 }

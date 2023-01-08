@@ -3,41 +3,41 @@ import {useEffect, useState} from "react";
 import {Button, Details} from "src/component";
 import {useDoc, useUpdateDoc} from "src/hooks";
 
+import {getAuth, updateProfile} from "firebase/auth";
+
 import styles from "./UserInfo.module.scss";
-interface UserInfoProps {
-    userId: string | null;
-}
+import {userValue} from "src/store/userSlice";
+import {useSelector} from "react-redux";
+
 interface userData extends DocumentData {
     deliveryAddress: string;
-    email: string;
     userName: string;
     surname: string;
     dateOfBirth: string;
     sex: string;
     language: string;
-    userEmail: string;
+    email: string | null;
     phone: string;
 }
-export const UserInfo = ({userId}: UserInfoProps) => {
-    const {getDocument, data} = useDoc("user");
-    const {updateDocument, isLoading, updateError} = useUpdateDoc("user");
-
+export const UserInfo = () => {
+    const {userEmail, userId} = useSelector(userValue);
+    const {getDocument, dataDoc} = useDoc("user");
+    const {updateDocument, updateError} = useUpdateDoc("user");
     const [isDelivery, setIsDelivery] = useState(false);
     const [isContact, setIsContact] = useState(false);
     const [isPersonalData, setIsPersonalData] = useState(false);
 
     const [userData, setUserData] = useState<userData>({
         deliveryAddress: "",
-        email: "",
         userName: "",
         surname: "",
         dateOfBirth: "",
         sex: "",
         language: "",
-        userEmail: "",
+        email: "",
         phone: "",
     });
-    console.log(updateError, userData);
+    const auth = getAuth();
     const editPersonalData = () => {
         setIsPersonalData(!isPersonalData);
         if (isPersonalData === true) {
@@ -50,6 +50,10 @@ export const UserInfo = ({userId}: UserInfoProps) => {
                     sex: userData.sex,
                     language: userData.language,
                 },
+            });
+        } else if (auth.currentUser) {
+            updateProfile(auth.currentUser, {
+                displayName: userData.userName,
             });
         }
     };
@@ -81,17 +85,16 @@ export const UserInfo = ({userId}: UserInfoProps) => {
     }, [userId]);
     useEffect(() => {
         setUserData({
-            deliveryAddress: data?.deliveryAddress,
-            email: data?.email,
-            userName: data?.userName,
-            surname: data?.surname,
-            dateOfBirth: data?.dateOfBirth,
-            sex: data?.sex,
-            language: data?.language,
-            userEmail: data?.userEmail,
-            phone: data?.phone,
+            deliveryAddress: dataDoc?.deliveryAddress,
+            email: dataDoc?.email,
+            userName: dataDoc?.userName,
+            surname: dataDoc?.surname,
+            dateOfBirth: dataDoc?.dateOfBirth,
+            sex: dataDoc?.sex,
+            language: dataDoc?.language,
+            phone: dataDoc?.phone,
         });
-    }, [data]);
+    }, [dataDoc]);
 
     return (
         <div className={styles.container}>

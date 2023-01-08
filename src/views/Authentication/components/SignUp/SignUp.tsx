@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {
     faEnvelope,
     faLock,
@@ -9,13 +9,30 @@ import {
 import {InputField} from "src/component";
 import {useSignUp} from "../../hooks";
 import {FormControl} from "../FormControl";
+import {useSelector} from "react-redux";
+import {userValue} from "src/store/userSlice";
+import {useDoc} from "src/hooks";
 
 export const SignUp = () => {
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
-    const {signUp, error} = useSignUp();
+    const {signUp, userCredential, error} = useSignUp({redirectUrl: "/"});
+    const {postDoc} = useDoc("user");
+
+    useEffect(() => {
+        if (userCredential && error === null) {
+            postDoc({
+                path: `${userCredential.user.uid}`,
+                documentItem: {
+                    userName: name,
+                    email: email,
+                    phone: phone,
+                },
+            });
+        }
+    }, [userCredential]);
     return (
         <FormControl
             title="Registration"

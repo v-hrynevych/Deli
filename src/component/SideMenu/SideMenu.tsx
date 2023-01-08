@@ -20,9 +20,15 @@ import {userValue} from "src/store/userSlice";
 import {useSignOut} from "src/views/Authentication/hooks";
 import Head from "next/head";
 
-interface SideMenuProps extends HTMLAttributes<HTMLDivElement> {}
+interface SideMenuProps extends HTMLAttributes<HTMLDivElement> {
+    setIsSideMenu: (value: boolean | ((prevVar: boolean) => boolean)) => void;
+}
 
-export const SideMenu = ({className, ...rest}: SideMenuProps) => {
+export const SideMenu = ({
+    className,
+    setIsSideMenu,
+    ...rest
+}: SideMenuProps) => {
     const {signOutUser} = useSignOut();
 
     const [IsServices, setIsServices] = useState(false);
@@ -39,7 +45,10 @@ export const SideMenu = ({className, ...rest}: SideMenuProps) => {
             <div className={SideMenuClasses} {...rest}>
                 <div className={styles.logo}>
                     <p>Ecom</p>
-                    <ButtonIcon icon={"faXmark"} href="/" />
+                    <ButtonIcon
+                        icon={"faXmark"}
+                        onClick={() => setIsSideMenu(false)}
+                    />
                 </div>
                 <div className={styles.auth}>
                     {userEmail ? (
@@ -193,10 +202,7 @@ export const SideMenu = ({className, ...rest}: SideMenuProps) => {
                             {IsPartners && (
                                 <ul className={styles.SideMenu__partnersItems}>
                                     <li>
-                                        <Link href={"/sell"}>
-                                           
-                                            Sell on Ecom
-                                        </Link>
+                                        <Link href={"/sell"}>Sell on Ecom</Link>
                                     </li>
                                     <li>
                                         <Link href={"/cooperation"}>

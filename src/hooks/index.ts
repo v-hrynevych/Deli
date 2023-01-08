@@ -7,3 +7,5 @@ export {useQueryDocLimit} from "./useQueryDocLimit";
 export {useLocalStorage} from "./useLocalStorage";
 export {useQueryFilter} from "./useQueryFilter";
 export {useUpdateDoc} from "./useUpdateDoc";
+export {useDeleteDoc} from "./useDeleteDoc";
+export {useWindowSize} from "./useWindowSize";

@@ -26,3 +26,14 @@
         flex-wrap: wrap;
     }
 }
+.auth {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    h3 {
+        color: red;
+    }
+}

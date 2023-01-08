@@ -19,3 +19,4 @@ export {GoodsInfo} from "./GoodsInfo";
 export {ImgSlider} from "./ImgSlider";
 export {WishIcon} from "./WishList";
 export {WishList} from "./WishList";
+export {Orders} from "./Cabinet";

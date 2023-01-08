@@ -6,13 +6,12 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFile} from "@fortawesome/free-solid-svg-icons";
 import {IconDefinition} from "@fortawesome/free-solid-svg-icons";
 
-import styles from "./InputField.module.css";
+import styles from "./InputField.module.scss";
 
 interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
     isInvalid?: boolean;
     errorMessage?: string;
     onChange: ChangeEventHandler<HTMLInputElement>;
-    value?: string;
     label?: string;
     icon?: IconDefinition;
 }
@@ -28,6 +27,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             accept,
             icon,
             hidden,
+            name,
             type,
             id,
             ...rest
@@ -42,10 +42,12 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             [styles.inputWithIcon]: isIconVisible,
         });
         const inputFileClasses = classNames(styles.file, inputFieldClasses);
-
+        const labelClasses = classNames(styles.inputWrapper, {
+            [styles.radio]: type === "radio",
+        });
         return (
             <>
-                <label className={styles.inputWrapper}>
+                <label className={labelClasses}>
                     <span>{label}</span>
                     {type === "tel" && (
                         <PhoneInput
@@ -70,20 +72,30 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
                                 id={id}
                                 ref={ref}
                                 type={type}
-                                name={type}
+                                name={name}
                                 autoComplete="on"
                             />
                         </div>
-                    ) : (
+                    ) : typeof value === "number" ? (
                         <input
-                           
                             value={value}
                             onChange={onChange}
                             className={inputFieldClasses}
                             ref={ref}
                             type={type}
-                            name={type}
-                            autoComplete="on" 
+                            name={name}
+                            autoComplete="on"
+                            {...rest}
+                        />
+                    ) : (
+                        <input
+                            value={value}
+                            onChange={onChange}
+                            className={inputFieldClasses}
+                            ref={ref}
+                            type={type}
+                            name={name}
+                            autoComplete="on"
                             {...rest}
                         />
                     )}

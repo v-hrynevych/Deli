@@ -1,28 +1,51 @@
+import {useDispatch, useSelector} from "react-redux";
+import {toast} from "react-toastify";
 import {ButtonIcon} from "src/component/ButtonIcon";
-import {useLocalStorage} from "src/hooks";
+import {ProductCardProp} from "src/component/ProductCard/interfaces";
+import {useDeleteDoc, useDoc} from "src/hooks";
+import {userValue} from "src/store/userSlice";
+import {
+    addToWishList,
+    removeWishListItem,
+    wishListValue,
+} from "src/store/wishListSlice";
+
 interface WishIconProps {
-    id: number;
+    productProps: ProductCardProp;
 }
-export const WishIcon = ({id}: WishIconProps) => {
-    const [wish, setWish] = useLocalStorage<Array<number>>("wish", []);
+export const WishIcon = ({productProps}: WishIconProps) => {
+    const {productId} = productProps;
+    const {userId} = useSelector(userValue);
+    const {wishList} = useSelector(wishListValue);
+    const {postDoc, docError} = useDoc("user");
+    const {deleteDocument} = useDeleteDoc();
+    const dispatch = useDispatch();
+
     const addWish = () => {
-        if (wish.includes(id)) return wish;
-        setWish([...wish, id]);
+        postDoc({
+            documentItem: productProps,
+            path: `${userId}/wish`,
+            subCollection: `productId${productId}`,
+        })
+            .then(() => {
+                toast.success("Great!");
+                dispatch(addToWishList(productProps));
+            })
+            .catch(() => toast.error(`${docError}`));
     };
 
     const removeWish = () => {
-        const index = wish.indexOf(id);
-        if (index > -1) {
-            setWish(
-                wish.filter((item) => {
-                    return item !== id;
-                }),
-            );
-        }
+        deleteDocument(`user/${userId}/wish/productId${productId}`)
+            .then(() => {
+                toast.info("Remove!");
+            })
+            .catch(() => toast.error(`${docError}`));
+        dispatch(removeWishListItem(productId));
     };
+
     return (
         <>
-            {wish.includes(id) ? (
+            {wishList?.some((prod) => prod.productId === productId) ? (
                 <ButtonIcon
                     title="Remove from the wish list"
                     onClick={removeWish}

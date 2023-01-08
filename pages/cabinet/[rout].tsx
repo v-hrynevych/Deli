@@ -1,5 +1,5 @@
 import {MainLayout} from "layout";
-import {UserInfo, WishList} from "src/component";
+import {Box, UserInfo, WishList} from "src/component";
 import {ButtonNav} from "src/component";
 import styles from "styles/Cabinet.module.scss";
 
@@ -9,60 +9,85 @@ import {userValue} from "src/store/userSlice";
 import {useRouter} from "next/router";
 import {AddProduct} from "src/component";
 import {Products} from "src/component/Cabinet";
+import {SignIn} from "src/views/Authentication";
+import {Spinner} from "src/component/Spiner";
+import {Orders} from "src/component/Cabinet/Orders";
 
 const Cabinet = () => {
     const {cabinetList} = useSelector(cabinetValue);
-    const {userEmail, userName, userId} = useSelector(userValue);
+    const {userEmail, userId} = useSelector(userValue);
     const router = useRouter();
-    const rout = router.asPath.split("/").at(2);
-    const cabinetRouting = (rout?: string) => {
+    const queryName = router.query.name;
+    const queryRout = router.query.rout;
+
+    const cabinetRouting = (rout: string | string[] | undefined) => {
         switch (rout) {
             case "personal-information":
-                return <UserInfo userId={userId} />;
+                return <UserInfo />;
             case "products":
                 return <Products />;
             case "add-product":
                 return <AddProduct />;
             case "wishlist":
                 return <WishList />;
-
+            case "orders":
+                return <Orders />;
             default:
                 break;
         }
     };
-
     return (
         <MainLayout isSidebar={false}>
-            <div className={styles.container}>
-                <nav className={styles.sideMenu}>
-                    <div className={styles.user}>
-                        <ButtonNav
-                            isActive={
-                                rout === "personal-information" ? "active" : ""
-                            }
-                            href="personal-information"
-                            icon={"faUser"}
-                            text={userEmail}
-                        />
+            {userId ? (
+                <div className={styles.container}>
+                    <nav className={styles.sideMenu}>
+                        <div className={styles.user}>
+                            <ButtonNav
+                                isActive={
+                                    queryName === "personal-information"
+                                        ? "active"
+                                        : ""
+                                }
+                                href={{
+                                    pathname: "personal-information",
+                                    query: {name: "personal-information"},
+                                }}
+                                icon={"faUser"}
+                                text={userEmail}
+                            />
+                        </div>
+                        <div className={styles.navItem}>
+                            {Object.values(cabinetList).map(
+                                ({name, icon, href}) => {
+                                    return (
+                                        <ButtonNav
+                                            isActive={
+                                                name === queryName
+                                                    ? "active"
+                                                    : ""
+                                            }
+                                            key={name}
+                                            icon={icon}
+                                            text={name}
+                                            href={{
+                                                pathname: href,
+                                                query: {
+                                                    name: name,
+                                                },
+                                            }}
+                                        />
+                                    );
+                                },
+                            )}
+                        </div>
+                    </nav>
+                    <div className={styles.content}>
+                        {cabinetRouting(queryRout)}
                     </div>
-                    <div className={styles.navItem}>
-                        {Object.values(cabinetList).map(
-                            ({name, icon, href}) => {
-                                return (
-                                    <ButtonNav
-                                        isActive={href === rout ? "active" : ""}
-                                        key={name}
-                                        icon={icon}
-                                        text={name}
-                                        href={href}
-                                    />
-                                );
-                            },
-                        )}
-                    </div>
-                </nav>
-                <div className={styles.content}>{cabinetRouting(rout)}</div>
-            </div>
+                </div>
+            ) : (
+                <Spinner />
+            )}
         </MainLayout>
     );
 };

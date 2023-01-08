@@ -1,33 +1,52 @@
+import {DocumentData} from "firebase/firestore";
 import type {NextPage} from "next";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {ProductCard} from "src/component";
-import {useQueryDocLimit} from "src/hooks";
+import {ProductCardProp} from "src/component/ProductCard/interfaces";
+import {useQueryDocLimit, useWindowSize} from "src/hooks";
 
 import {MainLayout} from "../layout";
 
 const Home: NextPage = () => {
-    const {queryLimit, data} = useQueryDocLimit("products");
+    const {scrollPosition, height} = useWindowSize();
+    const {queryLimit, lastQueryRef, data, isEmpty} =
+        useQueryDocLimit<ProductCardProp>("products");
+    const [homeItem, setHomeItem] = useState<Array<ProductCardProp>>([]);
+    const pageEnd = height - scrollPosition <= 50;
 
     useEffect(() => {
-        queryLimit();
-    }, []);
+        if (pageEnd && isEmpty === false) queryLimit(50, lastQueryRef);
+    }, [pageEnd]);
+    useEffect(() => {
+        if (data) {
+            setHomeItem((prevState) => [...prevState, ...data]);
+        }
+    }, [data]);
 
     return (
         <MainLayout isSidebar={true}>
-            {data &&
-                data.map((item: any) => {
+            {homeItem &&
+                homeItem.map((item) => {
                     return (
                         <ProductCard
-                            productId={item.id}
-                            key={item.id}
+                            name={item.name}
+                            productOwner={item.productOwner}
+                            category={item.category}
+                            location={item.location}
+                            data={item.data}
+                            description={item.description}
+                            email={item.email}
+                            productId={item.productId}
                             href={item.href}
-                            title={item.name}
-                            stars={3}
+                            key={item.productId}
+                            photoUrl={item.photoUrl}
+                            title={item.title}
+                            stars={item.stars}
                             price={item.price}
-                            quantity={item.quantity}
                             oldPrice={item.oldPrice}
-                            src={item.photoUrl[0]}
+                            quantity={item.quantity}
                             quantityComments={item.quantityComments}
+                            tel={item.tel}
                         />
                     );
                 })}

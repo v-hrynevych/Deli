@@ -1,0 +1,93 @@
+.orderWrapper {
+    width: 100%;
+    .missingOrder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        p {
+            font-size: 2rem;
+            color: #797878;
+        }
+    }
+    .detail {
+        padding-top: 16px;
+        padding-left: 24px;
+        display: flex;
+        .summary {
+            width: 35%;
+            padding-right: 24px;
+            .title {
+                font-size: 0.8rem;
+                color: #797878;
+            }
+        }
+        .goods {
+            width: 75%;
+            .header {
+                margin-bottom: 1rem;
+                display: flex;
+                justify-content: space-between;
+            }
+            .payment {
+                li {
+                    display: flex;
+                    justify-content: space-between;
+                    span:first-child {
+                        color: #797878;
+                    }
+                }
+            }
+            .items {
+                ul {
+                    li {
+                        display: flex;
+                        list-style: none;
+                        justify-content: space-between;
+                        padding-bottom: 1rem;
+                        figure {
+                            width: 30%;
+                            display: flex;
+                            align-items: center;
+                            gap: 1rem;
+                        }
+                        dl {
+                            dt{
+                                color: #797878;
+                            }
+                            dd{
+                                text-align: center;
+                            }
+                            width: 70%;
+                            justify-content: space-around;
+                            display: flex;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.orderDetailTitleWrapper {
+    display: flex;
+    gap: 20rem;
+    .status {
+        display: flex;
+
+        flex-direction: column;
+        align-items: flex-start;
+        &Label {
+            color: #797878;
+        }
+    }
+    .price {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        &Label {
+            color: #797878;
+        }
+    }
+    .orderLogo {
+    }
+}

@@ -6,25 +6,85 @@ import {
     getDocs,
     DocumentData,
     where,
+    limit,
 } from "firebase/firestore";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
-interface PostDataProps {
+type QueryOperator =
+    | "<"
+    | "<="
+    | "=="
+    | ">"
+    | ">="
+    | "!="
+    | "array-contains"
+    | "array-contains-any"
+    | "in"
+    | "not-in";
+
+interface QueryFilterProps {
     filterField: string;
     value?: string | string[] | number | number[] | null;
+    queryOperator: QueryOperator;
+    orderLimit?: number;
 }
-export const useQueryFilter = (nameCollection: string) => {
+interface QueryDualFilterProps extends QueryFilterProps {
+    secondFilterField: string;
+    secondQueryOperator: QueryOperator;
+    secondValue: string | string[] | number | number[] | null;
+}
+export const useQueryFilter = <T>(nameCollection: string) => {
     const [isLoading, setIsLoading] = useState(false);
     const [queryError, setError] = useState<FirebaseError | null>(null);
-    const [data, setData] = useState<DocumentData>();
+    const [data, setData] = useState<DocumentData | Array<T>>();
 
-    async function queryFilter({filterField, value}: PostDataProps) {
+    async function queryFilter({
+        filterField,
+        queryOperator,
+        value,
+        orderLimit = 10,
+    }: QueryFilterProps) {
         try {
             const collectionRef = collection(db, nameCollection);
-            const filter = Array.isArray(value)
-                ? where(filterField, "in", value)
-                : where(filterField, "==", value);
-            const queryRef = query(collectionRef, filter);
+            const filter = where(filterField, queryOperator, value);
+            const queryRef = query(collectionRef, filter, limit(orderLimit));
+            const querySnapshot = await getDocs(queryRef);
+            const resDate: DocumentData = [];
+            
+            querySnapshot.forEach((item) => {
+                resDate.push(item.data());
+            });
+            setData(resDate);
+        } catch (error) {
+            setError(error as FirebaseError);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    async function queryDualFilter({
+        filterField,
+        queryOperator,
+        secondQueryOperator,
+        value,
+        orderLimit = 10,
+        secondFilterField,
+        secondValue,
+    }: QueryDualFilterProps) {
+        try {
+            const collectionRef = collection(db, nameCollection);
+            const filter = where(filterField, queryOperator, value);
+            const secondFilter = where(
+                secondFilterField,
+                secondQueryOperator,
+                secondValue,
+            );
+            const queryRef = query(
+                collectionRef,
+                filter,
+                secondFilter,
+                limit(orderLimit),
+            );
             const querySnapshot = await getDocs(queryRef);
             const resDate: DocumentData = [];
             querySnapshot.forEach((item) => {
@@ -37,6 +97,11 @@ export const useQueryFilter = (nameCollection: string) => {
             setIsLoading(false);
         }
     }
-
-    return {queryFilter, data, isLoading, queryError};
+    return {
+        queryFilter,
+        queryDualFilter,
+        data,
+        isLoading,
+        queryError,
+    };
 };

@@ -11,12 +11,15 @@ import {IconProp} from "@fortawesome/fontawesome-svg-core";
 interface ButtonIconProps extends HTMLAttributes<HTMLButtonElement> {
     icon: string;
     handleClick?: () => void;
-    href?: string;
+    href?: string | HrefButton;
     brands?: boolean;
     color?: string;
-    after?: number[] | number;
+    after?: number[] | number | string;
 }
-
+interface HrefButton {
+    pathname?: string | null;
+    query: {[key: string]: string};
+}
 export const ButtonIcon = ({
     className,
     icon,
@@ -37,7 +40,15 @@ export const ButtonIcon = ({
         <>
             {href ? (
                 <Link href={href}>
-                    <a href={href}>
+                    <a
+                        href={
+                            typeof href === "string"
+                                ? href
+                                : href.pathname
+                                ? href.pathname
+                                : "/"
+                        }
+                    >
                         <button className={ButtonIconClasses} {...rest}>
                             <FontAwesomeIcon color={color} icon={isBrands} />
                             {Array.isArray(after) ? (

@@ -5,18 +5,24 @@ import {doc, DocumentData, getDoc, setDoc} from "firebase/firestore";
 import {useState} from "react";
 interface PostDataProps {
     documentItem: {};
-    nameDoc: string;
+    path: string;
+    subCollection?: string;
 }
 
 export const useDoc = (collection: string) => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [DocError, setError] = useState<FirebaseError | null>(null);
-    const [data, setData] = useState<DocumentData | undefined>(undefined);
-    async function postDoc({documentItem, nameDoc}: PostDataProps) {
+    const [isLoadingDoc, setIsLoading] = useState(false);
+    const [isSendDocumentSuccess, setIsSendDocumentSuccess] = useState(false);
+    const [docError, setError] = useState<FirebaseError | null>(null);
+    const [dataDoc, setData] = useState<DocumentData | undefined>(undefined);
+
+    async function postDoc({documentItem, path, subCollection}: PostDataProps) {
         try {
             setIsLoading(true);
-            const collectionName = doc(db, collection, nameDoc);
+            const collectionName = subCollection
+                ? doc(db, collection, path, subCollection)
+                : doc(db, collection, path);
             await setDoc(collectionName, documentItem, {merge: true});
+            setIsSendDocumentSuccess(true);
         } catch (err) {
             setError(err as FirebaseError);
         } finally {
@@ -25,19 +31,23 @@ export const useDoc = (collection: string) => {
     }
     async function getDocument(nameDoc: string) {
         try {
-            const collectionName = doc(db, collection, nameDoc);
             setIsLoading(true);
+            const collectionName = doc(db, collection, nameDoc);
             const document = await getDoc(collectionName);
             const data = document.data();
-
             setData(data);
-
-            return data;
         } catch (err) {
             setError(err as FirebaseError);
         } finally {
             setIsLoading(false);
         }
     }
-    return {postDoc, data, getDocument, isLoading, DocError};
+    return {
+        postDoc,
+        dataDoc,
+        getDocument,
+        isSendDocumentSuccess,
+        isLoadingDoc,
+        docError,
+    };
 };

@@ -7,40 +7,85 @@ import {ButtonIcon} from "../ButtonIcon";
 import {useRouter} from "next/router";
 import Head from "next/head";
 
-import {useLocalStorage} from "src/hooks";
+import {useDoc, useLocalStorage} from "src/hooks";
 import {WishIcon} from "../WishList";
+import {useSelector} from "react-redux";
+import {userValue} from "src/store/userSlice";
+import {ProductCardProp} from "../ProductCard/interfaces";
+import {cartValue, setCart} from "src/store/cartSlice";
+import {toast} from "react-toastify";
 
 interface GoodsInfoProps {
-    title: string;
-    star: number;
-    comment: number;
-    imgArr: string[];
-    id: number;
-    description: string;
-    price: string;
-    oldPrice: string;
-    quantity: string;
-    sellerName: string;
+    productProps: ProductCardProp;
 }
-export const GoodsInfo = ({
-    title,
-    quantity,
-    star,
-    description,
-    price,
-    oldPrice,
-    imgArr,
-    comment,
-    id,
-    sellerName,
-}: GoodsInfoProps) => {
+export const GoodsInfo = ({productProps}: GoodsInfoProps) => {
     const router = useRouter();
-    const [cart, setCart] = useLocalStorage<Array<number>>("cart", []);
-    const addInCart = () => {
-        if (cart.includes(id)) return cart;
-        setCart([...cart, id]);
-    };
+    const {userName, userId} = useSelector(userValue);
+    const {postDoc, docError} = useDoc("user");
+    const {cartData} = useSelector(cartValue);
+    const {
+        category,
+        data,
+        description,
+        email,
+        href,
+        location,
+        name,
+        photoUrl,
+        price,
+        quantity,
+        tel,
+        title,
+        productOwner,
+        productId,
+        oldPrice,
+    } = productProps;
 
+    const cardItem = cartData
+        ? [
+              ...cartData,
+              {
+                  photoUrl: photoUrl,
+                  title: title,
+                  price: price,
+                  oldPrice: oldPrice,
+                  id: productId,
+                  quantity: 1,
+              },
+          ]
+        : [
+              {
+                  photoUrl: photoUrl,
+                  title: title,
+                  price: price,
+                  oldPrice: oldPrice,
+                  id: productId,
+                  quantity: 1,
+              },
+          ];
+
+    const shopItem = () => {
+        if (userId) {
+            postDoc({
+                documentItem: {
+                    photoUrl: photoUrl,
+                    title: title,
+                    price: price,
+                    id: productId,
+                    quantity: 1,
+                },
+                path: `${userId}/cart`,
+                subCollection: `productId${productId}`,
+            })
+                .then(() => {
+                    toast.success("Shop Item");
+                })
+                .catch(() => {
+                    toast.error(`${docError}`);
+                });
+        }
+        dispatch(setCart(cardItem));
+    };
     return (
         <>
             <Head>
@@ -57,20 +102,20 @@ export const GoodsInfo = ({
                             <h1>{title}</h1>
                         </div>
                         <div>
-                            <StarRating star={star} />
+                            <StarRating star={0} />
                             <Link href={`${router.asPath}/comment`}>
                                 <a href={`${router.asPath}/comment`}>
-                                    <p>{comment} comment</p>
+                                    <p>0 comment</p>
                                 </a>
                             </Link>
                         </div>
                     </div>
-                    <div className={styles.id}>id: {id}</div>
+                    <div className={styles.id}>id: {productId}</div>
                 </div>
                 <div className={styles.content}>
                     <div className={styles.about}>
                         <div className={styles.aboutLeft}>
-                            <ImgSlider alt={title} imgArr={imgArr} />
+                            <ImgSlider alt={title} imgArr={photoUrl} />
                             <div>
                                 <p>{description}</p>
                             </div>
@@ -97,20 +142,23 @@ export const GoodsInfo = ({
                                 )}
                             </div>
                             <div className={styles.price}>
-                                {oldPrice && (
+                                {false && (
                                     <p className={styles.oldPrice}>
-                                        {oldPrice}
+                                        {/* {oldPrice} */}
                                     </p>
                                 )}
 
                                 <p>{price}</p>
-                                <Button onClick={addInCart} color="#00BC52">
+                                <Button
+                                    onClick={() => shopItem}
+                                    color="#00BC52"
+                                >
                                     <span>Buy</span>
                                 </Button>
-                                <WishIcon id={id} />
+                                <WishIcon productProps={productProps} />
                             </div>
                             <div className={styles.seller}>
-                                <p>Seller: {sellerName}</p>
+                                <p>Seller: {userName}</p>
                             </div>
                         </div>
                     </div>
@@ -119,3 +167,6 @@ export const GoodsInfo = ({
         </>
     );
 };
+function dispatch(arg0: {payload: any; type: string}) {
+    throw new Error("Function not implemented.");
+}

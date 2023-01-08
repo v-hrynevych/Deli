@@ -1,29 +1,44 @@
 import styles from "./HeadNavBar.module.scss";
 
-import {HTMLAttributes} from "react";
+import {HTMLAttributes, useEffect, useState} from "react";
 import {ButtonNav, SearchForm} from "../index";
 import {ButtonIcon} from "../index";
 
 import Link from "next/link";
+import {useDispatch, useSelector} from "react-redux";
+import {wishListValue} from "src/store/wishListSlice";
+import {cartValue} from "src/store/cartSlice";
 
-import {useRouter} from "next/router";
-import {useSelector} from "react-redux";
 import {userValue} from "src/store/userSlice";
-import { useLocalStorage } from "src/hooks";
 
-interface HeadNavBarProps extends HTMLAttributes<HTMLDivElement> {}
+interface HeadNavBarProps extends HTMLAttributes<HTMLDivElement> {
+    setIsSideMenu: (value: boolean | ((prevVar: boolean) => boolean)) => void;
+    setIsCatalog: (value: boolean | ((prevVar: boolean) => boolean)) => void;
+    isSideMenu: boolean;
+    isCatalog: boolean;
+}
 
-export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
-    const router = useRouter();
-    const {userEmail} = useSelector(userValue);
-    const [wish] = useLocalStorage<Array<number>>("wish", []);
+export const HeadNavBar = ({
+    className,
+    setIsSideMenu,
+    setIsCatalog,
+    isSideMenu,
+    isCatalog,
+    ...rest
+}: HeadNavBarProps) => {
+    const {userId} = useSelector(userValue);
+    const {cartData} = useSelector(cartValue);
+    const {wishList} = useSelector(wishListValue);
 
     return (
         <div {...rest} className={styles.container}>
             <nav>
                 <ul className={styles.containerUl}>
                     <li>
-                        <ButtonIcon href={"/side-menu"} icon={"faBars"} />
+                        <ButtonIcon
+                            onClick={() => setIsSideMenu(!isSideMenu)}
+                            icon={"faBars"}
+                        />
                     </li>
                     <li className={styles.logo}>
                         <Link href={"/"}>
@@ -32,7 +47,7 @@ export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
                     </li>
                     <li className={styles.catalog}>
                         <ButtonNav
-                            href={"/catalog"}
+                            clickHandler={() => setIsCatalog(!isCatalog)}
                             icon={"faStore"}
                             text={"Catalog"}
                         />
@@ -46,7 +61,7 @@ export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
                                 <Link href={"/pl"}>PL</Link>
                                 <Link href={"/ua"}>UA</Link>
                             </li>
-                            {userEmail === null && (
+                            {userId === null && (
                                 <li className={styles.actionsUser}>
                                     <ButtonIcon
                                         icon={"faUser"}
@@ -54,19 +69,25 @@ export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
                                     />
                                 </li>
                             )}
-                            {userEmail !== null && (
+                            {userId && (
                                 <>
                                     <li>
                                         <ButtonIcon
                                             icon={"faTableList"}
-                                            href={"/cabinet/products"}
+                                            href={{
+                                                pathname: "/cabinet/products",
+                                                query: {name: "My Products"},
+                                            }}
                                         />
                                     </li>
                                     <li>
                                         <ButtonIcon
-                                            after={wish}
+                                            after={wishList?.length}
                                             icon={"faHeart"}
-                                            href={"/cabinet/wishlist"}
+                                            href={{
+                                                pathname: "/cabinet/wishlist",
+                                                query: {name: "A wish list"},
+                                            }}
                                         />
                                     </li>
                                 </>
@@ -75,7 +96,11 @@ export const HeadNavBar = ({className, ...rest}: HeadNavBarProps) => {
                             <li className={styles.actionsCart}>
                                 <ButtonIcon
                                     icon={"faShoppingCart"}
-                                    href={"/cart"}
+                                    after={cartData?.length}
+                                    href={{
+                                        pathname: "/cart",
+                                        query: {name: "Cart"},
+                                    }}
                                 />
                             </li>
                         </ul>

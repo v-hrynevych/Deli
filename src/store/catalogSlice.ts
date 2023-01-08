@@ -1,5 +1,4 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {useCollection} from "src/hooks";
 import {RootState} from "src/store";
 
 interface initState {
