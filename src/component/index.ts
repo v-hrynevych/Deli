@@ -13,7 +13,6 @@ export {Details} from "./Details";
 export {AddProduct} from "./Cabinet";
 export {ProductCard} from "./ProductCard";
 export {StarRating} from "./StarRating";
-export {Goods} from "./Goods";
 export {ErrorText} from "./ErrorText";
 export {GoodsInfo} from "./GoodsInfo";
 export {ImgSlider} from "./ImgSlider";
