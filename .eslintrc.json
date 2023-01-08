@@ -1,6 +1,6 @@
 {
   "extends": ["airbnb", "airbnb-typescript", "next/core-web-vitals","some-other-config-you-use",
-  "prettier"],
+  "prettier","next"],
   "plugins": ["unused-imports"],
   "parserOptions": {
     "project": ["./tsconfig.json"]
