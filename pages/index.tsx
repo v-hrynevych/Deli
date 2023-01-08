@@ -2,7 +2,6 @@ import {DocumentData} from "firebase/firestore";
 import type {NextPage} from "next";
 import {useEffect, useState} from "react";
 import {ProductCard} from "src/component";
-import {ProductCardProp} from "src/component/ProductCard/interfaces";
 import {useQueryDocLimit, useWindowSize} from "src/hooks";
 
 import {MainLayout} from "../layout";
@@ -10,8 +9,8 @@ import {MainLayout} from "../layout";
 const Home: NextPage = () => {
     const {scrollPosition, height} = useWindowSize();
     const {queryLimit, lastQueryRef, data, isEmpty} =
-        useQueryDocLimit<ProductCardProp>("products");
-    const [homeItem, setHomeItem] = useState<Array<ProductCardProp>>([]);
+        useQueryDocLimit("products");
+    const [homeItem, setHomeItem] = useState<Array<DocumentData>>([]);
     const pageEnd = height - scrollPosition <= 50;
 
     useEffect(() => {

@@ -12,10 +12,10 @@ import {
 } from "firebase/firestore";
 import {useEffect, useState} from "react";
 
-export const useQueryDocLimit = <T>(nameCollection: string) => {
+export const useQueryDocLimit = (nameCollection: string) => {
     const [isLoading, setIsLoading] = useState(false);
     const [queryError, setError] = useState<FirebaseError | null>(null);
-    const [data, setData] = useState<Array<T>>([]);
+    const [data, setData] = useState<Array<DocumentData>>([]);
     const [lastQueryRef, setQueryRef] = useState<DocumentData>();
     const [isEmpty, setIsEmpty] = useState(false);
     async function queryLimit(queryLimit: number = 50, prevRef?: DocumentData) {
@@ -26,7 +26,7 @@ export const useQueryDocLimit = <T>(nameCollection: string) => {
                 : query(collectionRef, limit(queryLimit));
 
             const querySnapshot = await getDocs(queryRef);
-            onSnapshot(queryRef, (snapshot: QuerySnapshot<T>) => {
+            onSnapshot(queryRef, (snapshot) => {
                 return setData(
                     snapshot.docs.map((doc) => {
                         return {
