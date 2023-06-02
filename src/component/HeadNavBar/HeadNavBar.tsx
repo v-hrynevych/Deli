@@ -42,7 +42,7 @@ export const HeadNavBar = ({
                     </li>
                     <li className={styles.logo}>
                         <Link href={"/"}>
-                            <a href="/">Ecom</a>
+                            <a href="/">Deli</a>
                         </Link>
                     </li>
                     <li className={styles.catalog}>
