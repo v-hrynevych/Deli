@@ -1,9 +1,14 @@
-import {FormEventHandler, useEffect, useRef, useState} from "react";
-import {toast} from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import {Button, InputField, ErrorText, Modal} from "src/component";
 import {
-    faArrowUp19,
+    ChangeEvent,
+    FormEventHandler,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Button, InputField, ErrorText, Modal } from "src/component";
+import {
     faCity,
     faEnvelope,
     faMoneyBill,
@@ -11,58 +16,60 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./AddProduct.module.scss";
-import {useStorage} from "src/hooks/useStorage";
-import {useSelector} from "react-redux";
-import {userValue} from "src/store/userSlice";
-import {useDoc, useId} from "src/hooks";
-import {Timestamp} from "firebase/firestore";
-import {catalogValue} from "src/store/catalogSlice";
-import {Spinner} from "src/component/Spiner";
+import { useStorage } from "src/hooks/useStorage";
+import { useSelector } from "react-redux";
+import { userValue } from "src/store/userSlice";
+import { useDoc, useId } from "src/hooks";
+import { Timestamp } from "firebase/firestore";
+import { catalogValue } from "src/store/catalogSlice";
+import { Spinner } from "src/component/Spiner";
+
+interface Product {
+    productId: undefined | number;
+    title: undefined | string;
+    data: undefined | Timestamp;
+    description: undefined | string;
+    location: undefined | string;
+    email: undefined | string;
+    tel: undefined | string;
+    price: undefined | number;
+    photoUrl: string[];
+    productOwner: undefined | string;
+    category: undefined | string;
+    href: undefined | string;
+    userName: undefined | string;
+}
+const initialState = {
+    productId: undefined,
+    title: "",
+    data: undefined,
+    description: "",
+    location: "",
+    email: "",
+    tel: "",
+    price: 0,
+    photoUrl: [],
+    productOwner: undefined,
+    category: undefined,
+    href: undefined,
+    userName: undefined,
+};
 
 export const AddProduct = () => {
-    const {catalog} = useSelector(catalogValue);
-    const {userId, userName} = useSelector(userValue);
-    const {postFiles, fileError, fileUrlArr} = useStorage();
-    const {postDoc, docError, isLoadingDoc, isSendDocumentSuccess} =
+    const { catalog } = useSelector(catalogValue);
+    const { userId, userName } = useSelector(userValue);
+    const { postFiles, fileError, fileUrlArr } = useStorage();
+    const { postDoc, docError, isLoadingDoc, isSendDocumentSuccess } =
         useDoc("products");
-    const {id, updateId} = useId("productId");
+    const { id, error, updateId, getId, createId } = useId("productId");
 
-    const [title, setTitle] = useState("");
+    const [productObj, setProductObj] = useState<Product>(initialState);
+
     const [NamePhoto, setNamePhoto] = useState(["", "", "", "", "", ""]);
-    const [textArea, setTextArea] = useState("");
-    const [city, setCity] = useState("");
-    const [email, setEmail] = useState("");
-    const [tel, setTel] = useState<number>();
-    const [price, setPrice] = useState<number>();
-    const [category, setCategory] = useState("alcohol");
     const [photoFiles, setPhotoFiles] = useState<Array<File | null>>([]);
-    const [quantity, setQuantity] = useState<number>();
-    const [href, setHref] = useState("");
 
-    const formRef = useRef<HTMLFormElement>(null);
-
-    const isFillForm = [title, category, price, city, email, tel].some(
-        (value) => value === "",
-    );
-    const productObj = {
-        productId: id,
-        title: title,
-        data: Timestamp.fromDate(new Date()),
-        name: title.toLowerCase(),
-        description: textArea,
-        location: city,
-        email: email,
-        tel: tel,
-        price: price,
-        photoUrl: fileUrlArr,
-        productOwner: userId,
-        category: category,
-        quantity: quantity,
-        href: href,
-        userName: userName,
-    };
     const onChangePhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const {id, files} = event.target;
+        const { id, files } = event.target;
         const photoId = parseInt(id);
         const PhotoFile = files![0];
         setNamePhoto((prevState) => [
@@ -70,54 +77,95 @@ export const AddProduct = () => {
         ]);
         setPhotoFiles((prevState) => [...prevState, PhotoFile]);
     };
+
     const handleCategoryChange = (
-        event: React.ChangeEvent<HTMLSelectElement>,
+        event: React.ChangeEvent<HTMLSelectElement>
     ) => {
-        setCategory(event.target.value);
+        setProductObj({ ...productObj, category: event.target.value });
     };
+    console.log(productObj, id);
+
     const onSubmit: FormEventHandler = (e) => {
         e.preventDefault();
+
         postFiles({
             listFiles: photoFiles,
             user: userId,
         })
             .then(() => {
+                productObj.photoUrl = fileUrlArr;
+
                 postDoc({
                     documentItem: productObj,
                     path: `${"id" + id}`,
-                });
-                updateId();
+                })
+                    .then(() => {
+                        updateId();
+                        setProductObj({
+                            ...productObj,
+                            title: "",
+                            description: "",
+                            location: "",
+                            email: "",
+                            tel: "",
+                            price: 0,
+                        });
+                        setNamePhoto(["", "", "", "", "", ""]);
+                        setPhotoFiles([]);
+                        toast.success("Great !", {
+                            position: toast.POSITION.TOP_RIGHT,
+                        });
+                    })
+                    .catch((error) => {
+                        toast.error("Error!", {
+                            position: toast.POSITION.TOP_RIGHT,
+                        });
+                        console.log(error);
+                    });
             })
-            .then(() => {
-                setTitle("");
-                setCity("");
-                setEmail("");
-                setPrice(0);
-                setNamePhoto(["", "", "", "", "", ""]);
-                setPhotoFiles([]);
-                setTextArea("");
-                setTel(0);
-                setCategory("");
-                setQuantity(0);
-                formRef.current?.reset();
-                toast.success("Great !", {
+
+            .catch((error) => {
+                console.log(error);
+                toast.error("Error!", {
                     position: toast.POSITION.TOP_RIGHT,
                 });
             });
     };
+    const isValidForm =
+        productObj.title !== undefined &&
+        productObj.description !== undefined &&
+        productObj.location !== undefined &&
+        productObj.email !== undefined &&
+        productObj.tel !== undefined &&
+        productObj.price !== undefined;
+
     useEffect(() => {
-        setHref(`/${category}/${id}`);
-    }, [category, id]);
+        setProductObj({
+            ...productObj,
+            data: Timestamp.fromDate(new Date()),
+            href: `/${productObj.category}/${id}`,
+            productId: id,
+            category: "mcdonny",
+            productOwner: `${userId}`,
+            userName: `${userName}`,
+        });
+    }, [id]);
+
     return (
         <>
-            <form onSubmit={onSubmit} ref={formRef} className={styles.form}>
+            <form onSubmit={onSubmit} className={styles.form}>
                 <h2>Add product</h2>
                 <div className={styles.title}>
                     <InputField
                         placeholder="anything"
-                        value={title}
+                        value={productObj.title}
                         type={"text"}
-                        onChange={(e) => setTitle(e.target.value)}
+                        onChange={(e) =>
+                            setProductObj({
+                                ...productObj,
+                                title: e.target.value,
+                            })
+                        }
                         label="*Ad Title"
                     />
                 </div>
@@ -160,9 +208,14 @@ export const AddProduct = () => {
                 <div className={styles.description}>
                     <h3>Description</h3>
                     <textarea
-                        onChange={(e) => setTextArea(e.target.value)}
+                        onChange={(e) =>
+                            setProductObj({
+                                ...productObj,
+                                description: e.target.value,
+                            })
+                        }
                         name="description"
-                        value={textArea}
+                        value={productObj.description}
                         cols={100}
                         rows={11}
                     ></textarea>
@@ -174,50 +227,56 @@ export const AddProduct = () => {
                             <InputField
                                 type={"text"}
                                 icon={faCity}
-                                value={city}
+                                value={productObj.location}
                                 label="City"
-                                onChange={(e) => setCity(e.target.value)}
+                                onChange={(e) =>
+                                    setProductObj({
+                                        ...productObj,
+                                        location: e.target.value,
+                                    })
+                                }
                             />
                         </div>
                         <div className={styles.contact}>
                             <h3>Contact information</h3>
                             <InputField
-                                onChange={(e) => setEmail(e.target.value)}
+                                onChange={(e) =>
+                                    setProductObj({
+                                        ...productObj,
+                                        email: e.target.value,
+                                    })
+                                }
                                 type="text"
-                                value={email!}
+                                value={productObj.email}
                                 label="*E-mail address"
                                 icon={faEnvelope}
                             />
                             <InputField
                                 onChange={(e) =>
-                                    setTel(parseInt(e.target.value))
+                                    setProductObj({
+                                        ...productObj,
+                                        tel: e.target.value,
+                                    })
                                 }
                                 type={"number"}
-                                value={tel}
+                                value={productObj.tel}
                                 name="phoneNum"
                                 label="*Phone number"
                                 icon={faPhone}
-                            />
-                        </div>
-                        <div className={styles.quantity}>
-                            <h3>Quantity</h3>
-                            <InputField
-                                type={"number"}
-                                icon={faArrowUp19}
-                                value={quantity}
-                                label="Quantity"
-                                onChange={(e) =>
-                                    setQuantity(parseInt(e.target.value))
-                                }
                             />
                         </div>
                     </div>
                     <div className={styles.price}>
                         <h3>*Price</h3>
                         <InputField
-                            onChange={(e) => setPrice(parseInt(e.target.value))}
+                            onChange={(e) =>
+                                setProductObj({
+                                    ...productObj,
+                                    price: parseInt(e.target.value),
+                                })
+                            }
                             type="number"
-                            value={price}
+                            value={productObj.price}
                             name="price"
                             label="Price"
                             icon={faMoneyBill}
@@ -227,8 +286,8 @@ export const AddProduct = () => {
 
                 <div>
                     <Button
-                        disabled={isFillForm}
-                        variant={!isFillForm ? "primary" : "ghost"}
+                        disabled={!isValidForm}
+                        variant={isValidForm ? "primary" : "ghost"}
                         type="submit"
                     >
                         Add product
@@ -241,6 +300,9 @@ export const AddProduct = () => {
                         text={`${fileError?.message}`}
                         isError={fileError}
                     />
+                    {!isValidForm && (
+                        <p style={{ color: "red" }}>Please Fill form</p>
+                    )}
                 </div>
             </form>
             {isLoadingDoc && (

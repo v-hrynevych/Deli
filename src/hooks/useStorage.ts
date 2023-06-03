@@ -1,8 +1,8 @@
-import {FirebaseError} from "firebase/app";
-import {ref, listAll, uploadBytes, getDownloadURL} from "firebase/storage";
-import {storage} from "../../firebase";
+import { FirebaseError } from "firebase/app";
+import { ref, listAll, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "../../firebase";
 
-import {useState} from "react";
+import { useState } from "react";
 
 interface PostFileProp {
     listFiles: Array<File | null>;
@@ -15,22 +15,21 @@ interface getFileProp {
 export const useStorage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [fileError, setError] = useState<FirebaseError | null>(null);
-    const [fileUrlArr, setFileUrlArr] = useState<string[]>([]);
-
-    async function postFiles({listFiles, user}: PostFileProp) {
+    const fileUrlArr: string[] = [];
+    
+    async function postFiles({ listFiles, user }: PostFileProp) {
         try {
             setIsLoading(true);
             await Promise.all(
                 listFiles.map(async (el) => {
                     const imgRef = ref(
                         storage,
-                        `user/${user}/photo/${el!.name}`,
+                        `user/${user}/photo/${el!.name}`
                     );
                     await uploadBytes(imgRef, el!);
                     const url = await getDownloadURL(imgRef);
-
                     fileUrlArr.push(url);
-                }),
+                })
             );
         } catch (err) {
             setError(err as FirebaseError);
@@ -38,7 +37,7 @@ export const useStorage = () => {
             setIsLoading(false);
         }
     }
-    async function getFiles({userId, prodItem}: getFileProp) {
+    async function getFiles({ userId, prodItem }: getFileProp) {
         try {
             const listRef = ref(storage, `user/${userId}/products/${prodItem}`);
             const res = await listAll(listRef);
@@ -46,5 +45,5 @@ export const useStorage = () => {
         } finally {
         }
     }
-    return {postFiles, getFiles, fileUrlArr, isLoading, fileError};
+    return { postFiles, getFiles, fileUrlArr, isLoading, fileError };
 };
