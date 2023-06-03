@@ -1,16 +1,16 @@
 import styles from "./SearchForm.module.scss";
-import {HTMLAttributes, useEffect, useState} from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faMicrophone} from "@fortawesome/free-solid-svg-icons";
-import {useRouter} from "next/router";
-import {useQueryFilter} from "src/hooks";
-import {ButtonIcon} from "../ButtonIcon";
+import { HTMLAttributes, useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMicrophone } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/router";
+import { useQueryFilter } from "src/hooks";
+import { ButtonIcon } from "../ButtonIcon";
 import Link from "next/link";
 
 interface SearchFormProps extends HTMLAttributes<HTMLFormElement> {}
 
 export const SearchForm = ({}: SearchFormProps) => {
-    const {queryFilter, queryError, data} = useQueryFilter("products");
+    const { queryFilter, queryError, data } = useQueryFilter("products");
     const [searchText, setSearchText] = useState("");
     const [searchCategory, setSearchCategory] = useState(false);
     const router = useRouter();
@@ -19,7 +19,7 @@ export const SearchForm = ({}: SearchFormProps) => {
     };
     useEffect(() => {
         queryFilter({
-            filterField: "name",
+            filterField: "title",
             queryOperator: ">=",
             value: searchText,
         });
@@ -34,7 +34,7 @@ export const SearchForm = ({}: SearchFormProps) => {
                             e.preventDefault();
                             router.push({
                                 pathname: "/search",
-                                query: {searchText: searchText},
+                                query: { searchText: searchText },
                             });
                         }
                     }}
@@ -59,7 +59,7 @@ export const SearchForm = ({}: SearchFormProps) => {
                 onClick={() =>
                     router.push({
                         pathname: "/search",
-                        query: {searchText: searchText},
+                        query: { searchText: searchText },
                     })
                 }
                 type="button"
@@ -74,11 +74,14 @@ export const SearchForm = ({}: SearchFormProps) => {
                         searchText &&
                         data.map((item: any) => {
                             return (
-                                <div key={item.id} className={styles.category}>
+                                <div
+                                    key={item.productId}
+                                    className={styles.category}
+                                >
                                     <ButtonIcon
                                         href={{
                                             pathname: item.category,
-                                            query: {searchText: searchText},
+                                            query: { searchText: searchText },
                                         }}
                                         icon="faSearch"
                                         color="#908f8f"
@@ -86,11 +89,11 @@ export const SearchForm = ({}: SearchFormProps) => {
                                     <Link
                                         href={{
                                             pathname: item.category,
-                                            query: {searchText: searchText},
+                                            query: { searchText: searchText },
                                         }}
                                     >
                                         <a href={item.category}>
-                                            <p style={{fontWeight: "bold"}}>
+                                            <p style={{ fontWeight: "bold" }}>
                                                 {searchText}
                                             </p>
                                             <p>in category {item.category}</p>

@@ -1,25 +1,24 @@
-import {MainLayout} from "layout";
-import {useRouter} from "next/router";
-import {useEffect} from "react";
-import {ProductCard} from "src/component";
-import {useQueryFilter} from "src/hooks";
+import { MainLayout } from "layout";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { ProductCard } from "src/component";
+import { useQueryFilter } from "src/hooks";
 
 const Search = () => {
     const router = useRouter();
     const searchText = router.query.searchText;
 
-    const {queryFilter, queryError, data} = useQueryFilter("products");
+    const { searchFilter, queryError, data } = useQueryFilter("products");
 
     useEffect(() => {
-        queryFilter({
-            filterField: "name",
-            queryOperator: ">=",
+        searchFilter({
+            filterField: "title",
+           
             value: searchText,
-            orderLimit: 10,
         });
     }, [searchText]);
-    
-    
+
+
     return (
         <MainLayout isSidebar={true}>
             {data &&
@@ -33,7 +32,7 @@ const Search = () => {
                             category={item.category}
                             productId={item.productId}
                             href={item.href}
-                            key={item.id}
+                            key={item.productId}
                             photoUrl={item.photoUrl}
                             name={item.name}
                             productOwner={item.productOwner}

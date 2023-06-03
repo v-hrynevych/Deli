@@ -50,7 +50,7 @@ const initialState = {
     price: 0,
     photoUrl: [],
     productOwner: undefined,
-    category: undefined,
+    category: "mcdonny",
     href: undefined,
     userName: undefined,
 };
@@ -81,10 +81,12 @@ export const AddProduct = () => {
     const handleCategoryChange = (
         event: React.ChangeEvent<HTMLSelectElement>
     ) => {
-        setProductObj({ ...productObj, category: event.target.value });
+        setProductObj({
+            ...productObj,
+            category: event.target.value,
+            href: `/${event.target.value}/${id}`,
+        });
     };
-    console.log(productObj, id);
-
     const onSubmit: FormEventHandler = (e) => {
         e.preventDefault();
 
@@ -109,6 +111,7 @@ export const AddProduct = () => {
                             email: "",
                             tel: "",
                             price: 0,
+                            photoUrl: [],
                         });
                         setNamePhoto(["", "", "", "", "", ""]);
                         setPhotoFiles([]);
@@ -145,12 +148,11 @@ export const AddProduct = () => {
             data: Timestamp.fromDate(new Date()),
             href: `/${productObj.category}/${id}`,
             productId: id,
-            category: "mcdonny",
             productOwner: `${userId}`,
             userName: `${userName}`,
         });
     }, [id]);
-
+    console.log(productObj);
     return (
         <>
             <form onSubmit={onSubmit} className={styles.form}>
@@ -175,6 +177,7 @@ export const AddProduct = () => {
                         <select
                             name="category-list"
                             id="category-list"
+                            value={productObj.category}
                             onChange={handleCategoryChange}
                         >
                             {catalog?.map((item, index) => {
