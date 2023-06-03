@@ -40,6 +40,7 @@ interface SearchFilterProps {
     value?: string | string[];
     filterField: string;
 }
+
 export const useQueryFilter = <T>(nameCollection: string) => {
     const [isLoading, setIsLoading] = useState(false);
     const [queryError, setError] = useState<FirebaseError | null>(null);
@@ -126,6 +127,7 @@ export const useQueryFilter = <T>(nameCollection: string) => {
             setIsLoading(false);
         }
     }
+
     return {
         searchFilter,
         queryFilter,
@@ -133,5 +135,6 @@ export const useQueryFilter = <T>(nameCollection: string) => {
         data,
         isLoading,
         queryError,
+        setData,
     };
 };
