@@ -80,7 +80,7 @@ export const SearchForm = ({}: SearchFormProps) => {
                                 >
                                     <ButtonIcon
                                         href={{
-                                            pathname: item.category,
+                                            pathname: `/${item.category}`,
                                             query: { searchText: searchText },
                                         }}
                                         icon="faSearch"
@@ -88,7 +88,7 @@ export const SearchForm = ({}: SearchFormProps) => {
                                     />
                                     <Link
                                         href={{
-                                            pathname: item.category,
+                                            pathname: `/${item.category}`,
                                             query: { searchText: searchText,name: item.category },
                                         }}
                                     >

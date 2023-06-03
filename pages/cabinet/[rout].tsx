@@ -11,6 +11,7 @@ import {AddProduct} from "src/component";
 import {Products} from "src/component/Cabinet";
 import {SignIn} from "src/views/Authentication";
 import {Orders} from "src/component/Cabinet/Orders";
+import { Spinner } from "src/component/Spiner";
 
 
 const Cabinet = () => {
@@ -87,7 +88,7 @@ const Cabinet = () => {
                 </div>
             ) : (
                 <div style={{display:'flex' ,justifyContent: 'center',width:'100%'}}>
-                    <SignIn />
+                    <Spinner />
                 </div>
             )}
         </MainLayout>

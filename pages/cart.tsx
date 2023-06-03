@@ -1,10 +1,13 @@
-import {MainLayout} from "layout";
-import {CartItem} from "src/component/CartItem";
+import { MainLayout } from "layout";
+import { UserInfo, CartItem, CartContainer } from "src/component";
 
 const Cart = () => {
     return (
         <MainLayout isSidebar={false}>
-            <CartItem />
+            <CartContainer>
+                <UserInfo isOpenInfo />
+                <CartItem />
+            </CartContainer>
         </MainLayout>
     );
 };

@@ -1,5 +1,5 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {RootState} from "src/store";
+import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "src/store";
 
 interface CabinetItem {
     name: string;
@@ -15,7 +15,11 @@ interface CabinetState {
 
 const initialState: CabinetState = {
     cabinetList: {
-        MyOrders: {name: "My Products", icon: "faTableList", href: "products"},
+        MyOrders: {
+            name: "My Products",
+            icon: "faTableList",
+            href: "products",
+        },
         WithList: {
             name: "A wish list",
             icon: "faHeart",
@@ -32,24 +36,11 @@ const initialState: CabinetState = {
             href: "add-product",
         },
         Newsletters: {
-            name: "Newsletters",
+            name: "History",
             icon: "faBell",
-            href: "subscribes",
+            href: "history",
         },
-        Wallet: {name: "Wallet", icon: "faWallet", href: "wallet"},
-        Bonus: {name: "Bonus account", icon: "faB", href: "bonus"},
-        Premium: {name: "Premium", icon: "faP", href: "premium"},
-        reviews: {name: "My reviews", icon: "faMessage", href: "reviews"},
-        correspondence: {
-            name: "Correspondence",
-            icon: "faEnvelope",
-            href: "message",
-        },
-        Participation: {
-            name: "Participation",
-            icon: "faCalendarDays",
-            href: "promotions",
-        },
+        Bonus: { name: "Bonus", icon: "faB", href: "bonus" },
     },
 };
 

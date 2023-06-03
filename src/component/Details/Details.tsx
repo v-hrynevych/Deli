@@ -1,6 +1,6 @@
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {fas} from "@fortawesome/free-solid-svg-icons";
-import {HTMLAttributes, ReactNode} from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { HTMLAttributes, ReactNode } from "react";
 
 import styles from "./Details.module.scss";
 interface DetailsProp extends HTMLAttributes<HTMLDivElement> {
@@ -8,6 +8,7 @@ interface DetailsProp extends HTMLAttributes<HTMLDivElement> {
     title?: string;
     icon?: string;
     iconColor?: string;
+    isOpen: boolean;
 }
 
 export const Details = ({
@@ -16,10 +17,11 @@ export const Details = ({
     title,
     icon,
     children,
+    isOpen = false,
 }: DetailsProp) => {
     return (
         <div className={styles.container}>
-            <details>
+            <details open={isOpen}>
                 <summary>
                     <div className={styles.title}>
                         {icon && (
