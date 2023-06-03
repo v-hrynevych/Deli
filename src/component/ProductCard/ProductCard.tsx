@@ -1,15 +1,15 @@
-import {ButtonIcon} from "../ButtonIcon";
+import { ButtonIcon } from "../ButtonIcon";
 import Image from "next/image";
 import styles from "./ProductCard.module.scss";
 import Link from "next/link";
-import {StarRating} from "../StarRating";
-import {WishIcon} from "../WishList";
-import {ProductCardProp} from "./interfaces";
-import {useDoc} from "src/hooks";
-import {useDispatch, useSelector} from "react-redux";
-import {userValue} from "src/store/userSlice";
-import {cartValue, setCart} from "src/store/cartSlice";
-import {toast} from "react-toastify";
+import { StarRating } from "../StarRating";
+import { WishIcon } from "../WishList";
+import { ProductCardProp } from "./interfaces";
+import { useDoc } from "src/hooks";
+import { useDispatch, useSelector } from "react-redux";
+import { userValue } from "src/store/userSlice";
+import { cartValue, setCart } from "src/store/cartSlice";
+import { toast } from "react-toastify";
 
 export const ProductCard = ({
     photoUrl = [
@@ -30,15 +30,15 @@ export const ProductCard = ({
     description,
     email,
     location,
-    quantity,
+    quantity = 1,
     quantityComments = 0,
     ...rest
 }: ProductCardProp) => {
-    const {userId} = useSelector(userValue);
-    const {cartData} = useSelector(cartValue);
+    const { userId } = useSelector(userValue);
+    const { cartData } = useSelector(cartValue);
     const dispatch = useDispatch();
-    const {postDoc, docError} = useDoc("user");
-    
+    const { postDoc, docError } = useDoc("user");
+
     const isOldPriceObj = oldPrice
         ? {
               photoUrl: photoUrl,

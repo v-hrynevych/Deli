@@ -89,7 +89,7 @@ export const SearchForm = ({}: SearchFormProps) => {
                                     <Link
                                         href={{
                                             pathname: item.category,
-                                            query: { searchText: searchText },
+                                            query: { searchText: searchText,name: item.category },
                                         }}
                                     >
                                         <a href={item.category}>

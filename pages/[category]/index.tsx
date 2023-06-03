@@ -15,10 +15,20 @@ const Category = () => {
         useQueryFilter("products");
 
     useEffect(() => {
-        searchFilter({
-            filterField: "title",
-            value: searchText,
-        });
+        if (searchText) {
+            searchFilter({
+                filterField: "title",
+                value: searchText,
+            });
+        }
+        if (routName) {
+            queryFilter({
+                filterField: "category",
+                value: routerCategory,
+                queryOperator: "==",
+                orderLimit: 50,
+            });
+        }
     }, [routerCategory, searchText]);
 
     return (
