@@ -151,10 +151,12 @@ export const CheckoutItem = () => {
         }
     }, [cartData]);
     useEffect(() => {
-        setOrderInfo((prevState) => ({
-            ...prevState,
-            orderId: orderId,
-        }));
+        if (orderId) {
+            setOrderInfo((prevState) => ({
+                ...prevState,
+                orderId: orderId,
+            }));
+        }
     }, [orderId]);
     const addCoupons = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (coupons === "" && orderInfo.price) {
