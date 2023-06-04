@@ -1,24 +1,26 @@
 import Head from "next/head";
 import Image from "next/image";
-import {useRouter} from "next/router";
-import {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {toast, ToastContainer} from "react-toastify";
-import {useCollection, useDeleteDoc, useDoc, useId, useUser} from "src/hooks";
-import {cartValue, setCart} from "src/store/cartSlice";
-import {Button} from "../Button";
-import {Fieldset} from "../Fieldset";
-import {InputField} from "../InputField";
-import {Spinner} from "../Spiner";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+import { useCollection, useDeleteDoc, useDoc, useId, useUser } from "src/hooks";
+import { cartValue, setCart } from "src/store/cartSlice";
+import { Button } from "../Button";
+import { Fieldset } from "../Fieldset";
+import { InputField } from "../InputField";
+import { Spinner } from "../Spiner";
 import Card from "react-credit-card-flipping";
 
 import styles from "./CheckoutItem.module.scss";
 import "react-toastify/dist/ReactToastify.css";
+import { userValue } from "src/store/userSlice";
+import { ButtonIcon } from "../ButtonIcon";
 
 interface orderInfo {
     name: string;
     surName: string;
-    phone?: number;
+    phone?: string;
     email: string;
     orderId: number;
     price?: number;
@@ -42,32 +44,33 @@ interface cart {
     title: string;
 }
 export const CheckoutItem = () => {
-    const {user} = useUser();
+    const { user } = useUser();
+    const { userEmail, userId } = useSelector(userValue);
     const router = useRouter();
-    const {id: orderId, updateId} = useId("orderId");
+    const { id: orderId, updateId } = useId("orderId");
     const dispatch = useDispatch();
     const {
         collectionData: cartCollection,
         isSuccess: isSuccessCart,
         getData: getCartData,
     } = useCollection();
-    const {getDocument, dataDoc} = useDoc("user");
-    const {postDoc, docError, isLoadingDoc} = useDoc("user");
-    const {cartData} = useSelector(cartValue);
-    const {deleteDocument, error} = useDeleteDoc();
+    const { getDocument, dataDoc } = useDoc("user");
+    const { postDoc, docError, isLoadingDoc } = useDoc("user");
+    const { cartData } = useSelector(cartValue);
+    const { deleteDocument, error } = useDeleteDoc();
     const [orderInfo, setOrderInfo] = useState<orderInfo>({
         orderId: 0,
         name: "",
         surName: "",
-        phone: undefined,
+        phone: "",
         price: undefined,
         payment: "",
         email: "",
-        deliveryAddress: "pickup",
+        deliveryAddress: "",
         cart: undefined,
         deliveryCost: "Free",
     });
-
+    const [coupons, setCoupons] = useState("");
     const [creditCard, setCreditCard] = useState<CreditCard>({
         name: "",
         number: "",
@@ -95,7 +98,7 @@ export const CheckoutItem = () => {
                     updateId();
                     orderInfo.cart?.map((item) => {
                         deleteDocument(
-                            `user/${user.userId}/cart/productId${item.id}`,
+                            `user/${user.userId}/cart/productId${item.id}`
                         );
                     });
                     dispatch(setCart(null));
@@ -128,7 +131,7 @@ export const CheckoutItem = () => {
                 name: dataDoc.userName,
                 surName: dataDoc.surname,
                 phone: dataDoc.phone,
-                email: dataDoc.email,
+                email: `${userEmail}`,
             });
         }
     }, [dataDoc]);
@@ -142,7 +145,7 @@ export const CheckoutItem = () => {
                         accumulator +
                         currentValue.price * currentValue.quantity,
 
-                    0,
+                    0
                 ),
             }));
         }
@@ -153,6 +156,17 @@ export const CheckoutItem = () => {
             orderId: orderId,
         }));
     }, [orderId]);
+    const addCoupons = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (coupons === "" && orderInfo.price) {
+            setCoupons(e.target.value);
+            const discountAmount = (25 / 100) * orderInfo.price;
+            const discountedPrice = orderInfo.price - discountAmount;
+            setOrderInfo({ ...orderInfo, price: discountedPrice });
+            toast.success("Added Coupon -25% !", {
+                position: toast.POSITION.TOP_RIGHT,
+            });
+        }
+    };
     return (
         <section className={styles.section}>
             <Head>
@@ -167,6 +181,7 @@ export const CheckoutItem = () => {
                 </header>
                 <div className={styles.title}>
                     <h1>Checkout</h1>
+                    <ButtonIcon icon="faX" color="black" href={"/cart"} />
                 </div>
                 <div className={styles.checkoutForm}>
                     <main className={styles.content}>
@@ -199,7 +214,7 @@ export const CheckoutItem = () => {
                             ) : (
                                 <Spinner />
                             )}
-                            {orderInfo.phone && orderInfo.email ? (
+                            {userEmail ? (
                                 <div>
                                     <InputField
                                         type="text"
@@ -208,20 +223,20 @@ export const CheckoutItem = () => {
                                         onChange={(e) =>
                                             setOrderInfo({
                                                 ...orderInfo,
-                                                phone: parseInt(e.target.value),
+                                                phone: e.target.value,
                                             })
                                         }
                                     />
                                     <InputField
-                                        type="text"
-                                        label="Email"
-                                        value={orderInfo.email}
-                                        onChange={(e) =>
-                                            setOrderInfo({
-                                                ...orderInfo,
-                                                email: e.target.value,
+                                        onChange={() =>
+                                            toast.error("can not  Edit !", {
+                                                position:
+                                                    toast.POSITION.TOP_RIGHT,
                                             })
                                         }
+                                        type="text"
+                                        label="Email"
+                                        value={userEmail}
                                     />
                                 </div>
                             ) : (
@@ -495,7 +510,9 @@ export const CheckoutItem = () => {
                                                             creditCard:
                                                                 creditCard,
                                                         });
-                                                        toast.info('OK added card');
+                                                        toast.info(
+                                                            "OK added card"
+                                                        );
                                                     }}
                                                     disabled={!isFillCreditCard}
                                                     variant={
@@ -533,6 +550,15 @@ export const CheckoutItem = () => {
                                 <dd>{orderInfo.price}</dd>
                             </dl>
                             <div className={styles.confirm}>
+                                <InputField
+                                    style={{
+                                        padding: "10px",
+                                        marginBottom: "3px",
+                                    }}
+                                    value={coupons}
+                                    placeholder="Select coupon"
+                                    onChange={(e) => addCoupons(e)}
+                                />
                                 <Button
                                     variant={
                                         orderInfo.payment ? "primary" : "ghost"

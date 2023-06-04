@@ -1,0 +1,1 @@
+export {GoogleM} from './GoogleM'

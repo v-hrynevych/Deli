@@ -70,6 +70,9 @@ export const Coupons = () => {
                         );
                     })}
             </div>
+            {
+                
+            }
             <div className={styles.coupon}>
                 <div>
                     <Image width={"250px"} height={"150px"} src={ImgCoup} />
