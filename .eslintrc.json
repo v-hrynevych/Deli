@@ -1,6 +1,6 @@
 {
-  "extends": ["prettier"],
-  "plugins": ["unused-imports"],
+  "extends": ["standard", "prettier", "plugin:prettier/recommended"],
+  "plugins": ["unused-imports","prettier"],
   "parserOptions": {
     "project": ["./tsconfig.json"]
   },
