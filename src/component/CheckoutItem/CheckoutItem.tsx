@@ -108,6 +108,21 @@ export const CheckoutItem = () => {
                     }, 2000);
                 })
                 .catch(() => toast.error(docError?.message));
+        } else {
+            postDoc({
+                documentItem: orderInfo,
+                path: `noAuthUser/orders`,
+                subCollection: `order${orderId}`,
+            })
+                .then(() => {
+                    updateId();
+                    dispatch(setCart(null));
+                    toast.success("Order placed");
+                    setTimeout(() => {
+                        router.push("/");
+                    }, 2000);
+                })
+                .catch(() => toast.error(docError?.message));
         }
     };
 
@@ -185,6 +200,9 @@ export const CheckoutItem = () => {
                     <h1>Checkout</h1>
                     <ButtonIcon icon="faX" color="black" href={"/cart"} />
                 </div>
+                {userId === null && (
+                    <p style={{ color: "red" }}>not logged in</p>
+                )}
                 <div className={styles.checkoutForm}>
                     <main className={styles.content}>
                         <Fieldset title="Your contact details" number={1}>
@@ -213,6 +231,16 @@ export const CheckoutItem = () => {
                                         }
                                     />
                                 </div>
+                            ) : userId === null ? (
+                                <InputField
+                                    onChange={(e) => {
+                                        setOrderInfo({
+                                            ...orderInfo,
+                                            name: e.target.value,
+                                        });
+                                    }}
+                                    placeholder="Your name"
+                                />
                             ) : (
                                 <Spinner />
                             )}
@@ -241,6 +269,16 @@ export const CheckoutItem = () => {
                                         value={userEmail}
                                     />
                                 </div>
+                            ) : userId === null ? (
+                                <InputField
+                                    onChange={(e) => {
+                                        setOrderInfo({
+                                            ...orderInfo,
+                                            phone: e.target.value,
+                                        });
+                                    }}
+                                    placeholder="Your phone"
+                                />
                             ) : (
                                 <Spinner />
                             )}
