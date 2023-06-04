@@ -107,7 +107,7 @@ export const ProductCard = ({
                 <div className={styles.img}>
                     <Link href={href}>
                         <a href={href}>
-                            <Image src={photoUrl[0]} width={140} height={140} />
+                            <Image quality={50} priority={false} src={photoUrl[0]} width={140} height={140} />
                         </a>
                     </Link>
                 </div>
