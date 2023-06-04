@@ -89,7 +89,7 @@ export const Orders = () => {
                             title={`Order №${item.orderId}`}
                             borderBottom
                         >
-                            <Details jsxTitle={OrderDetailTitle}>
+                            <Details isOpen={false} jsxTitle={OrderDetailTitle}>
                                 <div className={styles.detail}>
                                     <div className={styles.summary}>
                                         <p className={styles.title}>
