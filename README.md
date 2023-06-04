@@ -1,6 +1,41 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
+* First you need to initialize the dependencies.
+```bash
+npm 
+# or
+yarn 
+```
+If not Yarn
+```bash
+npm install --global yarn
+```
+The project uses Firebase to interact with the database through an API. To work correctly with the project, you need to register in [Firebase](https://console.firebase.google.com/). 
+Next step create a new project and open settings. In the settings, create a new application.
+After initialization, firebaseConfig will appear, which looks like this:
+```bash
+const firebaseConfig = {
+  apiKey: "************",
+  authDomain: "************",
+  projectId: "****************",
+  storageBucket: "********************",
+  messagingSenderId: "************",
+  appId: "*****************",
+  measurementId: "***************",
+};
+```
+To connect to the database, you need to create [.env.local](https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables) a file in the root folder of the project and fill it accordingly.
+```bash
+  NEXT_PUBLIC_FIREBASE_API_KEY = "your API_KEY"
+  NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN = "your AUTH_DOMAIN"
+  NEXT_PUBLIC_FIREBASE_PROJECT_ID = "your PROJECT_ID"
+  NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET = "your STORAGE_BUCKET"
+  NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID = "your MESSAGING_SENDER_ID"
+  NEXT_PUBLIC_FIREBASE_APP_ID = "your APP_ID"
+  NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID = "your MEASUREMENT_ID"
+```
+Then you can run the project.
 
 First, run the development server:
 
@@ -11,12 +46,25 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+to enter the application as an administrator, type:
+* login> admin@gmail.com
+* password> admini
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Of course, you can also register your own user.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Implemented opportunities in the project
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+* registration and authorization
+* personal cabinet
+* creating discount coupons
+* adding products by category
+* search page with the ability to search by category
+* navigation on the site
+* order basket
+* favorite products
+* product page
+* order page
+* adding and changing personal information
 
 ## Learn More
 
