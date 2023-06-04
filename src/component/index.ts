@@ -21,3 +21,4 @@ export { WishList } from "./WishList";
 export { Orders } from "./Cabinet";
 export { CartItem } from "./CartItem";
 export { CartContainer } from "./CartContainer";
+export { Coupons } from "./Cabinet";

@@ -40,7 +40,7 @@ const initialState: CabinetState = {
             icon: "faBell",
             href: "history",
         },
-        Bonus: { name: "Bonus", icon: "faB", href: "bonus" },
+        Bonus: { name: "Coupons", icon: "faB", href: "coupons" },
     },
 };
 

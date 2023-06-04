@@ -13,11 +13,12 @@ const Search = () => {
     useEffect(() => {
         searchFilter({
             filterField: "title",
-           
+
             value: searchText,
         });
     }, [searchText]);
 
+    console.log(data);
 
     return (
         <MainLayout isSidebar={true}>
@@ -46,6 +47,7 @@ const Search = () => {
                         />
                     );
                 })}
+            {data?.length === 0 && <h3 style={{color:"#ADB8C8"}} >...nothing found</h3>}
         </MainLayout>
     );
 };

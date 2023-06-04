@@ -1,22 +1,21 @@
-import {MainLayout} from "layout";
-import {Box, UserInfo, WishList} from "src/component";
-import {ButtonNav} from "src/component";
+import { MainLayout } from "layout";
+import { Box, UserInfo, WishList } from "src/component";
+import { ButtonNav } from "src/component";
 import styles from "styles/Cabinet.module.scss";
 
-import {useSelector} from "react-redux";
-import {cabinetValue} from "src/store/cabinetSlice";
-import {userValue} from "src/store/userSlice";
-import {useRouter} from "next/router";
-import {AddProduct} from "src/component";
-import {Products} from "src/component/Cabinet";
-import {SignIn} from "src/views/Authentication";
-import {Orders} from "src/component/Cabinet/Orders";
+import { useSelector } from "react-redux";
+import { cabinetValue } from "src/store/cabinetSlice";
+import { userValue } from "src/store/userSlice";
+import { useRouter } from "next/router";
+import { AddProduct } from "src/component";
+import { Coupons, Products } from "src/component/Cabinet";
+import { SignIn } from "src/views/Authentication";
+import { Orders } from "src/component/Cabinet/Orders";
 import { Spinner } from "src/component/Spiner";
 
-
 const Cabinet = () => {
-    const {cabinetList} = useSelector(cabinetValue);
-    const {userEmail, userId} = useSelector(userValue);
+    const { cabinetList } = useSelector(cabinetValue);
+    const { userEmail, userId } = useSelector(userValue);
     const router = useRouter();
     const queryName = router.query.name;
     const queryRout = router.query.rout;
@@ -24,7 +23,7 @@ const Cabinet = () => {
     const cabinetRouting = (rout: string | string[] | undefined) => {
         switch (rout) {
             case "personal-information":
-                return <UserInfo />;
+                return <UserInfo isOpenInfo={false} />;
             case "products":
                 return <Products />;
             case "add-product":
@@ -33,6 +32,8 @@ const Cabinet = () => {
                 return <WishList />;
             case "orders":
                 return <Orders />;
+            case "coupons":
+                return <Coupons />;
             default:
                 break;
         }
@@ -51,7 +52,7 @@ const Cabinet = () => {
                                 }
                                 href={{
                                     pathname: "personal-information",
-                                    query: {name: "personal-information"},
+                                    query: { name: "personal-information" },
                                 }}
                                 icon={"faUser"}
                                 text={userEmail}
@@ -59,7 +60,7 @@ const Cabinet = () => {
                         </div>
                         <div className={styles.navItem}>
                             {Object.values(cabinetList).map(
-                                ({name, icon, href}) => {
+                                ({ name, icon, href }) => {
                                     return (
                                         <ButtonNav
                                             isActive={
@@ -78,7 +79,7 @@ const Cabinet = () => {
                                             }}
                                         />
                                     );
-                                },
+                                }
                             )}
                         </div>
                     </nav>
@@ -87,7 +88,13 @@ const Cabinet = () => {
                     </div>
                 </div>
             ) : (
-                <div style={{display:'flex' ,justifyContent: 'center',width:'100%'}}>
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        width: "100%",
+                    }}
+                >
                     <Spinner />
                 </div>
             )}
