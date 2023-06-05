@@ -66,6 +66,9 @@ Of course, you can also register your own user.
 * order page
 * adding and changing personal information
 
+## [Demo](https://deli-git-dev-hrynevych.vercel.app/)
+Link https://deli-git-dev-hrynevych.vercel.app/
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
